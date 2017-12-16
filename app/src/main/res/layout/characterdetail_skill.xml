@@ -40,7 +40,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/characterskilldetailpro_introduction" />
+        app:layout_constraintTop_toBottomOf="@+id/characterskilldetail_levellvframe" />
 
     <TextView
         android:id="@+id/characterskilldetail_type"
@@ -57,22 +57,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <TextView
-        android:id="@+id/characterskilldetailpro_introduction"
-        android:layout_width="330dp"
-        android:layout_height="35dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/detailproshape"
-        android:gravity="center"
-        android:text="@string/introduction"
-        android:textColor="@color/colorwhite"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/characterskilldetail_level" />
 
     <TextView
         android:id="@+id/characterskillpro_level"

@@ -34,7 +34,7 @@ public class CharacterDetail extends AppCompatActivity{
         ImageView detailimage = findViewById(R.id.detail_image);
         ImageView detailframe = findViewById(R.id.detail_imageframe);
         TextView detailname = findViewById(R.id.detail_name);
-        TextView detailsex = findViewById(R.id.detail_sex);
+        ImageView detailsex = findViewById(R.id.detail_sex);
         TextView detailheight = findViewById(R.id.detail_height);
         TextView detailweight = findViewById(R.id.detail_weight);
         TextView detailorigo = findViewById(R.id.detail_origo);
@@ -88,8 +88,13 @@ public class CharacterDetail extends AppCompatActivity{
         detailimage.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+number+".png"));
         detailframe.setImageResource(ImageGet.getBigFrame(job));
         detailname.setText(name);
-        detailsex.setText(sex);
-        detailheight.setText(height + "m");
+
+        if (sex.equals("男")) {
+            detailsex.setImageResource(R.mipmap.male);
+        } else {
+            detailsex.setImageResource(R.mipmap.female);
+        }
+        detailheight.setText(height + "cm");
         detailweight.setText(weight + "kg");
         detailorigo.setText(origo);
         detailalignment.setText(alignment);
