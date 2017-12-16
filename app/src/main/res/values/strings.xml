@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Fate Dictionary</string>
+    <string name="take_pic">拍照</string>
+    <string name="gallery">相册</string>
+    <string name="property_name">名称：</string>
+    <string name="property_job">职介：</string>
+    <string name="property_sex">性别：</string>
+    <string name="property_date">生卒年月：</string>
+    <string name="property_date_birth">出生日期：</string>
+    <string name="property_date_death">死亡日期：</string>
+    <string name="property_origo">地区：</string>
+    <string name="property_alignment">阵营：</string>
+    <string name="property_introduction">详情：</string>
+    <string name="addcharacterfull"><b>新建英灵</b>\nNew Character</string>
+    <string name="addskillfull"><b>新建宝具</b>\nNew Skill</string>
+    <string name="littletestfull"><b>知识测试</b>\nKnowledge Test</string>
+    <string name="bigimage">大图</string>
+    <string name="littleimage">小图</string>
+    <string name="owner">拥有者</string>
+    <string name="type">类型</string>
+    <string name="level">等级</string>
+    <string name="name">名称</string>
+    <string name="job">职介</string>
+    <string name="sex">性别</string>
+    <string name="date">生卒</string>
+    <string name="height">身高</string>
+    <string name="weight">体重</string>
+    <string name="origo">籍贯</string>
+    <string name="alignment">阵营</string>
+    <string name="introduction">详情</string>
+    <string name="stre">筋力</string>
+    <string name="endu">耐久</string>
+    <string name="agil">敏捷</string>
+    <string name="magi">魔力</string>
+    <string name="luck">幸运</string>
+    <string name="sikl">宝具</string>
+    <string name="text_error_empty">不能为空。</string>
+    <string name="confirm">确定</string>
+    <string name="cancel">取消</string>
+    <string name="add_character_button">+</string>
+    <string name="please_select">请 选 择</string>
+    <string name="edit">编辑</string>
+    <string name="delete">删除</string>
+    <string name="submitanwser">提交答案</string>
+    <string name="exittest">退出测试</string>
+    <string-array name="sexselect">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+    <string-array name="alignmentselect">
+        <item>秩序·善</item>
+        <item>中立·善</item>
+        <item>混沌·善</item>
+        <item>秩序·中庸</item>
+        <item>中立·中庸</item>
+        <item>混沌·中庸</item>
+        <item>秩序·恶</item>
+        <item>中立·恶</item>
+        <item>混沌·恶</item>
+    </string-array>
+    <string-array name="fatejob">
+        <item>saber</item>
+        <item>archer</item>
+        <item>lancer</item>
+        <item>rider</item>
+        <item>caster</item>
+        <item>assassin</item>
+        <item>berserker</item>
+        <item>ruler</item>
+        <item>avanger</item>
+    </string-array>
+    <string-array name="level">
+        <item>E</item>
+        <item>D</item>
+        <item>D+</item>
+        <item>C</item>
+        <item>C+</item>
+        <item>B</item>
+        <item>B+</item>
+        <item>A</item>
+        <item>A+</item>
+        <item>A++</item>
+        <item>A+++</item>
+        <item>EX</item>
+        <item>-</item>
+    </string-array>
+    <string-array name="fatetype">
+        <item>固有技能</item>
+        <item>职阶技能</item>
+        <item>宝具</item>
+    </string-array>
+    <string-array name="music">
+        <item>无</item>
+        <item>权御天下</item>
+    </string-array>
+
+</resources>

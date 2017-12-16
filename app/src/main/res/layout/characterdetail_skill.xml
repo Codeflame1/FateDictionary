@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/listlayout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/listviewbackground2"
+    tools:context="com.type_moon.codeflame.fatedictionary.MainActivity">
+
+    <TextView
+        android:id="@+id/characterskilldetail_name"
+        android:layout_width="230dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/detailtexthape"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/characterskilldetail_type"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/characterskilldetail_introduction"
+        android:layout_width="330dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/detailtexthape"
+        android:inputType="textMultiLine"
+        android:maxLines="30"
+        android:minLines="5"
+        android:scrollbars="vertical"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/characterskilldetailpro_introduction" />
+
+    <TextView
+        android:id="@+id/characterskilldetail_type"
+        android:layout_width="90dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/detailproshape"
+        android:gravity="center"
+        android:textColor="@color/colorwhite"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/characterskilldetail_name"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/characterskilldetailpro_introduction"
+        android:layout_width="330dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/detailproshape"
+        android:gravity="center"
+        android:text="@string/introduction"
+        android:textColor="@color/colorwhite"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/characterskilldetail_level" />
+
+    <TextView
+        android:id="@+id/characterskillpro_level"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/detailproshape"
+        android:gravity="center"
+        android:text="@string/level"
+        android:textColor="@color/colorwhite"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/characterskilldetail_level"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/characterskilldetail_type" />
+
+    <TextView
+        android:id="@+id/characterskilldetail_level"
+        android:layout_width="60dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/detailtexthape"
+        android:gravity="center"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toStartOf="@+id/characterskilldetail_levellv"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/characterskillpro_level"
+        app:layout_constraintTop_toBottomOf="@+id/characterskilldetail_name" />
+
+    <ImageView
+        android:id="@+id/characterskilldetail_levellv"
+        android:layout_width="190dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/characterskilldetail_level"
+        app:layout_constraintTop_toBottomOf="@+id/characterskilldetail_name"
+        tools:ignore="ContentDescription" />
+
+    <ImageView
+        android:id="@+id/characterskilldetail_levellvframe"
+        android:layout_width="190dp"
+        android:layout_height="35dp"
+        android:background="@drawable/detailimagestroke"
+        app:layout_constraintBottom_toBottomOf="@+id/characterskilldetail_levellv"
+        app:layout_constraintEnd_toEndOf="@+id/characterskilldetail_levellv"
+        app:layout_constraintStart_toStartOf="@+id/characterskilldetail_levellv"
+        app:layout_constraintTop_toTopOf="@+id/characterskilldetail_levellv"
+        tools:ignore="ContentDescription" />
+
+</android.support.constraint.ConstraintLayout>

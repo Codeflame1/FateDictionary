@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <ScrollView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background"
+            tools:context="com.type_moon.codeflame.fatedictionary.MainActivity">
+
+            <ImageButton
+                android:id="@+id/edit_image"
+                android:layout_width="350dp"
+                android:layout_height="495dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="40dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:id="@+id/edit_imageframe"
+                android:layout_width="350dp"
+                android:layout_height="600dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <TextView
+                android:id="@+id/edit_pro_job"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailproshape"
+                android:gravity="center"
+                android:text="@string/job"
+                android:textColor="@color/colorwhite"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_imageframe" />
+
+            <Spinner
+                android:id="@+id/edit_job"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:entries="@array/fatejob"
+                android:background="@drawable/detailtexthape"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edit_pro_job"
+                app:layout_constraintTop_toBottomOf="@+id/edit_imageframe" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/edit_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailtexthape"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edit_pro_name"
+                app:layout_constraintTop_toBottomOf="@+id/edit_job">
+
+                <EditText
+                    android:layout_width="220dp"
+                    android:layout_height="40dp"
+                    android:inputType="text"
+                    android:textSize="14sp"
+                    tools:ignore="LabelFor" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/edit_pro_name"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailproshape"
+                android:ems="5"
+                android:gravity="center"
+                android:text="@string/name"
+                android:textColor="@color/colorwhite"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_job"
+                tools:ignore="MissingConstraints" />
+
+            <Spinner
+                android:id="@+id/edit_sex"
+                android:layout_marginTop="5dp"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:entries="@array/sexselect"
+                android:background="@drawable/detailtexthape"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edit_pro_sex"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_name"/>
+
+            <TextView
+                android:id="@+id/edit_pro_sex"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailproshape"
+                android:ems="5"
+                android:gravity="center"
+                android:text="@string/sex"
+                android:textColor="@color/colorwhite"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_name"
+                tools:ignore="MissingConstraints" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/edit_height"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailtexthape"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edit_pro_height"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_sex">
+
+                <EditText
+                    android:layout_width="220dp"
+                    android:layout_height="40dp"
+                    android:ems="20"
+                    android:inputType="number"
+                    android:textSize="14sp"
+                    tools:ignore="LabelFor" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/edit_pro_height"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailproshape"
+                android:ems="5"
+                android:gravity="center"
+                android:text="@string/height"
+                android:textColor="@color/colorwhite"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_sex"
+                tools:ignore="MissingConstraints" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/edit_weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailtexthape"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edit_pro_weight"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_height">
+
+                <EditText
+                    android:layout_width="220dp"
+                    android:layout_height="40dp"
+                    android:ems="20"
+                    android:inputType="number"
+                    android:textSize="14sp"
+                    tools:ignore="LabelFor" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/edit_pro_weight"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailproshape"
+                android:ems="5"
+                android:gravity="center"
+                android:text="@string/weight"
+                android:textColor="@color/colorwhite"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_height"
+                tools:ignore="MissingConstraints" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/edit_origo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailtexthape"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edit_pro_origo"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_weight">
+
+                <EditText
+                    android:layout_width="220dp"
+                    android:layout_height="40dp"
+                    android:ems="20"
+                    android:inputType="text"
+                    android:textSize="14sp"
+                    tools:ignore="LabelFor" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/edit_pro_origo"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailproshape"
+                android:ems="5"
+                android:gravity="center"
+                android:text="@string/origo"
+                android:textColor="@color/colorwhite"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_weight"
+                tools:ignore="MissingConstraints" />
+
+            <Spinner
+                android:id="@+id/edit_alignment"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
+                android:entries="@array/alignmentselect"
+                android:background="@drawable/detailtexthape"
+                app:layout_constraintStart_toEndOf="@+id/edit_pro_alignment"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_origo"/>
+
+            <TextView
+                android:id="@+id/edit_pro_alignment"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailproshape"
+                android:ems="5"
+                android:gravity="center"
+                android:text="@string/alignment"
+                android:textColor="@color/colorwhite"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_origo"
+                tools:ignore="MissingConstraints" />
+
+            <Spinner
+                android:id="@+id/edit_stre"
+                android:layout_marginTop="5dp"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:entries="@array/level"
+                android:background="@drawable/detailtexthape"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edit_pro_stre"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_alignment"/>
+
+            <TextView
+                android:id="@+id/edit_pro_stre"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailproshape"
+                android:ems="5"
+                android:gravity="center"
+                android:text="@string/stre"
+                android:textColor="@color/colorwhite"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_alignment"
+                tools:ignore="MissingConstraints" />
+
+            <Spinner
+                android:id="@+id/edit_endu"
+                android:layout_marginTop="5dp"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:entries="@array/level"
+                android:background="@drawable/detailtexthape"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edit_pro_endu"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_stre"/>
+
+            <TextView
+                android:id="@+id/edit_pro_endu"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailproshape"
+                android:ems="5"
+                android:gravity="center"
+                android:text="@string/endu"
+                android:textColor="@color/colorwhite"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_stre"
+                tools:ignore="MissingConstraints" />
+
+            <Spinner
+                android:id="@+id/edit_agil"
+                android:layout_marginTop="5dp"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:entries="@array/level"
+                android:background="@drawable/detailtexthape"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edit_pro_agil"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_endu"/>
+
+            <TextView
+                android:id="@+id/edit_pro_agil"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailproshape"
+                android:ems="5"
+                android:gravity="center"
+                android:text="@string/agil"
+                android:textColor="@color/colorwhite"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_endu"
+                tools:ignore="MissingConstraints" />
+
+            <Spinner
+                android:id="@+id/edit_magi"
+                android:layout_marginTop="5dp"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:entries="@array/level"
+                android:background="@drawable/detailtexthape"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edit_pro_magi"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_agil"/>
+
+            <TextView
+                android:id="@+id/edit_pro_magi"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailproshape"
+                android:ems="5"
+                android:gravity="center"
+                android:text="@string/magi"
+                android:textColor="@color/colorwhite"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_agil"
+                tools:ignore="MissingConstraints" />
+
+            <Spinner
+                android:id="@+id/edit_luck"
+                android:layout_marginTop="5dp"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:entries="@array/level"
+                android:background="@drawable/detailtexthape"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edit_pro_luck"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_magi"/>
+
+            <TextView
+                android:id="@+id/edit_pro_luck"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailproshape"
+                android:ems="5"
+                android:gravity="center"
+                android:text="@string/luck"
+                android:textColor="@color/colorwhite"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_magi"
+                tools:ignore="MissingConstraints" />
+
+            <Spinner
+                android:id="@+id/edit_skil"
+                android:layout_marginTop="5dp"
+                android:layout_width="220dp"
+                android:layout_height="40dp"
+                android:entries="@array/level"
+                android:background="@drawable/detailtexthape"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/edit_pro_skil"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_luck"/>
+
+            <TextView
+                android:id="@+id/edit_pro_skil"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailproshape"
+                android:ems="5"
+                android:gravity="center"
+                android:text="@string/sikl"
+                android:textColor="@color/colorwhite"
+                android:textSize="18sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_luck"
+                tools:ignore="MissingConstraints" />
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/edit_introduction"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/detailtexthape"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_pro_introduction">
+
+                <EditText
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:ems="20"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:maxLines="10"
+                    android:minLines="8"
+                    android:scrollbars="vertical"
+                    android:textSize="14sp"
+                    tools:ignore="LabelFor" />
+            </android.support.design.widget.TextInputLayout>
+
+            <TextView
+                android:id="@+id/edit_pro_introduction"
+                android:layout_width="320dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/detailproshape"
+                android:ems="5"
+                android:gravity="center"
+                android:text="@string/introduction"
+                android:textColor="@color/colorwhite"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_skil"
+                tools:ignore="MissingConstraints" />
+
+            <Button
+                android:id="@+id/edit_buttonconfirm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/detailbuttonshape"
+                android:text="@string/confirm"
+                android:textColor="@color/colorwhite"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/edit_buttoncancel"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edit_introduction" />
+
+            <Button
+                android:id="@+id/edit_buttoncancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/detailbuttonshape"
+                android:text="@string/cancel"
+                android:textColor="@color/colorwhite"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/edit_buttonconfirm"
+                app:layout_constraintTop_toBottomOf="@+id/edit_introduction" />
+
+        </android.support.constraint.ConstraintLayout>
+
+    </ScrollView>
