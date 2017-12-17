@@ -6,10 +6,7 @@
     <string name="property_name">名称：</string>
     <string name="property_job">职介：</string>
     <string name="property_sex">性别：</string>
-    <string name="property_date">生卒年月：</string>
-    <string name="property_date_birth">出生日期：</string>
-    <string name="property_date_death">死亡日期：</string>
-    <string name="property_origo">地区：</string>
+    <string name="property_origo">所在地：</string>
     <string name="property_alignment">阵营：</string>
     <string name="property_introduction">详情：</string>
     <string name="addcharacterfull"><b>新建英灵</b>\nNew Character</string>
@@ -26,7 +23,7 @@
     <string name="date">生卒</string>
     <string name="height">身高</string>
     <string name="weight">体重</string>
-    <string name="origo">籍贯</string>
+    <string name="origo">所在地</string>
     <string name="alignment">阵营</string>
     <string name="introduction">详情</string>
     <string name="stre">筋力</string>

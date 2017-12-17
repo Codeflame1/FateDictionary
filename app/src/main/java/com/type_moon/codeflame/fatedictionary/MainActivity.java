@@ -1,11 +1,9 @@
 package com.type_moon.codeflame.fatedictionary;
 
-import android.content.ComponentName;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.IBinder;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,9 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.Spinner;
 import android.widget.Toast;
-import android.content.ServiceConnection;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -32,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
     private SkillListViewAdapter sadapter;
     private ListView mCharacterList;
     private ListView mSkillList;
-    private Spinner MusicChange;
-    private MusicService musicService;
+//    private Spinner MusicChange;
+//    private MusicService musicService;
     private Button CSChange;
     private Button mCharacterListAdd;
     private Button mSkillListAdd;
@@ -43,8 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog mcdialog;
     private AlertDialog msdialog;
     Intent intent;
-    ServiceConnection sc;
-
+//    ServiceConnection sc;
 
     @Override
 
@@ -57,21 +52,21 @@ public class MainActivity extends AppCompatActivity {
         mSkillListAdd = findViewById(R.id.skilllistadd);
         mLittletest = findViewById(R.id.littletestgoto);
         CSChange = findViewById(R.id.characterskillchange);
-        MusicChange = findViewById(R.id.music_change);
+//        MusicChange = findViewById(R.id.music_change);
         TextInputLayout characterlistsearch = findViewById(R.id.characterlistsearch);
         searchButton = findViewById(R.id.characterlistsearchButton);
         msearch = characterlistsearch.getEditText();
-        sc = new ServiceConnection() {
-            @Override
-            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-                musicService = ((MusicService.MyBinder) iBinder).getService();
-            }
-
-            @Override
-            public void onServiceDisconnected(ComponentName componentName) {
-                musicService = null;
-            }
-        };
+//        sc = new ServiceConnection() {
+//            @Override
+//            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+//                musicService = ((MusicService.MyBinder) iBinder).getService();
+//            }
+//
+//            @Override
+//            public void onServiceDisconnected(ComponentName componentName) {
+//                musicService = null;
+//            }
+//        };
         if (msearch != null) {
             msearch.clearFocus();
         }
@@ -98,28 +93,29 @@ public class MainActivity extends AppCompatActivity {
         CSChange.setTag("0");
         setListener();
 
-        intent = new Intent(MainActivity.this,MusicService.class);
-        startService(intent);
+//        intent = new Intent(MainActivity.this,MusicService.class);
+//        startService(intent);
+//        bindService(intent, sc, BIND_AUTO_CREATE);
 
     }
 
     private void setListener() {
-        MusicChange.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                String str1 = (String)MusicChange.getSelectedItem();
-                if (str1.equals("无")) {
-                    musicService.pausePlay();
-                } else if (str1.equals("权御天下")) {
-                    musicService.play1();
-                }
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-                musicService.pausePlay();
-            }
-        });
+//        MusicChange.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+//                String str1 = (String)MusicChange.getSelectedItem();
+//                if (str1.equals("无")) {
+//                    musicService.pausePlay();
+//                } else if (str1.equals("权御天下")) {
+//                    musicService.play1();
+//                }
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//                musicService.pausePlay();
+//            }
+//        });
 
         CSChange.setOnClickListener(new View.OnClickListener(){
             @Override

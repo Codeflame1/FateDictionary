@@ -20,9 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 public class CharacterDetail extends AppCompatActivity{
-
 
     private CharacterSkillListViewAdapter sadapter;
 
@@ -122,11 +120,6 @@ public class CharacterDetail extends AppCompatActivity{
     private List<Map<String, Object>> getSkillListData(String s) {
         List<Map<String, Object>> slist = new ArrayList<>();
         Cursor query = SkillDataBase.getInstances(CharacterDetail.this).query();
-        /*
-        游标cursor默认是在-1的位置,query.moveToFirst()将游标移动到第一行,如果不写这个就会报
-         Caused by: android.database.CursorIndexOutOfBoundsException: Index -1 requested, with a size of 12
-         这个问题坑爹,以后一定要注意
-         */
         if (query.moveToFirst()) {
             do {
                 String owner = query.getString(query.getColumnIndex("owner"));

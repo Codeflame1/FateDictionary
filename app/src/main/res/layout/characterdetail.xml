@@ -189,7 +189,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/detail_origo"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pro_height" />
+                app:layout_constraintTop_toBottomOf="@+id/pro_alignment" />
 
             <TextView
                 android:id="@+id/pro_alignment"

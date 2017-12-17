@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Binder;
+import android.os.Environment;
 import android.os.IBinder;
 
 import java.io.IOException;
@@ -18,7 +19,13 @@ public class MusicService extends Service {
     }
     public static MediaPlayer mediaPlayer = new MediaPlayer();
 
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+
     public void play1() {
+        mediaPlayer.stop();
         try { if (mediaPlayer == null)
         {
             mediaPlayer = new MediaPlayer();
@@ -26,11 +33,12 @@ public class MusicService extends Service {
             //重置
             mediaPlayer.reset();
             //加载多媒体文件
-            mediaPlayer.create(this, R.raw.quanyutianxia);
+            mediaPlayer.setDataSource(Environment.getExternalStorageDirectory()+"/FateDictionary/quanyutianxia.mp3");
             //准备播放音乐
             mediaPlayer.prepare();
             //播放音乐
             mediaPlayer.start();
+            mediaPlayer.setLooping(true);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -38,6 +46,8 @@ public class MusicService extends Service {
     }
 
     public void play2() {
+
+        mediaPlayer.stop();
         try { if (mediaPlayer == null)
         {
             mediaPlayer = new MediaPlayer();
@@ -45,11 +55,12 @@ public class MusicService extends Service {
             //重置
             mediaPlayer.reset();
             //加载多媒体文件
-            mediaPlayer.setDataSource("sdcard/zxmzf.mp3");
+            mediaPlayer.setDataSource(Environment.getExternalStorageDirectory()+"/FateDictionary/quanyutianxia.mp3");
             //准备播放音乐
             mediaPlayer.prepare();
             //播放音乐
             mediaPlayer.start();
+            mediaPlayer.setLooping(true);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,7 +68,9 @@ public class MusicService extends Service {
     }
 
     public void pausePlay() {
-        mediaPlayer.pause();
+        if (mediaPlayer.isPlaying()){
+            mediaPlayer.stop();
+        }
     }
 
     @Override
@@ -95,5 +108,4 @@ public class MusicService extends Service {
     public IBinder onBind(Intent intent) {
         return binder;
     }
-
 }
