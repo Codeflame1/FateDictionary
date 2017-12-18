@@ -30,11 +30,14 @@ public class SkillEdit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_skilldetail);
         id = getIntent().getIntExtra("id", 0);
-        String owner = getIntent().getStringExtra("owner");
-        String name = getIntent().getStringExtra("name");
-        String type = getIntent().getStringExtra("type");
-        String level = getIntent().getStringExtra("level");
-        String introduction = getIntent().getStringExtra("introduction");
+        Cursor cursor = SkillDataBase.getInstances(SkillEdit.this).searchById( id );
+        cursor.moveToNext();
+        String owner = cursor.getString(1);
+        String name = cursor.getString(3);
+        String type = cursor.getString(2);
+        String level = cursor.getString(4);
+        String introduction = cursor.getString(5);
+        cursor.close();
 
         final Button edit_confirm = findViewById(R.id.skilledit_buttonconfirm);
         Button edit_cancel = findViewById(R.id.skilledit_buttoncancel);

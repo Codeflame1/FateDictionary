@@ -1,5 +1,6 @@
 package com.type_moon.codeflame.fatedictionary;
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -22,11 +23,15 @@ public class SkillDetail extends AppCompatActivity{
         ImageView detaillevellv = findViewById(R.id.skilldetail_levellv);
         ImageButton detailback = findViewById(R.id.skillback);
 
-        String name = getIntent().getStringExtra("name");
-        String owner = getIntent().getStringExtra("owner");
-        String type = getIntent().getStringExtra("type");
-        String level = getIntent().getStringExtra("level");
-        String introduction = getIntent().getStringExtra("introduction");
+        int id = getIntent().getIntExtra("id", 0);
+        Cursor cursor = SkillDataBase.getInstances(SkillDetail.this).searchById( id );
+        cursor.moveToNext();
+        String owner = cursor.getString(1);
+        String name = cursor.getString(3);
+        String type = cursor.getString(2);
+        String level = cursor.getString(4);
+        String introduction = cursor.getString(5);
+        cursor.close();
         detailname.setText(name);
         detailowner.setText(owner);
         detailtype.setText(type);

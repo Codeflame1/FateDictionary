@@ -23,7 +23,7 @@ public class SpinnerSelect {
                 return 6;
             case "ruler":
                 return 7;
-            case "avanger":
+            case "avenger":
                 return 8;
             default:
                 return 0;

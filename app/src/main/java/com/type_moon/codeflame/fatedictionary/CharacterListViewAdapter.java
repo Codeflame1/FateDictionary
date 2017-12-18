@@ -2,6 +2,7 @@ package com.type_moon.codeflame.fatedictionary;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.view.LayoutInflater;
@@ -54,12 +55,18 @@ public class CharacterListViewAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        Object num = list.get(i).get("number");
-        int number = Integer.parseInt(num.toString());
+        int id = Integer.parseInt(list.get(i).get("id").toString());
+        Cursor cursor = CharacterDataBase.getInstances(context).searchById( id );
+        cursor.moveToNext();
+        int number = cursor.getInt(cursor.getColumnIndex("number"));
+        String name = cursor.getString(cursor.getColumnIndex("name"));
+        String job = cursor.getString(cursor.getColumnIndex("job"));
+        String alignment = cursor.getString(cursor.getColumnIndex("alignment"));
+        cursor.close();
         holder.image.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+number+"_little.png"));
-        holder.frame.setImageResource(ImageGet.getSmallFrame(list.get(i).get("job").toString()));
-        holder.name.setText(list.get(i).get("name").toString());
-        holder.alignment.setText(list.get(i).get("alignment").toString());
+        holder.frame.setImageResource(ImageGet.getSmallFrame(job));
+        holder.name.setText(name);
+        holder.alignment.setText(alignment);
 
         return view;
     }

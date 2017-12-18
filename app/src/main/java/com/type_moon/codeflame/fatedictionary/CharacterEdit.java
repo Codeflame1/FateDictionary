@@ -1,6 +1,7 @@
 package com.type_moon.codeflame.fatedictionary;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -65,21 +66,24 @@ public class CharacterEdit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_characterdetail);
         id = getIntent().getIntExtra("id", 0);
-        number = getIntent().getIntExtra("number", 0);
-        String name = getIntent().getStringExtra("name");
-        String job = getIntent().getStringExtra("job");
-        String sex = getIntent().getStringExtra("sex");
-        String height = getIntent().getStringExtra("height");
-        String weight = getIntent().getStringExtra("weight");
-        String origo = getIntent().getStringExtra("origo");
-        String alignment = getIntent().getStringExtra("alignment");
-        String introduction = getIntent().getStringExtra("introduction");
-        String stre = getIntent().getStringExtra("stre");
-        String endu = getIntent().getStringExtra("endu");
-        String agil = getIntent().getStringExtra("agil");
-        String magi = getIntent().getStringExtra("magi");
-        String luck = getIntent().getStringExtra("luck");
-        String skil = getIntent().getStringExtra("skil");
+        Cursor cursor = CharacterDataBase.getInstances(CharacterEdit.this).searchById( id );
+        cursor.moveToNext();
+        number = cursor.getInt(cursor.getColumnIndex("number"));
+        String name = cursor.getString(2);
+        String job = cursor.getString(3);
+        String sex = cursor.getString(4);
+        String height = cursor.getString(5);
+        String weight = cursor.getString(6);
+        String origo = cursor.getString(7);
+        String alignment = cursor.getString(8);
+        String introduction = cursor.getString(9);
+        String stre = cursor.getString(10);
+        String endu = cursor.getString(11);
+        String agil = cursor.getString(12);
+        String magi = cursor.getString(13);
+        String luck = cursor.getString(14);
+        String skil = cursor.getString(15);
+        cursor.close();
 
         final Button edit_confirm = findViewById(R.id.edit_buttonconfirm);
         Button edit_cancel = findViewById(R.id.edit_buttoncancel);

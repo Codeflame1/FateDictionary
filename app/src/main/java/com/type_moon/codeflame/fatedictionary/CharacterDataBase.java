@@ -117,12 +117,12 @@ public class CharacterDataBase extends SQLiteOpenHelper {
         return database.query(TABLE_NAME, null, null, null, null, null, null);
     }
 
-//    Cursor searchQuery(String s, String type) {
-//        SQLiteDatabase database = getReadableDatabase();
-//        String selection = type + "=?";
-//        String[] Args = {s};
-//        return database.query(TABLE_NAME, null, selection, Args, null, null, null);
-//    }
+    Cursor searchById(Integer id) {
+        SQLiteDatabase database = getReadableDatabase();
+        String selection = "id=?";
+        String[] Args = { id.toString() };
+        return database.query(TABLE_NAME, null, selection, Args, null, null, null);
+    }
 
 
 //    public void delete(int id, String name, String job, String sex, String height, String weight, String origo, String alignment, String introduction, String stre, String endu, String agil, String magi, String luck, String skil) {

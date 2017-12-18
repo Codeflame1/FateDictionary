@@ -19,7 +19,7 @@ public class FirstInsert {
 
     static void insertCharacter(Context context){
         if (CharacterDataBase.getInstances(context).query().getCount() == 0){
-            AddNumberDataBase.getInstances(context).insert(26);
+            AddNumberDataBase.getInstances(context).insert(29);
             CharacterDataBase.getInstances(context).insert(1,"赵云(子龙)","lancer","男","184","85","常山真定","秩序·善","    身长八尺，姿颜雄伟，蜀汉五虎上将之一。\n    汉末军阀混战，赵云受本郡推举，率领义从加入白马将军公孙瓒。期间结识了汉室皇亲刘备，但不久之后，因为兄长去世而离开。赵云离开公孙瓒大约七年左右的时间，在邺城与刘备相见，从此追随刘备。","A","B","A+","A","EX","EX");
             CharacterDataBase.getInstances(context).insert(2,"孙尚香","archer","女","167","56","吴郡富春","中立·善","    孙夫人，乃孙权之妹，名曰孙仁。刘备向东吴借荆州不还，周瑜上书孙权，教使“美人计”，进妹予刘备为夫人，不料在诸葛亮的锦囊妙计安排下，假婚成真姻；后来夫人更助刘备返蜀，于路上怒斥追袭的吴将。后刘备入益州，孙权闻知刘备西征，遣周善引领舟船以迎孙夫人，而夫人带着后主刘禅回吴，幸得赵云与张飞勒兵截江，方重夺刘禅。\n    彝陵之战，刘备战败，有讹言传入吴中，道刘备已死，孙夫人伤心不已，望西痛哭，投江而死。后人为其立庙，号曰“枭姬祠”。","B","C","A++","B","A++","B");
             CharacterDataBase.getInstances(context).insert(3,"黄月英","caster","女","160","41","沔南白水","混沌·中庸","    黄承彦之女,有传闻说她容貌甚丑却知识广博。也有传闻说其极美，故意令黄承彦提亲时说自己貌丑以试探孔明心意。\n  黄月英十分擅长机关术，曾制木虎、木犬、木人等物，无需人力操控即可自动。诸葛亮发明木牛流马，据说也是从黄月英的传授的技巧上发展出来的。","E","D","C","A+++","A","EX");

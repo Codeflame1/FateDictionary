@@ -23,7 +23,7 @@ public class ImageGet {
                 return R.mipmap.berserkerbig;
             case "ruler":
                 return R.mipmap.rulerbig;
-            case "avanger":
+            case "avenger":
                 return R.mipmap.avangerbig;
         }
         return 0;
@@ -47,7 +47,7 @@ public class ImageGet {
                 return R.mipmap.berserker;
             case "ruler":
                 return R.mipmap.ruler;
-            case "avanger":
+            case "avenger":
                 return R.mipmap.avenger;
         }
         return 0;

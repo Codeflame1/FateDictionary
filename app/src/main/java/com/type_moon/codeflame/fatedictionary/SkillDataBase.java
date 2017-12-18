@@ -114,11 +114,11 @@ public class SkillDataBase extends SQLiteOpenHelper {
 //        return database.query(TABLE_NAME, null, "name='"+name+"'", null, null, null, null);
 //    }
 //
-    Cursor searchQuery(String s, String type) {
+    Cursor searchById(Integer id) {
         SQLiteDatabase database = getReadableDatabase();
-        String selection = type + "=?";
-        String[] Args = {s};
-        return database.query(TABLE_NAME, null, selection, Args, null, null, null);
+        String selection = "id=?";
+        String[] Args = { id.toString() };
+       return database.query(TABLE_NAME, null, selection, Args, null, null, null);
     }
 //
 //    /**
