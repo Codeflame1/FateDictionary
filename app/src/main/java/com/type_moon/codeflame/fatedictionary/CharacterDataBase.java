@@ -117,6 +117,13 @@ public class CharacterDataBase extends SQLiteOpenHelper {
         return database.query(TABLE_NAME, null, null, null, null, null, null);
     }
 
+    Cursor queryNum(int startIndex, int num) {
+        //数据库可读
+        SQLiteDatabase database = getReadableDatabase();
+        //查找
+        return database.query(TABLE_NAME, null, null, null, null, null, startIndex + "," + num);
+    }
+
     Cursor searchById(Integer id) {
         SQLiteDatabase database = getReadableDatabase();
         String selection = "id=?";

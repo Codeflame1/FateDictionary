@@ -1,13 +1,17 @@
 package com.type_moon.codeflame.fatedictionary;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,14 +42,19 @@ public class MainActivity extends AppCompatActivity {
     private EditText msearch;
     private AlertDialog mcdialog;
     private AlertDialog msdialog;
-    Intent intent;
+//    Intent intent;
 //    ServiceConnection sc;
 
+    private boolean loadFinish;
+    private View mview;
+
+    @SuppressLint("InflateParams")
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mview = getLayoutInflater().inflate(R.layout.footer, null);
         mCharacterList = findViewById(R.id.characterlist);
         mSkillList = findViewById(R.id.skilllist);
         mCharacterListAdd = findViewById(R.id.characterlistadd);
@@ -73,22 +82,29 @@ public class MainActivity extends AppCompatActivity {
         characterlistsearch.clearFocus();
         msearch.setSelected(false);
 
-        FirstInsert.insertCharacter(this);
-        FirstInsert.insertSkill(this);
-        FirstInsert.insertImage(this);
+        if (CharacterDataBase.getInstances(MainActivity.this).query().getCount() == 0) {
+
+            FirstInsert.insertCharacter(this);
+            FirstInsert.insertSkill(this);
+            FirstInsert.insertImage(this);
+        }
 
         List<Map<String, Object>> data = getCharacterData("");
+        mCharacterList.setOnScrollListener(new cScrollListener());
         cadapter = new CharacterListViewAdapter(this, data);
+        mCharacterList.addFooterView(mview);
         mCharacterList.setAdapter(cadapter);
+        mCharacterList.removeFooterView(mview);
         mCharacterList.setTextFilterEnabled(true);
-        cadapter.notifyDataSetChanged();
 
         List<Map<String, Object>> data1 = getSkillData("");
+        mSkillList.setOnScrollListener(new sScrollListener());
         sadapter = new SkillListViewAdapter(this, data1);
         mSkillList.setVisibility(View.INVISIBLE);
+        mSkillList.addFooterView(mview);
         mSkillList.setAdapter(sadapter);
+        mSkillList.removeFooterView(mview);
         mSkillList.setTextFilterEnabled(true);
-        sadapter.notifyDataSetChanged();
 
         CSChange.setTag("0");
         setListener();
@@ -402,6 +418,118 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private final class cScrollListener implements AbsListView.OnScrollListener {
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+            // TODO Auto-generated method stub
+        }
+        //正在滚动时调用
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            int lastItemId = mCharacterList.getLastVisiblePosition();
+            int MaxItem = clist.size();
+            int cListNum = 15;
+            int cMaxPage = cListNum % MaxItem + 1;
+            //判断数据是否达到最后一条记录
+            if ((lastItemId + 1) == totalItemCount) {
+                if (totalItemCount > 0) {
+                    //当前页
+                    int currentpage = totalItemCount % cListNum == 0 ? totalItemCount/ cListNum : totalItemCount/ cListNum + 1;
+                    int nextpage = currentpage + 1;
+                    if (nextpage < cMaxPage && loadFinish) {
+                        loadFinish = false;
+                        //添加页脚
+                        mCharacterList.addFooterView(mview);
+                        //线程异步加载数据
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    //创造网络延迟
+                                    Thread.sleep(3000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                //发送数据
+                                chandler.sendMessage(chandler.obtainMessage(100, clist));
+                            }
+                        }).start();
+                    }
+                }
+            }
+        }
+    }
+    //通过handler对象来从子线程中获取数据
+    @SuppressLint("HandlerLeak")
+    Handler chandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            //得到数据
+            clist.addAll((List<Map<String, Object>>) msg.obj);
+            //告诉listview更新数据了，要求显示
+            cadapter.notifyDataSetChanged();
+            //删除页脚
+            if (mCharacterList.getFooterViewsCount() > 0)
+                mCharacterList.removeFooterView(mview);
+            loadFinish = true;
+        }
+    };
+
+    private final class sScrollListener implements AbsListView.OnScrollListener {
+        @Override
+        public void onScrollStateChanged(AbsListView view, int scrollState) {
+            // TODO Auto-generated method stub
+        }
+        //正在滚动时调用
+        @Override
+        public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+            int lastItemId = mSkillList.getLastVisiblePosition();
+            int MaxItem = slist.size();
+            int sListNum = 15;
+            int sMaxPage = sListNum % MaxItem + 1;
+            //判断数据是否达到最后一条记录
+            if ((lastItemId + 1) == totalItemCount) {
+                if (totalItemCount > 0) {
+                    //当前页
+                    int currentpage = totalItemCount % sListNum == 0 ? totalItemCount/ sListNum : totalItemCount/ sListNum + 1;
+                    int nextpage = currentpage + 1;
+                    if (nextpage < sMaxPage && loadFinish) {
+                        loadFinish = false;
+                        //添加页脚
+                        mSkillList.addFooterView(mview);
+                        //线程异步加载数据
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    //创造网络延迟
+                                    Thread.sleep(3000);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                                //发送数据
+                                shandler.sendMessage(shandler.obtainMessage(100, slist));
+                            }
+                        }).start();
+                    }
+                }
+            }
+        }
+    }
+    //通过handler对象来从子线程中获取数据
+    Handler shandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            //得到数据
+            slist.addAll((List<Map<String, Object>>) msg.obj);
+            //告诉listview更新数据了，要求显示
+            sadapter.notifyDataSetChanged();
+            //删除页脚
+            if (mSkillList.getFooterViewsCount() > 0)
+                mSkillList.removeFooterView(mview);
+            loadFinish = true;
+        }
+    };
 //    @Override
 //    public void onDestroy() {
 //        super.onDestroy();

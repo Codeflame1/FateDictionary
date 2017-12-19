@@ -109,6 +109,13 @@ public class SkillDataBase extends SQLiteOpenHelper {
         return database.query(TABLE_NAME, null, null, null, null, null, null);
     }
 
+    Cursor queryNum(int startIndex, int num) {
+        //数据库可读
+        SQLiteDatabase database = getReadableDatabase();
+        //查找
+        return database.query(TABLE_NAME, null, null, null, null, null, startIndex + "," + num);
+    }
+
 //    Cursor rawQuery(String name) {
 //        SQLiteDatabase database = getReadableDatabase();
 //        return database.query(TABLE_NAME, null, "name='"+name+"'", null, null, null, null);
