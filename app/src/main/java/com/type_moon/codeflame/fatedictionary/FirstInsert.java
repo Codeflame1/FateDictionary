@@ -415,7 +415,7 @@ public class FirstInsert {
                 if (getResId(str)>0){
                     Bitmap imageBig = BitmapFactory.decodeResource(context.getResources(),getResId(str));
                     File f1 = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", str+".png");
-                    FileOutputStream out1 = null;
+                    FileOutputStream out1;
                     try {
                         out1 = new FileOutputStream(f1);
                         imageBig.compress(Bitmap.CompressFormat.PNG, 100, out1);
@@ -433,7 +433,7 @@ public class FirstInsert {
                 if (getResId(str+"_little")>0){
                     Bitmap imageLittle = BitmapFactory.decodeResource(context.getResources(),getResId(str+"_little"));
                     File f2 = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", str+"_little.png");
-                    FileOutputStream out2 = null;
+                    FileOutputStream out2;
                     try {
                         out2 = new FileOutputStream(f2);
                         imageLittle.compress(Bitmap.CompressFormat.PNG, 100, out2);
