@@ -109,11 +109,37 @@ public class SkillDataBase extends SQLiteOpenHelper {
         return database.query(TABLE_NAME, null, null, null, null, null, null);
     }
 
-    Cursor queryNum(int startIndex, int num) {
+    int searchNum(String search) {
         //数据库可读
         SQLiteDatabase database = getReadableDatabase();
-        //查找
-        return database.query(TABLE_NAME, null, null, null, null, null, startIndex + "," + num);
+        if (search.isEmpty()) {
+            int i = database.query(TABLE_NAME, null, null, null, null, null, null).getCount();
+            query().close();
+            //查找
+            return i;
+        } else {
+            String[] columns = {"id,owner,name"};
+            String selection = "owner like ? or name like ?";
+            String[] selectionArgs = {"%"+search+"%","%"+search+"%"};
+            int i = database.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null).getCount();
+            query().close();
+            //查找
+            return i;
+        }
+    }
+
+    Cursor queryNum(String search, int startIndex, int num) {
+        //数据库可读
+        SQLiteDatabase database = getReadableDatabase();
+        if (search.isEmpty()){
+            return database.query(TABLE_NAME, null, null, null, null, null, null, startIndex + "," + num);
+        } else {
+            String[] columns = {"id,owner,name"};
+            String selection = "owner like ? or name like ?";
+            String[] selectionArgs = {"%"+search+"%","%"+search+"%"};
+            //查找
+            return database.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null, startIndex + "," + num);
+        }
     }
 
 //    Cursor rawQuery(String name) {

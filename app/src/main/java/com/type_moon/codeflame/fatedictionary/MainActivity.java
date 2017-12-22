@@ -28,6 +28,8 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     private List<Map<String, Object>> clist;
     private List<Map<String, Object>> slist;
+    private List<Map<String, Object>> cmorelist;
+    private List<Map<String, Object>> smorelist;
     private CharacterListViewAdapter cadapter;
     private SkillListViewAdapter sadapter;
     private ListView mCharacterList;
@@ -44,9 +46,10 @@ public class MainActivity extends AppCompatActivity {
     private AlertDialog msdialog;
 //    Intent intent;
 //    ServiceConnection sc;
-
-    private boolean loadFinish;
-    private View mview;
+    private int cPage;
+    private int sPage;
+    private int cListNum;
+    private int sListNum;
 
     @SuppressLint("InflateParams")
     @Override
@@ -54,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mview = getLayoutInflater().inflate(R.layout.footer, null);
         mCharacterList = findViewById(R.id.characterlist);
         mSkillList = findViewById(R.id.skilllist);
         mCharacterListAdd = findViewById(R.id.characterlistadd);
@@ -88,22 +90,21 @@ public class MainActivity extends AppCompatActivity {
             FirstInsert.insertSkill(this);
             FirstInsert.insertImage(this);
         }
-
-        List<Map<String, Object>> data = getCharacterData("");
+        cListNum = CharacterDataBase.getInstances(MainActivity.this).searchNum(msearch.getText().toString().trim());
+        cPage = 1;
+        clist = getCharacterData("",  0, 15);
         mCharacterList.setOnScrollListener(new cScrollListener());
-        cadapter = new CharacterListViewAdapter(this, data);
-        mCharacterList.addFooterView(mview);
+        cadapter = new CharacterListViewAdapter(this, clist);
         mCharacterList.setAdapter(cadapter);
-        mCharacterList.removeFooterView(mview);
         mCharacterList.setTextFilterEnabled(true);
 
-        List<Map<String, Object>> data1 = getSkillData("");
+        sListNum = SkillDataBase.getInstances(MainActivity.this).searchNum(msearch.getText().toString().trim());
+        sPage = 1;
+        slist = getSkillData("", 0, 15);
         mSkillList.setOnScrollListener(new sScrollListener());
-        sadapter = new SkillListViewAdapter(this, data1);
+        sadapter = new SkillListViewAdapter(this, slist);
         mSkillList.setVisibility(View.INVISIBLE);
-        mSkillList.addFooterView(mview);
         mSkillList.setAdapter(sadapter);
-        mSkillList.removeFooterView(mview);
         mSkillList.setTextFilterEnabled(true);
 
         CSChange.setTag("0");
@@ -155,10 +156,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String search = msearch.getText().toString().trim();
-                List<Map<String, Object>> data1 = getCharacterData(search);
-                List<Map<String, Object>> data2 = getSkillData(search);
-                cadapter.refreshList(data1);
-                sadapter.refreshList(data2);
+                cListNum = CharacterDataBase.getInstances(MainActivity.this).searchNum(search);
+                cPage = 1;
+                sListNum = SkillDataBase.getInstances(MainActivity.this).searchNum(search);
+                sPage = 1;
+                clist = getCharacterData(search, 0, 15);
+                slist = getSkillData(search, 0, 15);
+                cadapter.refreshList(clist);
+                sadapter.refreshList(slist);
             }
         });
 
@@ -197,8 +202,6 @@ public class MainActivity extends AppCompatActivity {
 //                //拿到当前position的 item的所有数据
                 Object id = clist.get(position).get("id");
                 int i = Integer.parseInt(id.toString());
-
-
                 //将得到id传入到需要的方法中
                 showCharacterDialog(i);
                 return true;
@@ -207,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
 
         mCharacterList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> cadapterView, View view, int position, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Object id = clist.get(position).get("id");
                 int i = Integer.parseInt(id.toString());
                 Intent intent = new Intent(MainActivity.this, CharacterDetail.class);
@@ -225,7 +228,6 @@ public class MainActivity extends AppCompatActivity {
 //                //拿到当前position的 item的所有数据
                 Object id = slist.get(position).get("id");
                 int i = Integer.parseInt(id.toString());
-
                 //将得到id传入到需要的方法中
                 showSkillDialog(i);
                 return true;
@@ -234,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
 
         mSkillList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> cadapterView, View view, int position, long l) {
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
                 Object id = slist.get(position).get("id");
                 int i = Integer.parseInt(id.toString());
                 Intent intent = new Intent(MainActivity.this, SkillDetail.class);
@@ -280,8 +282,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 CharacterDataBase.getInstances(MainActivity.this).deleteById(id);
                 //重新查询,然后显示
-                List<Map<String, Object>> data = getCharacterData("");
-                cadapter.refreshList(data);
+                clist = getCharacterData("",0,15);
+                cadapter.refreshList(clist);
                 Toast.makeText(MainActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
                 mcdialog.dismiss();
             }
@@ -315,8 +317,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 SkillDataBase.getInstances(MainActivity.this).deleteById(id);
                 //重新查询,然后显示
-                List<Map<String, Object>> data = getSkillData("");
-                sadapter.refreshList(data);
+                slist = getSkillData("", 0, 15);
+                sadapter.refreshList(slist);
                 Toast.makeText(MainActivity.this, "删除成功", Toast.LENGTH_SHORT).show();
                 msdialog.dismiss();
             }
@@ -333,9 +335,9 @@ public class MainActivity extends AppCompatActivity {
     /**
      * 通过查找数据库,拿到里面的数据
      */
-    private List<Map<String, Object>> getCharacterData(String s) {
-        clist = new ArrayList<>();
-        Cursor query = CharacterDataBase.getInstances(MainActivity.this).query();
+    private List<Map<String, Object>> getCharacterData(String s, int startIndex, int num) {
+        List<Map<String, Object>> list = new ArrayList<>();
+        Cursor query = CharacterDataBase.getInstances(MainActivity.this).queryNum(s, startIndex, num);
         /*
         游标cursor默认是在-1的位置,query.moveToFirst()将游标移动到第一行,如果不写这个就会报
          Caused by: android.database.CursorIndexOutOfBoundsException: Index -1 requested, with a size of 12
@@ -346,30 +348,19 @@ public class MainActivity extends AppCompatActivity {
                 String name = query.getString(query.getColumnIndex("name"));
                 int id = query.getInt(query.getColumnIndex("id"));
                 Map<String, Object> map = new HashMap<>();
-
-
-                if (s.isEmpty()) {
-                    map.put("id", id);
-                    map.put("name", name);
-                    clist.add(map);
-                } else {
-                    if (name.contains(s)) {
-                        map.put("id", id);
-                        map.put("name", name);
-                        clist.add(map);
-                    }
-                }
-
+                map.put("id", id);
+                map.put("name", name);
+                list.add(map);
             } while (query.moveToNext());
         }
         //关闭查询游标
         query.close();
-        return clist;
+        return list;
     }
 
-    private List<Map<String, Object>> getSkillData(String s) {
-        slist = new ArrayList<>();
-        Cursor query = SkillDataBase.getInstances(MainActivity.this).query();
+    private List<Map<String, Object>> getSkillData(String s, int startIndex, int num) {
+        List<Map<String, Object>> list = new ArrayList<>();
+        Cursor query = SkillDataBase.getInstances(MainActivity.this).queryNum(s, startIndex, num);
         /*
         游标cursor默认是在-1的位置,query.moveToFirst()将游标移动到第一行,如果不写这个就会报
          Caused by: android.database.CursorIndexOutOfBoundsException: Index -1 requested, with a size of 12
@@ -381,39 +372,31 @@ public class MainActivity extends AppCompatActivity {
                 String name = query.getString(query.getColumnIndex("name"));
                 int id = query.getInt(query.getColumnIndex("id"));
                 Map<String, Object> map = new HashMap<>();
-
-
-                if (s.isEmpty()) {
-                    map.put("id", id);
-                    map.put("owner", owner);
-                    map.put("name", name);
-                    slist.add(map);
-                } else {
-                    if (name.contains(s)||owner.contains(s)) {
-                        map.put("id", id);
-                        map.put("owner", owner);
-                        map.put("name", name);
-                        slist.add(map);
-                    }
-                }
-
+                map.put("id", id);
+                map.put("owner", owner);
+                map.put("name", name);
+                list.add(map);
             } while (query.moveToNext());
         }
         //关闭查询游标
         query.close();
-        return slist;
+        return list;
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
-            List<Map<String, Object>> data1 = getCharacterData("");
-            List<Map<String, Object>> data2 = getSkillData("");
+            cListNum = CharacterDataBase.getInstances(MainActivity.this).searchNum(msearch.getText().toString().trim());
+            cPage = 1;
+            sListNum = SkillDataBase.getInstances(MainActivity.this).searchNum(msearch.getText().toString().trim());
+            sPage = 1;
+            clist = getCharacterData("",0,15);
+            slist = getSkillData("",0,15);
 //            cadapter = new CharacterListViewAdapter(this, data1);
 //            mCharacterList.setAdapter(cadapter);
-            cadapter.refreshList(data1);
-            sadapter.refreshList(data2);
+            cadapter.refreshList(clist);
+            sadapter.refreshList(slist);
 
         }
     }
@@ -421,113 +404,85 @@ public class MainActivity extends AppCompatActivity {
     private final class cScrollListener implements AbsListView.OnScrollListener {
         @Override
         public void onScrollStateChanged(AbsListView view, int scrollState) {
-            // TODO Auto-generated method stub
+            if (scrollState == cScrollListener.SCROLL_STATE_IDLE) {
+                new Thread() {
+                    public void run() {
+                        int num;
+                        num = cPage*15;
+                        int i = cListNum - cPage*15;
+                        if (i>=15) {
+                            cmorelist = getCharacterData(msearch.getText().toString().trim(), num, 15);
+                            clist.addAll(cmorelist);
+                            chandler.obtainMessage().sendToTarget();
+                            cPage+=1;
+                        } else if (i<15&&i>0){
+                            cmorelist = getCharacterData(msearch.getText().toString().trim(), num, i);
+                            clist.addAll(cmorelist);
+                            chandler.obtainMessage().sendToTarget();
+                            cPage+=1;
+                        }
+                    }
+                }.start();
+            }
         }
         //正在滚动时调用
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-            int lastItemId = mCharacterList.getLastVisiblePosition();
-            int MaxItem = clist.size();
-            int cListNum = 15;
-            int cMaxPage = cListNum % MaxItem + 1;
-            //判断数据是否达到最后一条记录
-            if ((lastItemId + 1) == totalItemCount) {
-                if (totalItemCount > 0) {
-                    //当前页
-                    int currentpage = totalItemCount % cListNum == 0 ? totalItemCount/ cListNum : totalItemCount/ cListNum + 1;
-                    int nextpage = currentpage + 1;
-                    if (nextpage < cMaxPage && loadFinish) {
-                        loadFinish = false;
-                        //添加页脚
-                        mCharacterList.addFooterView(mview);
-                        //线程异步加载数据
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    //创造网络延迟
-                                    Thread.sleep(3000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                //发送数据
-                                chandler.sendMessage(chandler.obtainMessage(100, clist));
-                            }
-                        }).start();
-                    }
-                }
-            }
         }
     }
-    //通过handler对象来从子线程中获取数据
-    @SuppressLint("HandlerLeak")
-    Handler chandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            //得到数据
-            clist.addAll((List<Map<String, Object>>) msg.obj);
-            //告诉listview更新数据了，要求显示
-            cadapter.notifyDataSetChanged();
-            //删除页脚
-            if (mCharacterList.getFooterViewsCount() > 0)
-                mCharacterList.removeFooterView(mview);
-            loadFinish = true;
-        }
-    };
-
     private final class sScrollListener implements AbsListView.OnScrollListener {
         @Override
         public void onScrollStateChanged(AbsListView view, int scrollState) {
-            // TODO Auto-generated method stub
+            if (scrollState == sScrollListener.SCROLL_STATE_IDLE) {
+                new Thread() {
+                    public void run() {
+                        int num;
+                        num = sPage*15;
+                        int i = sListNum - sPage*15;
+                        if (i>=15) {
+                            smorelist = getSkillData(msearch.getText().toString().trim(), num, 15);
+                            slist.addAll(smorelist);
+                            shandler.obtainMessage().sendToTarget();
+                            sPage+=1;
+                        } else if (i<15&&i>0){
+                            smorelist = getSkillData(msearch.getText().toString().trim(), num, i);
+                            slist.addAll(smorelist);
+                            shandler.obtainMessage().sendToTarget();
+                            sPage+=1;
+                        }
+                    }
+                }.start();
+            }
         }
         //正在滚动时调用
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-            int lastItemId = mSkillList.getLastVisiblePosition();
-            int MaxItem = slist.size();
-            int sListNum = 15;
-            int sMaxPage = sListNum % MaxItem + 1;
-            //判断数据是否达到最后一条记录
-            if ((lastItemId + 1) == totalItemCount) {
-                if (totalItemCount > 0) {
-                    //当前页
-                    int currentpage = totalItemCount % sListNum == 0 ? totalItemCount/ sListNum : totalItemCount/ sListNum + 1;
-                    int nextpage = currentpage + 1;
-                    if (nextpage < sMaxPage && loadFinish) {
-                        loadFinish = false;
-                        //添加页脚
-                        mSkillList.addFooterView(mview);
-                        //线程异步加载数据
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    //创造网络延迟
-                                    Thread.sleep(3000);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                                //发送数据
-                                shandler.sendMessage(shandler.obtainMessage(100, slist));
-                            }
-                        }).start();
-                    }
-                }
-            }
         }
     }
-    //通过handler对象来从子线程中获取数据
-    Handler shandler = new Handler(){
-        @Override
+
+    @SuppressLint("HandlerLeak")
+    private Handler chandler = new Handler() {
         public void handleMessage(Message msg) {
-            //得到数据
-            slist.addAll((List<Map<String, Object>>) msg.obj);
-            //告诉listview更新数据了，要求显示
-            sadapter.notifyDataSetChanged();
-            //删除页脚
-            if (mSkillList.getFooterViewsCount() > 0)
-                mSkillList.removeFooterView(mview);
-            loadFinish = true;
+            if (cmorelist.size() != 0) {
+                System.out.println(cmorelist.toString());
+                cadapter.notifyDataSetChanged();
+                System.out.println("加载更多数据");
+            }else {
+                Toast.makeText(MainActivity.this, "没有更多数据", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    @SuppressLint("HandlerLeak")
+    private Handler shandler = new Handler() {
+        public void handleMessage(Message msg) {
+            if (smorelist.size() != 0) {
+                System.out.println(smorelist.toString());
+                sadapter.notifyDataSetChanged();
+                System.out.println("加载更多数据");
+            }else {
+                Toast.makeText(MainActivity.this, "没有更多数据", Toast.LENGTH_SHORT).show();
+            }
         }
     };
 //    @Override
