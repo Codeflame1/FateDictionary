@@ -45,36 +45,42 @@ public class SpinnerSelect {
         switch (string){
             case "E":
                 return 0;
-            case "D":
+            case "D-":
                 return 1;
-            case "D+":
+            case "D":
                 return 2;
-            case "C":
+            case "D+":
                 return 3;
-            case "C+":
+            case "C-":
                 return 4;
-            case "B-":
+            case "C":
                 return 5;
-            case "B":
+            case "C+":
                 return 6;
-            case "B+":
+            case "B-":
                 return 7;
-            case "A-":
+            case "B":
                 return 8;
-            case "A":
+            case "B+":
                 return 9;
-            case "A+":
+            case "B++":
                 return 10;
-            case "A++":
+            case "A-":
                 return 11;
-            case "A+++":
+            case "A":
                 return 12;
-            case "EX":
+            case "A+":
                 return 13;
-            case "-":
+            case "A++":
                 return 14;
+            case "A+++":
+                return 15;
+            case "EX":
+                return 16;
+            case "-":
+                return 17;
             default:
-                return 0;
+                return 17;
         }
     }
 

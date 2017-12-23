@@ -111,19 +111,15 @@ public class CharacterDataBase extends SQLiteOpenHelper {
      Cursor是一个游标接口，提供了遍历查询结果的方法，如移动指针方法move()，获得列值方法getString()等.
      */
     Cursor query() {
-        //数据库可读
         SQLiteDatabase database = getReadableDatabase();
-        //查找
         return database.query(TABLE_NAME, null, null, null, null, null, null);
     }
 
     int searchNum(String search) {
-        //数据库可读
         SQLiteDatabase database = getReadableDatabase();
         if (search.isEmpty()) {
             int i = database.query(TABLE_NAME, null, null, null, null, null, null).getCount();
             query().close();
-            //查找
             return i;
         } else {
             String[] columns = {"id,name"};
@@ -131,13 +127,11 @@ public class CharacterDataBase extends SQLiteOpenHelper {
             String[] selectionArgs = {"%"+search+"%"};
             int i = database.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null).getCount();
             query().close();
-            //查找
             return i;
         }
     }
 
     Cursor queryNum(String search, int startIndex, int num) {
-        //数据库可读
         SQLiteDatabase database = getReadableDatabase();
         if (search.isEmpty()){
             return database.query(TABLE_NAME, null, null, null, null, null, null, startIndex + "," + num);
@@ -145,7 +139,6 @@ public class CharacterDataBase extends SQLiteOpenHelper {
             String[] columns = {"id,name"};
             String selection = "name like ?";
             String[] selectionArgs = {"%"+search+"%"};
-            //查找
             return database.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null, startIndex + "," + num);
         }
     }

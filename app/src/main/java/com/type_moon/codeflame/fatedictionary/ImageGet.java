@@ -57,18 +57,28 @@ public class ImageGet {
         switch (string){
             case "E":
                 return R.mipmap.levele;
+            case "D-":
+                return R.mipmap.leveld;
             case "D":
                 return R.mipmap.leveld;
             case "D+":
                 return R.mipmap.leveld;
+            case "C-":
+                return R.mipmap.levelc;
             case "C":
                 return R.mipmap.levelc;
             case "C+":
                 return R.mipmap.levelc;
+            case "B-":
+                return R.mipmap.levelb;
             case "B":
                 return R.mipmap.levelb;
             case "B+":
                 return R.mipmap.levelb;
+            case "B++":
+                return R.mipmap.levelb;
+            case "A-":
+                return R.mipmap.levela;
             case "A":
                 return R.mipmap.levela;
             case "A+":
