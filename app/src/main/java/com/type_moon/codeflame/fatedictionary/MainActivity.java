@@ -405,6 +405,7 @@ public class MainActivity extends AppCompatActivity {
             slist = getSkillData(strSearch, 0, 15);
             cPage=1;
             sPage=1;
+
             cadapter.refreshList(clist);
             sadapter.refreshList(slist);
         } else if (requestCode == 1) {
