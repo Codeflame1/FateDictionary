@@ -12,7 +12,7 @@
             android:background="@drawable/background"
             tools:context="com.type_moon.codeflame.fatedictionary.MainActivity">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/detail_image"
                 android:layout_width="350dp"
                 android:layout_height="495dp"
@@ -143,6 +143,17 @@
                 android:layout_marginTop="5dp"
                 android:background="@drawable/mainpng"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="ContentDescription" />
+
+            <ImageButton
+                android:id="@+id/change"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/changepng"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="ContentDescription" />
 

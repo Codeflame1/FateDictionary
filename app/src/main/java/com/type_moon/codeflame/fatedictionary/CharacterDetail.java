@@ -21,18 +21,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CharacterDetail extends AppCompatActivity{
+public class CharacterDetail extends AppCompatActivity {
 
     private CharacterSkillListViewAdapter sadapter;
     private int number;
     private int flag = 0;
+    private String LOCATION = Environment.getExternalStorageDirectory()+"/FateDictionary/a";
 
     @SuppressLint("SetTextI18n")
-    protected void onCreate(Bundle savedInstanceState){
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.characterdetail);
 
-        ImageButton detailimage = findViewById(R.id.detail_image);
+        final ImageView detailimage = findViewById(R.id.detail_image);
         ImageView detailframe = findViewById(R.id.detail_imageframe);
         TextView detailname = findViewById(R.id.detail_name);
         ImageView detailsex = findViewById(R.id.detail_sex);
@@ -55,6 +56,7 @@ public class CharacterDetail extends AppCompatActivity{
         ImageView detailskillv = findViewById(R.id.detail_skillv);
         ListView skillList = findViewById(R.id.detail_skilllist);
         ImageButton detailback = findViewById(R.id.back);
+        ImageButton detailchange = findViewById(R.id.change);
 
 
         int id = getIntent().getIntExtra("id", 0);
@@ -90,7 +92,7 @@ public class CharacterDetail extends AppCompatActivity{
             weight = "?";
 
 
-        detailimage.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"a.png"));
+        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"a.png"));
         detailframe.setImageResource(ImageGet.getBigFrame(job));
         detailname.setText(name);
 
@@ -99,8 +101,16 @@ public class CharacterDetail extends AppCompatActivity{
         } else {
             detailsex.setImageResource(R.mipmap.female);
         }
-        detailheight.setText(height + "cm");
-        detailweight.setText(weight + "kg");
+        if (height.equals("0")) {
+            detailheight.setText("??cm");
+        } else {
+            detailheight.setText(height + "cm");
+        }
+        if (weight.equals("0")) {
+            detailweight.setText("??kg");
+        } else {
+            detailweight.setText(weight + "kg");
+        }
         detailorigo.setText(origo);
         detailalignment.setText(alignment);
         detailintroduction.setText(introduction);
@@ -116,21 +126,37 @@ public class CharacterDetail extends AppCompatActivity{
         detailmagilv.setImageResource(ImageGet.getLevelImage(magi));
         detaillucklv.setImageResource(ImageGet.getLevelImage(luck));
         detailskillv.setImageResource(ImageGet.getLevelImage(skil));
-        detailimage.setOnClickListener(new View.OnClickListener() {
+        detailchange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                File f1 = new File(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"b.png");
-                File f2 = new File(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"c.png");
-                File f3 = new File(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"d.png");
-                if (flag==0&& f1.exists()) {
-                    ((ImageButton)view).setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"b.png"));
-                    flag=1;
-                } else if (flag==1&& f2.exists()) {
-                    ((ImageButton)view).setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"c.png"));
-                    flag=2;
-                } else if (flag==2&& f3.exists()) {
-                    ((ImageButton)view).setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"d.png"));
-                    flag=3;
+                File f1 = new File(LOCATION+Tool.numDecimal(number)+"a.png");
+                File f2 = new File(LOCATION+Tool.numDecimal(number)+"b.png");
+                File f3 = new File(LOCATION+Tool.numDecimal(number)+"c.png");
+                File f4 = new File(LOCATION+Tool.numDecimal(number)+"d.png");
+                if (flag==0) {
+                    if (f2.exists()) {
+                        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"b.png"));
+                        flag=1;
+                    }
+                } else if (flag==1) {
+                    if (f3.exists()) {
+                        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"c.png"));
+                        flag=2;
+                    } else {
+                        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"a.png"));
+                        flag=0;
+                    }
+                } else if (flag==2) {
+                    if (f4.exists()) {
+                        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"d.png"));
+                        flag=3;
+                    } else {
+                        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"a.png"));
+                        flag=0;
+                    }
+                } else if (flag==3&& f1.exists()) {
+                    detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"a.png"));
+                    flag=0;
                 }
             }
         });

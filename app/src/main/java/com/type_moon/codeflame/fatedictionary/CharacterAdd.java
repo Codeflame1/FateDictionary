@@ -251,9 +251,7 @@ public class CharacterAdd extends AppCompatActivity{
 
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
-
         //把裁剪的数据填入里面
-
         // 设置裁剪
         intent.putExtra("crop", "true");
         if (i==0) {
@@ -278,7 +276,7 @@ public class CharacterAdd extends AppCompatActivity{
     private void setImage(Intent intent, int i) {
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            Bitmap photo = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/temp.jpg");
+            Bitmap photo = BitmapFactory.decodeFile(IMAGE_FILE_LOCATION);
             File nf = new File(Environment.getExternalStorageDirectory()+"/FateDictionary");
             String code = null;
             add_image.setImageBitmap(photo);
@@ -299,14 +297,12 @@ public class CharacterAdd extends AppCompatActivity{
             try {
                 out = new FileOutputStream(f);
                 photo.compress(Bitmap.CompressFormat.PNG, 100, out);
-
                 try {
                     out.flush();
                     out.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

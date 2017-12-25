@@ -54,44 +54,22 @@ public class ImageGet {
     }
 
     static int getLevelImage(String string){
-        switch (string){
-            case "E":
-                return R.mipmap.levele;
-            case "D-":
-                return R.mipmap.leveld;
-            case "D":
-                return R.mipmap.leveld;
-            case "D+":
-                return R.mipmap.leveld;
-            case "C-":
-                return R.mipmap.levelc;
-            case "C":
-                return R.mipmap.levelc;
-            case "C+":
-                return R.mipmap.levelc;
-            case "B-":
-                return R.mipmap.levelb;
-            case "B":
-                return R.mipmap.levelb;
-            case "B+":
-                return R.mipmap.levelb;
-            case "B++":
-                return R.mipmap.levelb;
-            case "A-":
-                return R.mipmap.levela;
-            case "A":
-                return R.mipmap.levela;
-            case "A+":
-                return R.mipmap.levela;
-            case "A++":
-                return R.mipmap.levela;
-            case "A+++":
-                return R.mipmap.levela;
-            case "EX":
-                return R.mipmap.levelex;
-            case "-":
-                return R.mipmap.levelnull;
+        if (string.equals("E")) {
+            return R.mipmap.levele;
+        } else if (string.contains("D")) {
+            return R.mipmap.leveld;
+        } else if (string.contains("C")) {
+            return R.mipmap.levelc;
+        } else if (string.contains("B")) {
+            return R.mipmap.levelb;
+        } else if (string.contains("A")) {
+            return R.mipmap.levela;
+        } else if (string.equals("EX")) {
+            return R.mipmap.levelex;
+        } else if (string.equals("-")) {
+            return R.mipmap.levelnull;
+        } else {
+            return R.mipmap.levelnull;
         }
-        return 0;
     }
 }

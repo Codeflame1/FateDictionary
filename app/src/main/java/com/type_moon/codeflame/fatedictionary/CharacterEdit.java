@@ -303,7 +303,7 @@ public class CharacterEdit extends AppCompatActivity {
     private void setImage(Intent intent, int i) {
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            Bitmap photo = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/temp.jpg");
+            Bitmap photo = BitmapFactory.decodeFile(IMAGE_FILE_LOCATION);
             File nf = new File(Environment.getExternalStorageDirectory()+"/FateDictionary");
             String code = null;
             edit_image.setImageBitmap(photo);
@@ -331,7 +331,6 @@ public class CharacterEdit extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }

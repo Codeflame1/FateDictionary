@@ -203,7 +203,6 @@ public class MainActivity extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
 //                //删除是要拿到当前行的id值才能删除当前行,下面的操作都是点击某个item拿到对应item的id字段
 //                //拿到当前position的 item的所有数据
-                int listId = mCharacterList.getId();
                 Object id = clist.get(position).get("id");
                 int i = Integer.parseInt(id.toString());
                 //将得到id传入到需要的方法中
