@@ -15,6 +15,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,13 +24,15 @@ import java.util.Map;
 public class CharacterDetail extends AppCompatActivity{
 
     private CharacterSkillListViewAdapter sadapter;
+    private int number;
+    private int flag = 0;
 
     @SuppressLint("SetTextI18n")
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.characterdetail);
 
-        ImageView detailimage = findViewById(R.id.detail_image);
+        ImageButton detailimage = findViewById(R.id.detail_image);
         ImageView detailframe = findViewById(R.id.detail_imageframe);
         TextView detailname = findViewById(R.id.detail_name);
         ImageView detailsex = findViewById(R.id.detail_sex);
@@ -57,7 +60,7 @@ public class CharacterDetail extends AppCompatActivity{
         int id = getIntent().getIntExtra("id", 0);
         Cursor cursor = CharacterDataBase.getInstances(CharacterDetail.this).searchById( id );
         cursor.moveToNext();
-        int number = cursor.getInt(cursor.getColumnIndex("number"));
+        number = cursor.getInt(cursor.getColumnIndex("number"));
         String name = cursor.getString(2);
         String job = cursor.getString(3);
         String sex = cursor.getString(4);
@@ -87,7 +90,7 @@ public class CharacterDetail extends AppCompatActivity{
             weight = "?";
 
 
-        detailimage.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+number+".png"));
+        detailimage.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"a.png"));
         detailframe.setImageResource(ImageGet.getBigFrame(job));
         detailname.setText(name);
 
@@ -113,6 +116,24 @@ public class CharacterDetail extends AppCompatActivity{
         detailmagilv.setImageResource(ImageGet.getLevelImage(magi));
         detaillucklv.setImageResource(ImageGet.getLevelImage(luck));
         detailskillv.setImageResource(ImageGet.getLevelImage(skil));
+        detailimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                File f1 = new File(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"b.png");
+                File f2 = new File(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"c.png");
+                File f3 = new File(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"d.png");
+                if (flag==0&& f1.exists()) {
+                    ((ImageButton)view).setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"b.png"));
+                    flag=1;
+                } else if (flag==1&& f2.exists()) {
+                    ((ImageButton)view).setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"c.png"));
+                    flag=2;
+                } else if (flag==2&& f3.exists()) {
+                    ((ImageButton)view).setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"d.png"));
+                    flag=3;
+                }
+            }
+        });
         detailback.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

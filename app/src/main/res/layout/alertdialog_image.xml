@@ -21,18 +21,60 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/dia_bigimage"
+        android:id="@+id/dia_bigimage_1"
         android:background="@drawable/detailbuttonshape"
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/bigimage"
+        android:text="@string/bigimage_a"
         android:textColor="@color/colorwhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/diaimage_title" />
+
+    <Button
+        android:id="@+id/dia_bigimage_2"
+        android:background="@drawable/detailbuttonshape"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/bigimage_b"
+        android:textColor="@color/colorwhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dia_bigimage_1" />
+
+    <Button
+        android:id="@+id/dia_bigimage_3"
+        android:background="@drawable/detailbuttonshape"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/bigimage_c"
+        android:textColor="@color/colorwhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dia_bigimage_2" />
+
+    <Button
+        android:id="@+id/dia_bigimage_4"
+        android:background="@drawable/detailbuttonshape"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/bigimage_d"
+        android:textColor="@color/colorwhite"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dia_bigimage_3" />
 
     <Button
         android:id="@+id/dia_littleimage"
@@ -46,7 +88,7 @@
         android:textColor="@color/colorwhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dia_bigimage" />
+        app:layout_constraintTop_toBottomOf="@+id/dia_bigimage_4" />
 
     <Button
         android:id="@+id/dia_cancelimage"

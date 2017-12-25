@@ -56,10 +56,6 @@ public class CharacterEdit extends AppCompatActivity {
     private static final String IMAGE_FILE_LOCATION = Environment.getExternalStorageDirectory()+"/temp.jpg";
 
     private AlertDialog imagedialog;
-    private static final int PHOTOBIG = 0xa0;
-    private static final int PHOTOLITTLE = 0xa1;
-    private static final int PHOTOB_RESULT = 0xa2;
-    private static final int PHOTOL_RESULT = 0xa3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +119,7 @@ public class CharacterEdit extends AppCompatActivity {
         medit_origo.setText(origo);
         edit_alignment.setSelection(SpinnerSelect.getAlignmengt(alignment));
         medit_introduction.setText(introduction);
-        edit_image.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/"+"a"+number+".png"));
+        edit_image.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/"+"a"+Tool.numDecimal(number)+"a.png"));
         str1 = (String) edit_job.getSelectedItem();
         imageUri = Uri.fromFile(new File(IMAGE_FILE_LOCATION));
 
@@ -208,21 +204,47 @@ public class CharacterEdit extends AppCompatActivity {
         imagedialog = new AlertDialog.Builder(CharacterEdit.this).create();
         imagedialog.show();
         imagedialog.getWindow().setContentView(R.layout.alertdialog_image);
-        imagedialog.getWindow().findViewById(R.id.dia_bigimage).setOnClickListener(new View.OnClickListener() {
+        imagedialog.getWindow().findViewById(R.id.dia_bigimage_1).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
                 intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent, PHOTOBIG);
+                startActivityForResult(intent, 1);
             }
         });
 
+        imagedialog.getWindow().findViewById(R.id.dia_bigimage_2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, 2);
+            }
+        });
+
+        imagedialog.getWindow().findViewById(R.id.dia_bigimage_3).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, 3);
+            }
+        });
+
+        imagedialog.getWindow().findViewById(R.id.dia_bigimage_4).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
+                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, 4);
+            }
+        });
         imagedialog.getWindow().findViewById(R.id.dia_littleimage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
                 intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent, PHOTOLITTLE);
+                startActivityForResult(intent, 0);
             }
         });
         //设置一个标题
@@ -236,35 +258,21 @@ public class CharacterEdit extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
-
         // 处理结果 处理缩放过后的图片
-
         if (resultCode == RESULT_CANCELED) {//取消
             Toast.makeText(getApplication(), "取消", Toast.LENGTH_LONG).show();
             return;
-        }
-        switch (requestCode) {
-            case PHOTOBIG://如果是来自本地的
-                cropBigPhoto(intent.getData());//直接裁剪图片
-                break;
-            case PHOTOLITTLE:
-                cropLittlePhoto(intent.getData());
-                break;
-            case PHOTOB_RESULT:
-                if (intent != null) {
-                    setImageBig(intent);//设置图片框
-                }
-                break;
-            case PHOTOL_RESULT:
-                if (intent != null) {
-                    setImageLittle(intent);//设置图片框
-                }
-                break;
+        } if (requestCode <=4) {
+            cropPhoto(intent.getData(),requestCode);
+        }  else if (requestCode >4) {
+            if (intent != null) {
+                setImage(intent, requestCode);//设置图片框
+            }
         }
         super.onActivityResult(requestCode, resultCode, intent);
     }
 
-    public void cropBigPhoto(Uri uri) {
+    public void cropPhoto(Uri uri, int i) {
 
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
@@ -273,82 +281,46 @@ public class CharacterEdit extends AppCompatActivity {
 
         // 设置裁剪
         intent.putExtra("crop", "true");
-
-        // aspectX , aspectY :宽高的比例
-        intent.putExtra("aspectX", 764);
-        intent.putExtra("aspectY", 1080);
-
-        // outputX , outputY : 裁剪图片宽高
-        intent.putExtra("outputX", 764);
-        intent.putExtra("outputY", 1080);
+        if (i==0) {
+            intent.putExtra("aspectX", 1);
+            intent.putExtra("aspectY", 1);
+            intent.putExtra("outputX", 300);
+            intent.putExtra("outputY", 300);
+        } else {
+            intent.putExtra("aspectX", 764);
+            intent.putExtra("aspectY", 1080);
+            intent.putExtra("outputX", 764);
+            intent.putExtra("outputY", 1080);
+        }
         intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);//图像输出
         intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
         intent.putExtra("noFaceDetection", true);
         intent.putExtra("return-data", false);
-
-        startActivityForResult(intent, PHOTOB_RESULT);
+        i+=5;
+        startActivityForResult(intent, i);
     }
 
-    public void cropLittlePhoto(Uri uri) {
-
-        Intent intent = new Intent("com.android.camera.action.CROP");
-        intent.setDataAndType(uri, "image/*");
-
-        //把裁剪的数据填入里面
-
-        // 设置裁剪
-        intent.putExtra("crop", "true");
-
-        // aspectX , aspectY :宽高的比例
-        intent.putExtra("aspectX", 1);
-        intent.putExtra("aspectY", 1);
-
-        // outputX , outputY : 裁剪图片宽高
-        intent.putExtra("outputX", 300);
-        intent.putExtra("outputY", 300);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);//图像输出
-        intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
-        intent.putExtra("noFaceDetection", true);
-        intent.putExtra("return-data", false);
-
-        startActivityForResult(intent, PHOTOL_RESULT);
-    }
-
-    private void setImageBig(Intent intent) {
+    private void setImage(Intent intent, int i) {
         Bundle extras = intent.getExtras();
         if (extras != null) {
             Bitmap photo = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/temp.jpg");
             File nf = new File(Environment.getExternalStorageDirectory()+"/FateDictionary");
+            String code = null;
             edit_image.setImageBitmap(photo);
             nf.mkdir();
-            File f = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+number+".png");
-            FileOutputStream out = null;
-            try {
-                out = new FileOutputStream(f);
-                photo.compress(Bitmap.CompressFormat.PNG, 100, out);
-
-                try {
-                    out.flush();
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+            if (i==5) {
+                code="l.png";
+            } else if (i==6) {
+                code="a.png";
+            } else if (i==7) {
+                code="b.png";
+            } else if (i==8) {
+                code="c.png";
+            } else if (i==9) {
+                code="d.png";
             }
-        }
-    }
-
-    private void setImageLittle(Intent intent) {
-        Bundle extras = intent.getExtras();
-        if (extras != null) {
-            Bitmap photo = BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/temp.jpg");
-            File nf = new File(Environment.getExternalStorageDirectory()+"/FateDictionary");
-            nf.mkdir();
-            File f = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+number+"_little.png");
-
-            FileOutputStream out = null;
+            File f = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+Tool.numDecimal(number)+code);
+            FileOutputStream out;
             try {
                 out = new FileOutputStream(f);
                 photo.compress(Bitmap.CompressFormat.PNG, 100, out);

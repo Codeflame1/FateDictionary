@@ -12,7 +12,7 @@
             android:background="@drawable/background"
             tools:context="com.type_moon.codeflame.fatedictionary.MainActivity">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/detail_image"
                 android:layout_width="350dp"
                 android:layout_height="495dp"
@@ -115,7 +115,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/detailtexthape"
-                android:maxLines="80"
+                android:maxLines="100"
                 android:minLines="5"
                 android:scrollbars="vertical"
                 android:textSize="18sp"

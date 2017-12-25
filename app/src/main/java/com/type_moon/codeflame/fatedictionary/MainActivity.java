@@ -117,7 +117,6 @@ public class MainActivity extends AppCompatActivity {
 //        intent = new Intent(MainActivity.this,MusicService.class);
 //        startService(intent);
 //        bindService(intent, sc, BIND_AUTO_CREATE);
-
     }
 
     private void setListener() {
@@ -274,10 +273,10 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Cursor cursor = CharacterDataBase.getInstances(MainActivity.this).searchById( id );
                 cursor.moveToNext();
-                String number = cursor.getInt(1) + "";
+                int number = cursor.getInt(1);
                 cursor.close();
-                File f1 = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+number+".png");
-                File f2 = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+number+"_little.png");
+                File f1 = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+Tool.numDecimal(number)+"a.png");
+                File f2 = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+Tool.numDecimal(number)+"l.png");
                 if(f1.isFile()){
                     f1.delete();
                 }
