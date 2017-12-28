@@ -58,7 +58,6 @@ public class SkillDataBase extends SQLiteOpenHelper {
             //重新创建表
             onCreate(sqLiteDatabase);
         }
-
     }
 
     /**
@@ -82,7 +81,6 @@ public class SkillDataBase extends SQLiteOpenHelper {
         database.insert(TABLE_NAME, "type", values);
         //插入完成后关闭,以免造成内存泄漏
         database.close();
-
     }
 
 
@@ -120,6 +118,18 @@ public class SkillDataBase extends SQLiteOpenHelper {
             int i = database.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null).getCount();
             query().close();
             return i;
+        }
+    }
+
+    Cursor searchOwner(String owner) {
+        SQLiteDatabase database = getReadableDatabase();
+        if (owner.isEmpty()) {
+            return null;
+        } else {
+            String[] columns = {"type,name,level,introduction"};
+            String selection = "owner = ?";
+            String[] selectionArgs = {"%"+owner+"%"};
+            return database.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
         }
     }
 

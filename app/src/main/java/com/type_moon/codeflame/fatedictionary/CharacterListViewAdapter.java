@@ -60,13 +60,13 @@ public class CharacterListViewAdapter extends BaseAdapter {
         cursor.moveToNext();
         int number = cursor.getInt(cursor.getColumnIndex("number"));
         String name = cursor.getString(cursor.getColumnIndex("name"));
-        String job = cursor.getString(cursor.getColumnIndex("job"));
-        String alignment = cursor.getString(cursor.getColumnIndex("alignment"));
+        int job = cursor.getInt(cursor.getColumnIndex("job"));
+        int alignment = cursor.getInt(cursor.getColumnIndex("alignment"));
         cursor.close();
         holder.image.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"l.png"));
-        holder.frame.setImageResource(ImageGet.getSmallFrame(job));
+        holder.frame.setImageResource(ImageGet.getSmallFrame(Tool.getJob(job)));
         holder.name.setText(name);
-        holder.alignment.setText(alignment);
+        holder.alignment.setText(Tool.getAlignment(alignment));
 
         return view;
     }

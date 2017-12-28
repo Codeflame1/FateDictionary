@@ -79,7 +79,7 @@ public class SpinnerSelect {
                 return 16;
             case "-":
                 return 17;
-            case "?":
+            case "？":
                 return 18;
             default:
                 return 18;

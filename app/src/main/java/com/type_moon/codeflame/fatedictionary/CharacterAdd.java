@@ -38,11 +38,13 @@ public class CharacterAdd extends AppCompatActivity{
     private TextInputLayout add_height;
     private TextInputLayout add_weight;
     private TextInputLayout add_origo;
+    private TextInputLayout add_resource;
     private TextInputLayout add_introduction;
     private EditText madd_name;
     private EditText madd_height;
     private EditText madd_weight;
     private EditText madd_origo;
+    private EditText madd_resource;
     private Spinner add_alignment;
     private EditText madd_introduction;
     private Spinner add_stre;
@@ -74,12 +76,14 @@ public class CharacterAdd extends AppCompatActivity{
         add_height = findViewById(R.id.add_height);
         add_weight = findViewById(R.id.add_weight);
         add_origo = findViewById(R.id.add_origo);
+        add_resource = findViewById(R.id.add_resource);
         add_alignment = findViewById(R.id.add_alignment);
         add_introduction = findViewById(R.id.add_introduction);
         madd_name = add_name.getEditText();
         madd_height = add_height.getEditText();
         madd_weight = add_weight.getEditText();
         madd_origo = add_origo.getEditText();
+        madd_resource = add_resource.getEditText();
         madd_introduction = add_introduction.getEditText();
         add_stre = findViewById(R.id.add_stre);
         add_endu = findViewById(R.id.add_endu);
@@ -121,14 +125,17 @@ public class CharacterAdd extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 //拿到输入的数据
+                String hei = madd_height.getText().toString().trim();
+                String wei = madd_weight.getText().toString().trim();
                 AddNumberDataBase.getInstances(CharacterAdd.this).updata(number);
                 String name = madd_name.getText().toString().trim();
-                String job = (String)add_job.getSelectedItem();
-                String sex = (String)add_sex.getSelectedItem();
-                String height = madd_height.getText().toString().trim();
-                String weight = madd_weight.getText().toString().trim();
+                int job = (int)add_job.getSelectedItemId();
+                int sex = (int)add_sex.getSelectedItemId();
+                int height = Integer.parseInt(hei);
+                int weight = Integer.parseInt(wei);
                 String origo = madd_origo.getText().toString().trim();
-                String alignment = (String) add_alignment.getSelectedItem();
+                String resource = madd_resource.getText().toString().trim();
+                int alignment = (int) add_alignment.getSelectedItemId();
                 String introduction = madd_introduction.getText().toString().trim();
                 String stre = (String)add_stre.getSelectedItem();
                 String endu = (String)add_endu.getSelectedItem();
@@ -145,21 +152,24 @@ public class CharacterAdd extends AppCompatActivity{
                 if (TextUtils.isEmpty(name)) {
                     add_name.setErrorEnabled(true);
                     add_name.setError(getString(R.string.name) + getString(R.string.text_error_empty));
-                } else if (TextUtils.isEmpty(height)) {
+                } else if (TextUtils.isEmpty(hei)) {
                     add_height.setErrorEnabled(true);
                     add_height.setError(getString(R.string.height) + getString(R.string.text_error_empty));
-                } else if (TextUtils.isEmpty(weight)) {
+                } else if (TextUtils.isEmpty(wei)) {
                     add_weight.setErrorEnabled(true);
                     add_weight.setError(getString(R.string.weight) + getString(R.string.text_error_empty));
                 } else if (TextUtils.isEmpty(origo)) {
                     add_origo.setErrorEnabled(true);
                     add_origo.setError(getString(R.string.origo) + getString(R.string.text_error_empty));
+                } else if (TextUtils.isEmpty(resource)) {
+                    add_resource.setErrorEnabled(true);
+                    add_resource.setError(getString(R.string.resource) + getString(R.string.text_error_empty));
                 } else if (TextUtils.isEmpty(introduction)) {
                     add_introduction.setErrorEnabled(true);
                     add_introduction.setError(getString(R.string.introduction) + getString(R.string.text_error_empty));
                 } else {
                     //调用插入方法
-                    CharacterDataBase.getInstances(CharacterAdd.this).insert(number, name, job, sex, height, weight, origo, alignment ,introduction, stre, endu, agil, magi, luck, skil);
+                    CharacterDataBase.getInstances(CharacterAdd.this).insert(number, name, job, sex, height, weight, origo, alignment , resource, introduction, stre, endu, agil, magi, luck, skil);
                     finish();
                 }
             }

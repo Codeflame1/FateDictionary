@@ -54,8 +54,8 @@ public class ImageGet {
     }
 
     static int getLevelImage(String string){
-        if (string.equals("E")) {
-            return R.mipmap.levele;
+        if (string.equals("EX")) {
+            return R.mipmap.levelex;
         } else if (string.contains("D")) {
             return R.mipmap.leveld;
         } else if (string.contains("C")) {
@@ -64,10 +64,8 @@ public class ImageGet {
             return R.mipmap.levelb;
         } else if (string.contains("A")) {
             return R.mipmap.levela;
-        } else if (string.equals("EX")) {
-            return R.mipmap.levelex;
-        } else if (string.equals("-")) {
-            return R.mipmap.levelnull;
+        } else if (string.contains("E")&&!string.equals("EX")) {
+            return R.mipmap.levele;
         } else {
             return R.mipmap.levelnull;
         }

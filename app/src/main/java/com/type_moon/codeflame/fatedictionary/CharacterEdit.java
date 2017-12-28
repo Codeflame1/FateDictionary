@@ -38,12 +38,14 @@ public class CharacterEdit extends AppCompatActivity {
     private TextInputLayout edit_height;
     private TextInputLayout edit_weight;
     private TextInputLayout edit_origo;
+    private TextInputLayout edit_resource;
     private Spinner edit_alignment;
     private TextInputLayout edit_introduction;
     private EditText medit_name;
     private EditText medit_height;
     private EditText medit_weight;
     private EditText medit_origo;
+    private EditText medit_resource;
     private EditText medit_introduction;
     private Spinner edit_stre;
     private Spinner edit_endu;
@@ -65,20 +67,21 @@ public class CharacterEdit extends AppCompatActivity {
         Cursor cursor = CharacterDataBase.getInstances(CharacterEdit.this).searchById( id );
         cursor.moveToNext();
         number = cursor.getInt(cursor.getColumnIndex("number"));
-        String name = cursor.getString(2);
-        String job = cursor.getString(3);
-        String sex = cursor.getString(4);
-        String height = cursor.getString(5);
-        String weight = cursor.getString(6);
-        String origo = cursor.getString(7);
-        String alignment = cursor.getString(8);
-        String introduction = cursor.getString(9);
-        String stre = cursor.getString(10);
-        String endu = cursor.getString(11);
-        String agil = cursor.getString(12);
-        String magi = cursor.getString(13);
-        String luck = cursor.getString(14);
-        String skil = cursor.getString(15);
+        String name = cursor.getString(cursor.getColumnIndex("name"));
+        int job = cursor.getInt(cursor.getColumnIndex("job"));
+        int sex = cursor.getInt(cursor.getColumnIndex("sex"));
+        String height = cursor.getString(cursor.getColumnIndex("height"));
+        int weight = cursor.getInt(cursor.getColumnIndex("weight"));
+        int origo = cursor.getInt(cursor.getColumnIndex("origo"));
+        int alignment = cursor.getInt(cursor.getColumnIndex("alignment"));
+        String resource = cursor.getString(cursor.getColumnIndex("resource"));
+        String introduction = cursor.getString(cursor.getColumnIndex("introduction"));
+        String stre = cursor.getString(cursor.getColumnIndex("stre"));
+        String endu = cursor.getString(cursor.getColumnIndex("endu"));
+        String agil = cursor.getString(cursor.getColumnIndex("agil"));
+        String magi = cursor.getString(cursor.getColumnIndex("magi"));
+        String luck = cursor.getString(cursor.getColumnIndex("luck"));
+        String skil = cursor.getString(cursor.getColumnIndex("skil"));
         cursor.close();
 
         final Button edit_confirm = findViewById(R.id.edit_buttonconfirm);
@@ -91,6 +94,7 @@ public class CharacterEdit extends AppCompatActivity {
         edit_height = findViewById(R.id.edit_height);
         edit_weight = findViewById(R.id.edit_weight);
         edit_origo = findViewById(R.id.edit_origo);
+        edit_resource = findViewById(R.id.edit_resource);
         edit_alignment = findViewById(R.id.edit_alignment);
         edit_introduction = findViewById(R.id.edit_introduction);
         edit_stre = findViewById(R.id.edit_stre);
@@ -103,9 +107,10 @@ public class CharacterEdit extends AppCompatActivity {
         medit_height = edit_height.getEditText();
         medit_weight = edit_weight.getEditText();
         medit_origo = edit_origo.getEditText();
+        medit_resource = edit_resource.getEditText();
         medit_introduction = edit_introduction.getEditText();
 
-        edit_job.setSelection(SpinnerSelect.getJobSelect(job));
+        edit_job.setSelection(job);
         edit_stre.setSelection(SpinnerSelect.getLevel(stre));
         edit_endu.setSelection(SpinnerSelect.getLevel(endu));
         edit_agil.setSelection(SpinnerSelect.getLevel(agil));
@@ -113,11 +118,12 @@ public class CharacterEdit extends AppCompatActivity {
         edit_luck.setSelection(SpinnerSelect.getLevel(luck));
         edit_skil.setSelection(SpinnerSelect.getLevel(skil));
         medit_name.setText(name);
-        edit_sex.setSelection(SpinnerSelect.getSex(sex));
+        edit_sex.setSelection(sex);
         medit_height.setText(height);
         medit_weight.setText(weight);
         medit_origo.setText(origo);
-        edit_alignment.setSelection(SpinnerSelect.getAlignmengt(alignment));
+        medit_resource.setText(resource);
+        edit_alignment.setSelection(alignment);
         medit_introduction.setText(introduction);
         edit_image.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/"+"a"+Tool.numDecimal(number)+"a.png"));
         str1 = (String) edit_job.getSelectedItem();
@@ -147,13 +153,16 @@ public class CharacterEdit extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //拿到输入的数据
+                String hei = medit_height.getText().toString().trim();
+                String wei = medit_weight.getText().toString().trim();
                 String name = medit_name.getText().toString().trim();
-                String job = (String) edit_job.getSelectedItem();
-                String sex = (String) edit_sex.getSelectedItem();
-                String height = medit_height.getText().toString().trim();
-                String weight = medit_weight.getText().toString().trim();
+                int job = (int) edit_job.getSelectedItemId();
+                int sex = (int) edit_sex.getSelectedItemId();
+                int height = Integer.parseInt(hei);
+                int weight = Integer.parseInt(wei);
                 String origo = medit_origo.getText().toString().trim();
-                String alignment = (String) edit_alignment.getSelectedItem();
+                String resource = medit_resource.getText().toString().trim();
+                int alignment = (int) edit_alignment.getSelectedItemId();
                 String introduction = medit_introduction.getText().toString().trim();
                 String stre = (String) edit_stre.getSelectedItem();
                 String endu = (String) edit_endu.getSelectedItem();
@@ -170,21 +179,24 @@ public class CharacterEdit extends AppCompatActivity {
                 if (TextUtils.isEmpty(name)) {
                     edit_name.setErrorEnabled(true);
                     edit_name.setError(getString(R.string.name) + getString(R.string.text_error_empty));
-                } else if (TextUtils.isEmpty(height)) {
+                } else if (TextUtils.isEmpty(hei)) {
                     edit_height.setErrorEnabled(true);
                     edit_height.setError(getString(R.string.height) + getString(R.string.text_error_empty));
-                } else if (TextUtils.isEmpty(weight)) {
+                } else if (TextUtils.isEmpty(wei)) {
                     edit_weight.setErrorEnabled(true);
                     edit_weight.setError(getString(R.string.weight) + getString(R.string.text_error_empty));
                 } else if (TextUtils.isEmpty(origo)) {
                     edit_origo.setErrorEnabled(true);
                     edit_origo.setError(getString(R.string.origo) + getString(R.string.text_error_empty));
+                } else if (TextUtils.isEmpty(resource)) {
+                    edit_resource.setErrorEnabled(true);
+                    edit_resource.setError(getString(R.string.resource) + getString(R.string.text_error_empty));
                 } else if (TextUtils.isEmpty(introduction)) {
                     edit_introduction.setErrorEnabled(true);
                     edit_introduction.setError(getString(R.string.introduction) + getString(R.string.text_error_empty));
                 } else {
                     //调用插入方法
-                    CharacterDataBase.getInstances(CharacterEdit.this).updata(id, number, name, job, sex, height, weight, origo, alignment, introduction, stre, endu, agil, magi, luck, skil);
+                    CharacterDataBase.getInstances(CharacterEdit.this).updata(id, number, name, job, sex, height, weight, origo, alignment, resource, introduction, stre, endu, agil, magi, luck, skil);
                     finish();
                 }
             }

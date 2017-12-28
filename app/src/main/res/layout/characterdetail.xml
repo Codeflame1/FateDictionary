@@ -44,68 +44,71 @@
                 android:background="@drawable/detailtexthape"
                 android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_imageframe"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/detail_hweight"
+                app:layout_constraintTop_toBottomOf="@+id/detail_name"
                 tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/detail_name"
-                android:layout_width="250dp"
+                android:layout_width="270dp"
                 android:layout_height="35dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="5dp"
                 android:background="@drawable/detailtexthape"
                 android:gravity="center"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/detail_sex"
-                app:layout_constraintTop_toBottomOf="@+id/detail_imageframe" />
+                app:layout_constraintBottom_toBottomOf="@id/pro_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/pro_name" />
 
             <TextView
-                android:id="@+id/detail_height"
-                android:layout_width="90dp"
+                android:id="@+id/detail_hweight"
+                android:layout_width="210dp"
                 android:layout_height="35dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginTop="5dp"
                 android:background="@drawable/detailtexthape"
                 android:gravity="center"
                 android:textSize="18sp"
-                app:layout_constraintEnd_toStartOf="@+id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/detail_name" />
+                app:layout_constraintBottom_toBottomOf="@id/pro_hweight"
+                app:layout_constraintEnd_toStartOf="@+id/detail_sex"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/pro_hweight"
+                app:layout_constraintTop_toTopOf="@id/pro_hweight" />
 
             <TextView
                 android:id="@+id/detail_origo"
-                android:layout_width="290dp"
+                android:layout_width="270dp"
                 android:layout_height="35dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="5dp"
                 android:background="@drawable/detailtexthape"
                 android:gravity="center"
                 android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/pro_origo"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_alignment" />
+                app:layout_constraintTop_toTopOf="@id/pro_origo" />
 
             <TextView
                 android:id="@+id/detail_alignment"
-                android:layout_width="290dp"
+                android:layout_width="270dp"
                 android:layout_height="35dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="5dp"
                 android:background="@drawable/detailtexthape"
                 android:gravity="center"
                 android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/pro_alignment"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_height" />
+                app:layout_constraintTop_toTopOf="@id/pro_alignment" />
 
             <TextView
-                android:id="@+id/detail_weight"
-                android:layout_width="90dp"
+                android:id="@+id/detail_resource"
+                android:layout_width="270dp"
                 android:layout_height="35dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginTop="5dp"
                 android:background="@drawable/detailtexthape"
                 android:gravity="center"
                 android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="@id/pro_resource"
                 app:layout_constraintEnd_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/detail_name" />
+                app:layout_constraintTop_toTopOf="@id/pro_resource" />
 
             <TextView
                 android:id="@+id/detail_introduction"
@@ -127,12 +130,12 @@
                 android:id="@+id/detail_skilllist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginBottom="20dp"
+                android:layout_marginTop="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/detail_introduction"
-                app:layout_constraintBottom_toBottomOf="parent"
                 tools:ignore="NestedScrolling" />
 
             <ImageButton
@@ -159,7 +162,7 @@
 
             <TextView
                 android:id="@+id/pro_name"
-                android:layout_width="60dp"
+                android:layout_width="75dp"
                 android:layout_height="35dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
@@ -173,23 +176,24 @@
                 app:layout_constraintTop_toBottomOf="@+id/detail_imageframe" />
 
             <TextView
-                android:id="@+id/pro_height"
-                android:layout_width="60dp"
+                android:id="@+id/pro_hweight"
+                android:layout_width="80dp"
                 android:layout_height="35dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/detailproshape"
                 android:gravity="center"
-                android:text="@string/height"
+                android:text="@string/hweight"
                 android:textColor="@color/colorwhite"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/detail_height"
+                app:layout_constraintEnd_toStartOf="@+id/detail_hweight"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/pro_name" />
 
             <TextView
                 android:id="@+id/pro_origo"
-                android:layout_width="60dp"
+                android:layout_width="75dp"
                 android:layout_height="35dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
@@ -204,7 +208,7 @@
 
             <TextView
                 android:id="@+id/pro_alignment"
-                android:layout_width="60dp"
+                android:layout_width="75dp"
                 android:layout_height="35dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
@@ -215,22 +219,22 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/detail_alignment"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/pro_height" />
+                app:layout_constraintTop_toBottomOf="@+id/pro_hweight" />
 
             <TextView
-                android:id="@+id/pro_weight"
-                android:layout_width="60dp"
+                android:id="@+id/pro_resource"
+                android:layout_width="75dp"
                 android:layout_height="35dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/detailproshape"
                 android:gravity="center"
-                android:text="@string/weight"
+                android:text="@string/resource"
                 android:textColor="@color/colorwhite"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/detail_weight"
-                app:layout_constraintStart_toStartOf="@id/guideline2"
-                app:layout_constraintTop_toBottomOf="@+id/detail_name" />
+                app:layout_constraintEnd_toStartOf="@+id/detail_resource"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/detail_origo" />
 
             <TextView
                 android:id="@+id/pro_introduction"
@@ -258,9 +262,9 @@
                 android:text="@string/stre"
                 android:textColor="@color/colorwhite"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/pro_origo"
-                app:layout_constraintStart_toStartOf="@+id/pro_origo"
-                app:layout_constraintTop_toBottomOf="@+id/pro_origo" />
+                app:layout_constraintEnd_toEndOf="@+id/pro_resource"
+                app:layout_constraintStart_toStartOf="@+id/pro_resource"
+                app:layout_constraintTop_toBottomOf="@+id/pro_resource" />
 
             <TextView
                 android:id="@+id/detail_stre"
@@ -272,7 +276,7 @@
                 android:gravity="center"
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/pro_stre"
-                app:layout_constraintTop_toBottomOf="@+id/detail_origo" />
+                app:layout_constraintTop_toBottomOf="@+id/detail_resource" />
 
             <ImageView
                 android:id="@+id/detail_strelv"
@@ -284,7 +288,7 @@
                 android:scaleType="fitXY"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/detail_stre"
-                app:layout_constraintTop_toBottomOf="@+id/detail_origo"
+                app:layout_constraintTop_toBottomOf="@+id/detail_resource"
                 tools:ignore="ContentDescription" />
 
             <ImageView
@@ -292,10 +296,10 @@
                 android:layout_width="190dp"
                 android:layout_height="35dp"
                 android:background="@drawable/detailimagestroke"
+                app:layout_constraintBottom_toBottomOf="@+id/detail_strelv"
                 app:layout_constraintEnd_toEndOf="@+id/detail_strelv"
                 app:layout_constraintStart_toStartOf="@+id/detail_strelv"
                 app:layout_constraintTop_toTopOf="@+id/detail_strelv"
-                app:layout_constraintBottom_toBottomOf="@+id/detail_strelv"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -310,7 +314,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/pro_stre"
                 app:layout_constraintStart_toStartOf="@+id/pro_stre"
-                app:layout_constraintTop_toBottomOf="@+id/pro_stre"  />
+                app:layout_constraintTop_toBottomOf="@+id/pro_stre" />
 
             <TextView
                 android:id="@+id/detail_endu"
@@ -322,7 +326,7 @@
                 android:gravity="center"
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/pro_endu"
-                app:layout_constraintTop_toBottomOf="@+id/detail_stre"  />
+                app:layout_constraintTop_toBottomOf="@+id/detail_stre" />
 
             <ImageView
                 android:id="@+id/detail_endulv"
@@ -340,10 +344,10 @@
                 android:layout_width="190dp"
                 android:layout_height="35dp"
                 android:background="@drawable/detailimagestroke"
+                app:layout_constraintBottom_toBottomOf="@+id/detail_endulv"
                 app:layout_constraintEnd_toEndOf="@+id/detail_endulv"
                 app:layout_constraintStart_toStartOf="@+id/detail_endulv"
                 app:layout_constraintTop_toTopOf="@+id/detail_endulv"
-                app:layout_constraintBottom_toBottomOf="@+id/detail_endulv"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -358,7 +362,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/pro_endu"
                 app:layout_constraintStart_toStartOf="@+id/pro_endu"
-                app:layout_constraintTop_toBottomOf="@+id/pro_endu"  />
+                app:layout_constraintTop_toBottomOf="@+id/pro_endu" />
 
             <TextView
                 android:id="@+id/detail_agil"
@@ -370,7 +374,7 @@
                 android:gravity="center"
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/pro_agil"
-                app:layout_constraintTop_toBottomOf="@+id/detail_endu"  />
+                app:layout_constraintTop_toBottomOf="@+id/detail_endu" />
 
             <ImageView
                 android:id="@+id/detail_agillv"
@@ -390,10 +394,10 @@
                 android:layout_width="190dp"
                 android:layout_height="35dp"
                 android:background="@drawable/detailimagestroke"
+                app:layout_constraintBottom_toBottomOf="@+id/detail_agillv"
                 app:layout_constraintEnd_toEndOf="@+id/detail_agillv"
                 app:layout_constraintStart_toStartOf="@+id/detail_agillv"
                 app:layout_constraintTop_toTopOf="@+id/detail_agillv"
-                app:layout_constraintBottom_toBottomOf="@+id/detail_agillv"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -408,7 +412,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/pro_agil"
                 app:layout_constraintStart_toStartOf="@+id/pro_agil"
-                app:layout_constraintTop_toBottomOf="@+id/pro_agil"  />
+                app:layout_constraintTop_toBottomOf="@+id/pro_agil" />
 
             <TextView
                 android:id="@+id/detail_magi"
@@ -420,7 +424,7 @@
                 android:gravity="center"
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/pro_magi"
-                app:layout_constraintTop_toBottomOf="@+id/detail_agil"  />
+                app:layout_constraintTop_toBottomOf="@+id/detail_agil" />
 
             <ImageView
                 android:id="@+id/detail_magilv"
@@ -440,10 +444,10 @@
                 android:layout_width="190dp"
                 android:layout_height="35dp"
                 android:background="@drawable/detailimagestroke"
+                app:layout_constraintBottom_toBottomOf="@+id/detail_magilv"
                 app:layout_constraintEnd_toEndOf="@+id/detail_magilv"
                 app:layout_constraintStart_toStartOf="@+id/detail_magilv"
                 app:layout_constraintTop_toTopOf="@+id/detail_magilv"
-                app:layout_constraintBottom_toBottomOf="@+id/detail_magilv"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -458,7 +462,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@+id/pro_magi"
                 app:layout_constraintStart_toStartOf="@+id/pro_magi"
-                app:layout_constraintTop_toBottomOf="@+id/pro_magi"  />
+                app:layout_constraintTop_toBottomOf="@+id/pro_magi" />
 
             <TextView
                 android:id="@+id/detail_luck"
@@ -470,7 +474,7 @@
                 android:gravity="center"
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/pro_luck"
-                app:layout_constraintTop_toBottomOf="@+id/detail_magi"  />
+                app:layout_constraintTop_toBottomOf="@+id/detail_magi" />
 
             <ImageView
                 android:id="@+id/detail_lucklv"
@@ -490,10 +494,10 @@
                 android:layout_width="190dp"
                 android:layout_height="35dp"
                 android:background="@drawable/detailimagestroke"
+                app:layout_constraintBottom_toBottomOf="@+id/detail_lucklv"
                 app:layout_constraintEnd_toEndOf="@+id/detail_lucklv"
                 app:layout_constraintStart_toStartOf="@+id/detail_lucklv"
                 app:layout_constraintTop_toTopOf="@+id/detail_lucklv"
-                app:layout_constraintBottom_toBottomOf="@+id/detail_lucklv"
                 tools:ignore="ContentDescription" />
 
             <TextView
@@ -520,7 +524,7 @@
                 android:gravity="center"
                 android:textSize="18sp"
                 app:layout_constraintStart_toEndOf="@+id/pro_skil"
-                app:layout_constraintTop_toBottomOf="@+id/detail_luck"  />
+                app:layout_constraintTop_toBottomOf="@+id/detail_luck" />
 
             <ImageView
                 android:id="@+id/detail_skillv"

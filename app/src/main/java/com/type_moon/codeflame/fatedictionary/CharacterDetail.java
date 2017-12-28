@@ -37,10 +37,10 @@ public class CharacterDetail extends AppCompatActivity {
         ImageView detailframe = findViewById(R.id.detail_imageframe);
         TextView detailname = findViewById(R.id.detail_name);
         ImageView detailsex = findViewById(R.id.detail_sex);
-        TextView detailheight = findViewById(R.id.detail_height);
-        TextView detailweight = findViewById(R.id.detail_weight);
+        TextView detailhweight = findViewById(R.id.detail_hweight);
         TextView detailorigo = findViewById(R.id.detail_origo);
         TextView detailalignment = findViewById(R.id.detail_alignment);
+        TextView detailresource = findViewById(R.id.detail_resource);
         TextView detailintroduction = findViewById(R.id.detail_introduction);
         TextView detailstre = findViewById(R.id.detail_stre);
         TextView detailendu = findViewById(R.id.detail_endu);
@@ -60,23 +60,24 @@ public class CharacterDetail extends AppCompatActivity {
 
 
         int id = getIntent().getIntExtra("id", 0);
-        Cursor cursor = CharacterDataBase.getInstances(CharacterDetail.this).searchById( id );
+        Cursor cursor = CharacterDataBase.getInstances(CharacterDetail.this).searchById(id);
         cursor.moveToNext();
         number = cursor.getInt(cursor.getColumnIndex("number"));
-        String name = cursor.getString(2);
-        String job = cursor.getString(3);
-        String sex = cursor.getString(4);
-        String height = cursor.getString(5);
-        String weight = cursor.getString(6);
-        String origo = cursor.getString(7);
-        String alignment = cursor.getString(8);
-        String introduction = cursor.getString(9);
-        String stre = cursor.getString(10);
-        String endu = cursor.getString(11);
-        String agil = cursor.getString(12);
-        String magi = cursor.getString(13);
-        String luck = cursor.getString(14);
-        String skil = cursor.getString(15);
+        String name = cursor.getString(cursor.getColumnIndex("name"));
+        int job = cursor.getInt(cursor.getColumnIndex("job"));
+        int sex = cursor.getInt(cursor.getColumnIndex("sex"));
+        int height = cursor.getInt(cursor.getColumnIndex("height"));
+        int weight = cursor.getInt(cursor.getColumnIndex("weight"));
+        String origo = cursor.getString(cursor.getColumnIndex("origo"));
+        int alignment = cursor.getInt(cursor.getColumnIndex("alignment"));
+        String resource = cursor.getString(cursor.getColumnIndex("resource"));
+        String introduction = cursor.getString(cursor.getColumnIndex("introduction"));
+        String stre = cursor.getString(cursor.getColumnIndex("stre"));
+        String endu = cursor.getString(cursor.getColumnIndex("endu"));
+        String agil = cursor.getString(cursor.getColumnIndex("agil"));
+        String magi = cursor.getString(cursor.getColumnIndex("magi"));
+        String luck = cursor.getString(cursor.getColumnIndex("luck"));
+        String skil = cursor.getString(cursor.getColumnIndex("skil"));
         cursor.close();
 
         List<Map<String, Object>> data = getSkillListData(name);
@@ -86,33 +87,27 @@ public class CharacterDetail extends AppCompatActivity {
         setListViewHeightBasedOnChildren(skillList);
         sadapter.notifyDataSetChanged();
 
-        if (height.equals("0"))
-            height = "?";
-        if (weight.equals("0"))
-            weight = "?";
-
-
-        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"a.png"));
-        detailframe.setImageResource(ImageGet.getBigFrame(job));
         detailname.setText(name);
-
-        if (sex.equals("男")) {
+        String hei = height+"";
+        String wei = weight+"";
+        if (height==0) {
+            hei = "??";
+        }
+        if (weight==0) {
+            wei = "??";
+        }
+        detailhweight.setText(hei+"cm·"+wei+"kg");
+        if (sex==0) {
             detailsex.setImageResource(R.mipmap.male);
         } else {
             detailsex.setImageResource(R.mipmap.female);
         }
-        if (height.equals("0")) {
-            detailheight.setText("??cm");
-        } else {
-            detailheight.setText(height + "cm");
-        }
-        if (weight.equals("0")) {
-            detailweight.setText("??kg");
-        } else {
-            detailweight.setText(weight + "kg");
-        }
+        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"a.png"));
+        detailframe.setImageResource(ImageGet.getBigFrame(Tool.getJob(job)));
+
         detailorigo.setText(origo);
-        detailalignment.setText(alignment);
+        detailalignment.setText(Tool.getAlignment(alignment));
+        detailresource.setText(resource);
         detailintroduction.setText(introduction);
         detailstre.setText(stre);
         detailendu.setText(endu);
@@ -154,9 +149,11 @@ public class CharacterDetail extends AppCompatActivity {
                         detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"a.png"));
                         flag=0;
                     }
-                } else if (flag==3&& f1.exists()) {
-                    detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"a.png"));
-                    flag=0;
+                } else if (flag==3) {
+                    if (f1.exists()) {
+                        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"a.png"));
+                        flag=0;
+                    }
                 }
             }
         });
@@ -180,8 +177,6 @@ public class CharacterDetail extends AppCompatActivity {
                 String introduction = query.getString(query.getColumnIndex("introduction"));
                 int id = query.getInt(query.getColumnIndex("id"));
                 Map<String, Object> map = new HashMap<>();
-
-
                 if (s.equals(owner)) {
                     map.put("id", id);
                     map.put("owner", owner);
@@ -191,10 +186,8 @@ public class CharacterDetail extends AppCompatActivity {
                     map.put("introduction", introduction);
                     slist.add(map);
                 }
-
             } while (query.moveToNext());
         }
-        //关闭查询游标
         query.close();
         return slist;
     }
@@ -220,7 +213,6 @@ public class CharacterDetail extends AppCompatActivity {
         //params.height最后得到整个ListView完整显示需要的高度
         listView.setLayoutParams(params);
     }
-
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
