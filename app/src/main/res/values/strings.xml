@@ -12,10 +12,9 @@
     <string name="addcharacterfull"><b>新建英灵</b>\nNew Character</string>
     <string name="addskillfull"><b>新建宝具</b>\nNew Skill</string>
     <string name="littletestfull"><b>知识测试</b>\nKnowledge Test</string>
-    <string name="bigimage_a">大图a</string>
-    <string name="bigimage_b">大图b</string>
-    <string name="bigimage_c">大图c</string>
-    <string name="bigimage_d">大图d</string>
+    <string name="bigimagechange">编辑图片</string>
+    <string name="bigimageadd">添加图片</string>
+    <string name="bigimagedelete">删除图片</string>
     <string name="littleimage">小图</string>
     <string name="loading">加载中……</string>
     <string name="owner">拥有者</string>

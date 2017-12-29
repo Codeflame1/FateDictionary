@@ -21,60 +21,46 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/dia_bigimage_1"
+        android:id="@+id/dia_bigimagechange"
         android:background="@drawable/detailbuttonshape"
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/bigimage_a"
+        android:text="@string/bigimagechange"
         android:textColor="@color/colorwhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/diaimage_title" />
 
     <Button
-        android:id="@+id/dia_bigimage_2"
+        android:id="@+id/dia_bigimageadd"
         android:background="@drawable/detailbuttonshape"
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/bigimage_b"
+        android:text="@string/bigimageadd"
         android:textColor="@color/colorwhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dia_bigimage_1" />
+        app:layout_constraintTop_toBottomOf="@+id/dia_bigimagechange" />
 
     <Button
-        android:id="@+id/dia_bigimage_3"
+        android:id="@+id/dia_bigimagedelete"
         android:background="@drawable/detailbuttonshape"
         android:layout_width="100dp"
         android:layout_height="40dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/bigimage_c"
+        android:text="@string/bigimagedelete"
         android:textColor="@color/colorwhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dia_bigimage_2" />
-
-    <Button
-        android:id="@+id/dia_bigimage_4"
-        android:background="@drawable/detailbuttonshape"
-        android:layout_width="100dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/bigimage_d"
-        android:textColor="@color/colorwhite"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dia_bigimage_3" />
+        app:layout_constraintTop_toBottomOf="@+id/dia_bigimageadd" />
 
     <Button
         android:id="@+id/dia_littleimage"
@@ -88,7 +74,7 @@
         android:textColor="@color/colorwhite"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dia_bigimage_4" />
+        app:layout_constraintTop_toBottomOf="@+id/dia_bigimagedelete" />
 
     <Button
         android:id="@+id/dia_cancelimage"

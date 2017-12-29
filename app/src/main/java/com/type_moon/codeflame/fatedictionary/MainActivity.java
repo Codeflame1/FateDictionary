@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
     private String strSearch = "";
     private Handler handler = null;
 
+    private String LOCATION = Environment.getExternalStorageDirectory()+"/FateDictionary/a";
+    private String[] w = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y"};
+
     @SuppressLint("InflateParams")
     @Override
 
@@ -89,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
         msearch.setSelected(false);
 
         if (CharacterDataBase.getInstances(MainActivity.this).query().getCount() == 0) {
-
             FirstInsert.insertCharacter(this);
             FirstInsert.insertSkill(this);
             FirstInsert.insertImage(this);
@@ -274,10 +276,12 @@ public class MainActivity extends AppCompatActivity {
                 cursor.moveToNext();
                 int number = cursor.getInt(1);
                 cursor.close();
-                File f1 = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+Tool.numDecimal(number)+"a.png");
-                File f2 = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+Tool.numDecimal(number)+"l.png");
-                if(f1.isFile()){
-                    f1.delete();
+                int i =0;
+                File f1 = new File(LOCATION+Tool.numDecimal(number)+w[i]+".png");
+                File f2 = new File(LOCATION+Tool.numDecimal(number)+"z.png");
+                while (f1.exists()) {
+                    new File(LOCATION+Tool.numDecimal(number)+w[i]+".png").delete();
+                    i++;
                 }
                 if(f2.isFile()){
                     f2.delete();

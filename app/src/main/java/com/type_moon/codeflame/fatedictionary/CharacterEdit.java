@@ -30,31 +30,36 @@ public class CharacterEdit extends AppCompatActivity {
 
     private int id;
     private int number;
-    private ImageButton edit_image;
-    private Spinner edit_job;
-    private ImageView edit_jobframe;
-    private TextInputLayout edit_name;
-    private Spinner edit_sex;
-    private TextInputLayout edit_height;
-    private TextInputLayout edit_weight;
-    private TextInputLayout edit_origo;
-    private TextInputLayout edit_resource;
-    private Spinner edit_alignment;
-    private TextInputLayout edit_introduction;
-    private EditText medit_name;
-    private EditText medit_height;
-    private EditText medit_weight;
-    private EditText medit_origo;
-    private EditText medit_resource;
-    private EditText medit_introduction;
-    private Spinner edit_stre;
-    private Spinner edit_endu;
-    private Spinner edit_agil;
-    private Spinner edit_magi;
-    private Spinner edit_luck;
-    private Spinner edit_skil;
+    private ImageButton m_image;
+    private Spinner m_job;
+    private ImageView m_jobframe;
+    private TextInputLayout m_name;
+    private Spinner m_sex;
+    private TextInputLayout m_height;
+    private TextInputLayout m_weight;
+    private TextInputLayout m_origo;
+    private TextInputLayout m_resource;
+    private Spinner m_alignment;
+    private TextInputLayout m_introduction;
+    private EditText ed_name;
+    private EditText ed_height;
+    private EditText ed_weight;
+    private EditText ed_origo;
+    private EditText ed_resource;
+    private EditText ed_introduction;
+    private Spinner m_stre;
+    private Spinner m_endu;
+    private Spinner m_agil;
+    private Spinner m_magi;
+    private Spinner m_luck;
+    private Spinner m_skil;
     public String str1;
     private Uri imageUri;
+
+    private int flag = 0;
+    private String LOCATION = Environment.getExternalStorageDirectory()+"/FateDictionary/a";
+    private String[] w = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y"};
+    private File file;
     private static final String IMAGE_FILE_LOCATION = Environment.getExternalStorageDirectory()+"/temp.jpg";
 
     private AlertDialog imagedialog;
@@ -70,9 +75,9 @@ public class CharacterEdit extends AppCompatActivity {
         String name = cursor.getString(cursor.getColumnIndex("name"));
         int job = cursor.getInt(cursor.getColumnIndex("job"));
         int sex = cursor.getInt(cursor.getColumnIndex("sex"));
-        String height = cursor.getString(cursor.getColumnIndex("height"));
+        int height = cursor.getInt(cursor.getColumnIndex("height"));
         int weight = cursor.getInt(cursor.getColumnIndex("weight"));
-        int origo = cursor.getInt(cursor.getColumnIndex("origo"));
+        String origo = cursor.getString(cursor.getColumnIndex("origo"));
         int alignment = cursor.getInt(cursor.getColumnIndex("alignment"));
         String resource = cursor.getString(cursor.getColumnIndex("resource"));
         String introduction = cursor.getString(cursor.getColumnIndex("introduction"));
@@ -84,116 +89,129 @@ public class CharacterEdit extends AppCompatActivity {
         String skil = cursor.getString(cursor.getColumnIndex("skil"));
         cursor.close();
 
-        final Button edit_confirm = findViewById(R.id.edit_buttonconfirm);
-        Button edit_cancel = findViewById(R.id.edit_buttoncancel);
-        edit_image = findViewById(R.id.edit_image);
-        edit_job = findViewById(R.id.edit_job);
-        edit_jobframe = findViewById(R.id.edit_imageframe);
-        edit_name = findViewById(R.id.edit_name);
-        edit_sex = findViewById(R.id.edit_sex);
-        edit_height = findViewById(R.id.edit_height);
-        edit_weight = findViewById(R.id.edit_weight);
-        edit_origo = findViewById(R.id.edit_origo);
-        edit_resource = findViewById(R.id.edit_resource);
-        edit_alignment = findViewById(R.id.edit_alignment);
-        edit_introduction = findViewById(R.id.edit_introduction);
-        edit_stre = findViewById(R.id.edit_stre);
-        edit_endu = findViewById(R.id.edit_endu);
-        edit_agil = findViewById(R.id.edit_agil);
-        edit_magi = findViewById(R.id.edit_magi);
-        edit_luck = findViewById(R.id.edit_luck);
-        edit_skil = findViewById(R.id.edit_skil);
-        medit_name = edit_name.getEditText();
-        medit_height = edit_height.getEditText();
-        medit_weight = edit_weight.getEditText();
-        medit_origo = edit_origo.getEditText();
-        medit_resource = edit_resource.getEditText();
-        medit_introduction = edit_introduction.getEditText();
+        final Button m_confirm = findViewById(R.id.edit_buttonconfirm);
+        Button m_cancel = findViewById(R.id.edit_buttoncancel);
+        ImageButton change = findViewById(R.id.edit_change);
+        m_image = findViewById(R.id.edit_image);
+        m_job = findViewById(R.id.edit_job);
+        m_jobframe = findViewById(R.id.edit_imageframe);
+        m_name = findViewById(R.id.edit_name);
+        m_sex = findViewById(R.id.edit_sex);
+        m_height = findViewById(R.id.edit_height);
+        m_weight = findViewById(R.id.edit_weight);
+        m_origo = findViewById(R.id.edit_origo);
+        m_resource = findViewById(R.id.edit_resource);
+        m_alignment = findViewById(R.id.edit_alignment);
+        m_introduction = findViewById(R.id.edit_introduction);
+        m_stre = findViewById(R.id.edit_stre);
+        m_endu = findViewById(R.id.edit_endu);
+        m_agil = findViewById(R.id.edit_agil);
+        m_magi = findViewById(R.id.edit_magi);
+        m_luck = findViewById(R.id.edit_luck);
+        m_skil = findViewById(R.id.edit_skil);
+        ed_name = m_name.getEditText();
+        ed_height = m_height.getEditText();
+        ed_weight = m_weight.getEditText();
+        ed_origo = m_origo.getEditText();
+        ed_resource = m_resource.getEditText();
+        ed_introduction = m_introduction.getEditText();
 
-        edit_job.setSelection(job);
-        edit_stre.setSelection(SpinnerSelect.getLevel(stre));
-        edit_endu.setSelection(SpinnerSelect.getLevel(endu));
-        edit_agil.setSelection(SpinnerSelect.getLevel(agil));
-        edit_magi.setSelection(SpinnerSelect.getLevel(magi));
-        edit_luck.setSelection(SpinnerSelect.getLevel(luck));
-        edit_skil.setSelection(SpinnerSelect.getLevel(skil));
-        medit_name.setText(name);
-        edit_sex.setSelection(sex);
-        medit_height.setText(height);
-        medit_weight.setText(weight);
-        medit_origo.setText(origo);
-        medit_resource.setText(resource);
-        edit_alignment.setSelection(alignment);
-        medit_introduction.setText(introduction);
-        edit_image.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/"+"a"+Tool.numDecimal(number)+"a.png"));
-        str1 = (String) edit_job.getSelectedItem();
+        m_job.setSelection(job);
+        m_stre.setSelection(SpinnerSelect.getLevel(stre));
+        m_endu.setSelection(SpinnerSelect.getLevel(endu));
+        m_agil.setSelection(SpinnerSelect.getLevel(agil));
+        m_magi.setSelection(SpinnerSelect.getLevel(magi));
+        m_luck.setSelection(SpinnerSelect.getLevel(luck));
+        m_skil.setSelection(SpinnerSelect.getLevel(skil));
+        ed_name.setText(name);
+        m_sex.setSelection(sex);
+        ed_height.setText(height+"");
+        ed_weight.setText(weight+"");
+        ed_origo.setText(origo);
+        ed_resource.setText(resource);
+        m_alignment.setSelection(alignment);
+        ed_introduction.setText(introduction);
+        m_image.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"a.png"));
+        str1 = (String) m_job.getSelectedItem();
         imageUri = Uri.fromFile(new File(IMAGE_FILE_LOCATION));
 
-        edit_job.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                flag++;
+                file = new File(LOCATION+Tool.numDecimal(number)+w[flag]+".png");
+                if (!file.exists()) {
+                    flag=0;
+                }
+                m_image.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+w[flag]+".png"));
+            }
+        });
+
+        m_job.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                str1 = (String) edit_job.getSelectedItem();
-                edit_jobframe.setImageResource(ImageGet.getBigFrame(str1));
+                str1 = (String) m_job.getSelectedItem();
+                m_jobframe.setImageResource(ImageGet.getBigFrame(str1));
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                edit_jobframe.setImageResource(ImageGet.getBigFrame(""));
+                m_jobframe.setImageResource(ImageGet.getBigFrame(""));
             }
         });
 
-        edit_image.setOnClickListener(new View.OnClickListener() {
+        m_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showImageDialog();
             }
         });
 
-        edit_confirm.setOnClickListener(new View.OnClickListener() {
+        m_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //拿到输入的数据
-                String hei = medit_height.getText().toString().trim();
-                String wei = medit_weight.getText().toString().trim();
-                String name = medit_name.getText().toString().trim();
-                int job = (int) edit_job.getSelectedItemId();
-                int sex = (int) edit_sex.getSelectedItemId();
+                String hei = ed_height.getText().toString().trim();
+                String wei = ed_weight.getText().toString().trim();
+                String name = ed_name.getText().toString().trim();
+                int job = (int) m_job.getSelectedItemId();
+                int sex = (int) m_sex.getSelectedItemId();
                 int height = Integer.parseInt(hei);
                 int weight = Integer.parseInt(wei);
-                String origo = medit_origo.getText().toString().trim();
-                String resource = medit_resource.getText().toString().trim();
-                int alignment = (int) edit_alignment.getSelectedItemId();
-                String introduction = medit_introduction.getText().toString().trim();
-                String stre = (String) edit_stre.getSelectedItem();
-                String endu = (String) edit_endu.getSelectedItem();
-                String agil = (String) edit_agil.getSelectedItem();
-                String magi = (String) edit_magi.getSelectedItem();
-                String luck = (String) edit_luck.getSelectedItem();
-                String skil = (String) edit_skil.getSelectedItem();
+                String origo = ed_origo.getText().toString().trim();
+                String resource = ed_resource.getText().toString().trim();
+                int alignment = (int) m_alignment.getSelectedItemId();
+                String introduction = ed_introduction.getText().toString().trim();
+                String stre = (String) m_stre.getSelectedItem();
+                String endu = (String) m_endu.getSelectedItem();
+                String agil = (String) m_agil.getSelectedItem();
+                String magi = (String) m_magi.getSelectedItem();
+                String luck = (String) m_luck.getSelectedItem();
+                String skil = (String) m_skil.getSelectedItem();
 
-                edit_name.setErrorEnabled(false);
-                edit_height.setErrorEnabled(false);
-                edit_weight.setErrorEnabled(false);
-                edit_origo.setErrorEnabled(false);
-                edit_introduction.setErrorEnabled(false);
+                m_name.setErrorEnabled(false);
+                m_height.setErrorEnabled(false);
+                m_weight.setErrorEnabled(false);
+                m_origo.setErrorEnabled(false);
+                m_introduction.setErrorEnabled(false);
                 if (TextUtils.isEmpty(name)) {
-                    edit_name.setErrorEnabled(true);
-                    edit_name.setError(getString(R.string.name) + getString(R.string.text_error_empty));
+                    m_name.setErrorEnabled(true);
+                    m_name.setError(getString(R.string.name) + getString(R.string.text_error_empty));
                 } else if (TextUtils.isEmpty(hei)) {
-                    edit_height.setErrorEnabled(true);
-                    edit_height.setError(getString(R.string.height) + getString(R.string.text_error_empty));
+                    m_height.setErrorEnabled(true);
+                    m_height.setError(getString(R.string.height) + getString(R.string.text_error_empty));
                 } else if (TextUtils.isEmpty(wei)) {
-                    edit_weight.setErrorEnabled(true);
-                    edit_weight.setError(getString(R.string.weight) + getString(R.string.text_error_empty));
+                    m_weight.setErrorEnabled(true);
+                    m_weight.setError(getString(R.string.weight) + getString(R.string.text_error_empty));
                 } else if (TextUtils.isEmpty(origo)) {
-                    edit_origo.setErrorEnabled(true);
-                    edit_origo.setError(getString(R.string.origo) + getString(R.string.text_error_empty));
+                    m_origo.setErrorEnabled(true);
+                    m_origo.setError(getString(R.string.origo) + getString(R.string.text_error_empty));
                 } else if (TextUtils.isEmpty(resource)) {
-                    edit_resource.setErrorEnabled(true);
-                    edit_resource.setError(getString(R.string.resource) + getString(R.string.text_error_empty));
+                    m_resource.setErrorEnabled(true);
+                    m_resource.setError(getString(R.string.resource) + getString(R.string.text_error_empty));
                 } else if (TextUtils.isEmpty(introduction)) {
-                    edit_introduction.setErrorEnabled(true);
-                    edit_introduction.setError(getString(R.string.introduction) + getString(R.string.text_error_empty));
+                    m_introduction.setErrorEnabled(true);
+                    m_introduction.setError(getString(R.string.introduction) + getString(R.string.text_error_empty));
                 } else {
                     //调用插入方法
                     CharacterDataBase.getInstances(CharacterEdit.this).updata(id, number, name, job, sex, height, weight, origo, alignment, resource, introduction, stre, endu, agil, magi, luck, skil);
@@ -202,7 +220,7 @@ public class CharacterEdit extends AppCompatActivity {
             }
         });
 
-        edit_cancel.setOnClickListener(new View.OnClickListener() {
+        m_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -216,7 +234,7 @@ public class CharacterEdit extends AppCompatActivity {
         imagedialog = new AlertDialog.Builder(CharacterEdit.this).create();
         imagedialog.show();
         imagedialog.getWindow().setContentView(R.layout.alertdialog_image);
-        imagedialog.getWindow().findViewById(R.id.dia_bigimage_1).setOnClickListener(new View.OnClickListener() {
+        imagedialog.getWindow().findViewById(R.id.dia_bigimagechange).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
@@ -225,7 +243,7 @@ public class CharacterEdit extends AppCompatActivity {
             }
         });
 
-        imagedialog.getWindow().findViewById(R.id.dia_bigimage_2).setOnClickListener(new View.OnClickListener() {
+        imagedialog.getWindow().findViewById(R.id.dia_bigimageadd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
@@ -234,7 +252,7 @@ public class CharacterEdit extends AppCompatActivity {
             }
         });
 
-        imagedialog.getWindow().findViewById(R.id.dia_bigimage_3).setOnClickListener(new View.OnClickListener() {
+        imagedialog.getWindow().findViewById(R.id.dia_bigimagedelete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
@@ -243,14 +261,6 @@ public class CharacterEdit extends AppCompatActivity {
             }
         });
 
-        imagedialog.getWindow().findViewById(R.id.dia_bigimage_4).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
-                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent, 4);
-            }
-        });
         imagedialog.getWindow().findViewById(R.id.dia_littleimage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -274,11 +284,37 @@ public class CharacterEdit extends AppCompatActivity {
         if (resultCode == RESULT_CANCELED) {//取消
             Toast.makeText(getApplication(), "取消", Toast.LENGTH_LONG).show();
             return;
-        } if (requestCode <=4) {
+        } if (requestCode <=2) {
             cropPhoto(intent.getData(),requestCode);
-        }  else if (requestCode >4) {
+        } else if (requestCode == 4) {
             if (intent != null) {
-                setImage(intent, requestCode);//设置图片框
+                setImage(intent, 26);//设置图片框
+            }
+        } else if (requestCode == 5) {
+            if (intent != null) {
+                setImage(intent, flag);//设置图片框
+            }
+        } else if (requestCode == 6) {
+            if (intent != null) {
+                int i = 0;
+                file = new File(LOCATION+Tool.numDecimal(number)+w[i]+".png");
+                while (file.exists()) {
+                    i++;
+                }
+                i++;
+                setImage(intent, i);//设置图片框
+            }
+        } else if (requestCode == 3) {
+            if (intent != null) {
+                int i = flag;
+                file = new File(LOCATION+Tool.numDecimal(number)+w[i]+".png");
+                new File(LOCATION+Tool.numDecimal(number)+w[i]+".png").delete();
+                i++;
+                while (file.exists()) {
+                    file.renameTo(new File(LOCATION+Tool.numDecimal(number)+w[i-1]+".png"));
+                    i++;
+                }
+                m_image.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+w[flag]+".png"));
             }
         }
         super.onActivityResult(requestCode, resultCode, intent);
@@ -308,7 +344,7 @@ public class CharacterEdit extends AppCompatActivity {
         intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
         intent.putExtra("noFaceDetection", true);
         intent.putExtra("return-data", false);
-        i+=5;
+        i+=4;
         startActivityForResult(intent, i);
     }
 
@@ -317,21 +353,14 @@ public class CharacterEdit extends AppCompatActivity {
         if (extras != null) {
             Bitmap photo = BitmapFactory.decodeFile(IMAGE_FILE_LOCATION);
             File nf = new File(Environment.getExternalStorageDirectory()+"/FateDictionary");
-            String code = null;
-            edit_image.setImageBitmap(photo);
             nf.mkdir();
-            if (i==5) {
-                code="l.png";
-            } else if (i==6) {
-                code="a.png";
-            } else if (i==7) {
-                code="b.png";
-            } else if (i==8) {
-                code="c.png";
-            } else if (i==9) {
-                code="d.png";
+            File f;
+            if (i==26) {
+                f = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+Tool.numDecimal(number)+"z.png");
+            } else {
+                f = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+Tool.numDecimal(number)+w[i]+".png");
+                m_image.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+w[i]+".png"));
             }
-            File f = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+Tool.numDecimal(number)+code);
             FileOutputStream out;
             try {
                 out = new FileOutputStream(f);

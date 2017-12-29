@@ -30,32 +30,36 @@ import java.io.IOException;
 public class CharacterAdd extends AppCompatActivity{
 
     private int number;
-    private ImageButton add_image;
-    private Spinner add_job;
-    private ImageView add_jobframe;
-    private TextInputLayout add_name;
-    private Spinner add_sex;
-    private TextInputLayout add_height;
-    private TextInputLayout add_weight;
-    private TextInputLayout add_origo;
-    private TextInputLayout add_resource;
-    private TextInputLayout add_introduction;
-    private EditText madd_name;
-    private EditText madd_height;
-    private EditText madd_weight;
-    private EditText madd_origo;
-    private EditText madd_resource;
-    private Spinner add_alignment;
-    private EditText madd_introduction;
-    private Spinner add_stre;
-    private Spinner add_endu;
-    private Spinner add_agil;
-    private Spinner add_magi;
-    private Spinner add_luck;
-    private Spinner add_skil;
+    private ImageButton m_image;
+    private Spinner m_job;
+    private ImageView m_jobframe;
+    private TextInputLayout m_name;
+    private Spinner m_sex;
+    private TextInputLayout m_height;
+    private TextInputLayout m_weight;
+    private TextInputLayout m_origo;
+    private TextInputLayout m_resource;
+    private TextInputLayout m_introduction;
+    private EditText ed_name;
+    private EditText ed_height;
+    private EditText ed_weight;
+    private EditText ed_origo;
+    private EditText ed_resource;
+    private Spinner m_alignment;
+    private EditText ed_introduction;
+    private Spinner m_stre;
+    private Spinner m_endu;
+    private Spinner m_agil;
+    private Spinner m_magi;
+    private Spinner m_luck;
+    private Spinner m_skil;
     public String str1;
     private Uri imageUri;
     private static final String IMAGE_FILE_LOCATION = Environment.getExternalStorageDirectory()+"/temp.jpg";
+    private int flag = 0;
+    private String LOCATION = Environment.getExternalStorageDirectory()+"/FateDictionary/a";
+    private String[] w = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y"};
+    private File file;
 
 
     private AlertDialog imagedialog;
@@ -66,33 +70,46 @@ public class CharacterAdd extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_characterdetail);
 
-        Button add_confirm = findViewById(R.id.add_buttonconfirm);
-        Button add_cancel = findViewById(R.id.add_buttoncancel);
-        add_image = findViewById(R.id.add_image);
-        add_job = findViewById(R.id.add_job);
-        add_jobframe = findViewById(R.id.add_imageframe);
-        add_name = findViewById(R.id.add_name);
-        add_sex = findViewById(R.id.add_sex);
-        add_height = findViewById(R.id.add_height);
-        add_weight = findViewById(R.id.add_weight);
-        add_origo = findViewById(R.id.add_origo);
-        add_resource = findViewById(R.id.add_resource);
-        add_alignment = findViewById(R.id.add_alignment);
-        add_introduction = findViewById(R.id.add_introduction);
-        madd_name = add_name.getEditText();
-        madd_height = add_height.getEditText();
-        madd_weight = add_weight.getEditText();
-        madd_origo = add_origo.getEditText();
-        madd_resource = add_resource.getEditText();
-        madd_introduction = add_introduction.getEditText();
-        add_stre = findViewById(R.id.add_stre);
-        add_endu = findViewById(R.id.add_endu);
-        add_agil = findViewById(R.id.add_agil);
-        add_magi = findViewById(R.id.add_magi);
-        add_luck = findViewById(R.id.add_luck);
-        add_skil = findViewById(R.id.add_skil);
-        str1 = (String) add_job.getSelectedItem();
+        Button m_confirm = findViewById(R.id.add_buttonconfirm);
+        Button m_cancel = findViewById(R.id.add_buttoncancel);
+        ImageButton change = findViewById(R.id.add_change);
+        m_image = findViewById(R.id.add_image);
+        m_job = findViewById(R.id.add_job);
+        m_jobframe = findViewById(R.id.add_imageframe);
+        m_name = findViewById(R.id.add_name);
+        m_sex = findViewById(R.id.add_sex);
+        m_height = findViewById(R.id.add_height);
+        m_weight = findViewById(R.id.add_weight);
+        m_origo = findViewById(R.id.add_origo);
+        m_resource = findViewById(R.id.add_resource);
+        m_alignment = findViewById(R.id.add_alignment);
+        m_introduction = findViewById(R.id.add_introduction);
+        ed_name = m_name.getEditText();
+        ed_height = m_height.getEditText();
+        ed_weight = m_weight.getEditText();
+        ed_origo = m_origo.getEditText();
+        ed_resource = m_resource.getEditText();
+        ed_introduction = m_introduction.getEditText();
+        m_stre = findViewById(R.id.add_stre);
+        m_endu = findViewById(R.id.add_endu);
+        m_agil = findViewById(R.id.add_agil);
+        m_magi = findViewById(R.id.add_magi);
+        m_luck = findViewById(R.id.add_luck);
+        m_skil = findViewById(R.id.add_skil);
+        str1 = (String) m_job.getSelectedItem();
         imageUri = Uri.fromFile(new File(IMAGE_FILE_LOCATION));
+
+        change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                flag++;
+                file = new File(LOCATION+Tool.numDecimal(number)+w[flag]+".png");
+                if (!file.exists()) {
+                    flag=0;
+                }
+                m_image.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+w[flag]+".png"));
+            }
+        });
 
         Cursor query = AddNumberDataBase.getInstances(CharacterAdd.this).query();
         if (query.move(1)){
@@ -101,72 +118,72 @@ public class CharacterAdd extends AppCompatActivity{
         }
 
 
-        add_job.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        m_job.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                str1 = (String) add_job.getSelectedItem();
-                add_jobframe.setImageResource(ImageGet.getBigFrame(str1));
+                str1 = (String) m_job.getSelectedItem();
+                m_jobframe.setImageResource(ImageGet.getBigFrame(str1));
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                add_jobframe.setImageResource(ImageGet.getBigFrame(""));
+                m_jobframe.setImageResource(ImageGet.getBigFrame(""));
             }
         });
 
-        add_image.setOnClickListener(new View.OnClickListener() {
+        m_image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showImageDialog();
             }
         });
 
-        add_confirm.setOnClickListener(new View.OnClickListener() {
+        m_confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //拿到输入的数据
-                String hei = madd_height.getText().toString().trim();
-                String wei = madd_weight.getText().toString().trim();
+                String hei = ed_height.getText().toString().trim();
+                String wei = ed_weight.getText().toString().trim();
                 AddNumberDataBase.getInstances(CharacterAdd.this).updata(number);
-                String name = madd_name.getText().toString().trim();
-                int job = (int)add_job.getSelectedItemId();
-                int sex = (int)add_sex.getSelectedItemId();
+                String name = ed_name.getText().toString().trim();
+                int job = (int)m_job.getSelectedItemId();
+                int sex = (int)m_sex.getSelectedItemId();
                 int height = Integer.parseInt(hei);
                 int weight = Integer.parseInt(wei);
-                String origo = madd_origo.getText().toString().trim();
-                String resource = madd_resource.getText().toString().trim();
-                int alignment = (int) add_alignment.getSelectedItemId();
-                String introduction = madd_introduction.getText().toString().trim();
-                String stre = (String)add_stre.getSelectedItem();
-                String endu = (String)add_endu.getSelectedItem();
-                String agil = (String)add_agil.getSelectedItem();
-                String magi = (String)add_magi.getSelectedItem();
-                String luck = (String)add_luck.getSelectedItem();
-                String skil = (String)add_skil.getSelectedItem();
+                String origo = ed_origo.getText().toString().trim();
+                String resource = ed_resource.getText().toString().trim();
+                int alignment = (int) m_alignment.getSelectedItemId();
+                String introduction = ed_introduction.getText().toString().trim();
+                String stre = (String)m_stre.getSelectedItem();
+                String endu = (String)m_endu.getSelectedItem();
+                String agil = (String)m_agil.getSelectedItem();
+                String magi = (String)m_magi.getSelectedItem();
+                String luck = (String)m_luck.getSelectedItem();
+                String skil = (String)m_skil.getSelectedItem();
 
-                add_name.setErrorEnabled(false);
-                add_height.setErrorEnabled(false);
-                add_weight.setErrorEnabled(false);
-                add_origo.setErrorEnabled(false);
-                add_introduction.setErrorEnabled(false);
+                m_name.setErrorEnabled(false);
+                m_height.setErrorEnabled(false);
+                m_weight.setErrorEnabled(false);
+                m_origo.setErrorEnabled(false);
+                m_introduction.setErrorEnabled(false);
                 if (TextUtils.isEmpty(name)) {
-                    add_name.setErrorEnabled(true);
-                    add_name.setError(getString(R.string.name) + getString(R.string.text_error_empty));
+                    m_name.setErrorEnabled(true);
+                    m_name.setError(getString(R.string.name) + getString(R.string.text_error_empty));
                 } else if (TextUtils.isEmpty(hei)) {
-                    add_height.setErrorEnabled(true);
-                    add_height.setError(getString(R.string.height) + getString(R.string.text_error_empty));
+                    m_height.setErrorEnabled(true);
+                    m_height.setError(getString(R.string.height) + getString(R.string.text_error_empty));
                 } else if (TextUtils.isEmpty(wei)) {
-                    add_weight.setErrorEnabled(true);
-                    add_weight.setError(getString(R.string.weight) + getString(R.string.text_error_empty));
+                    m_weight.setErrorEnabled(true);
+                    m_weight.setError(getString(R.string.weight) + getString(R.string.text_error_empty));
                 } else if (TextUtils.isEmpty(origo)) {
-                    add_origo.setErrorEnabled(true);
-                    add_origo.setError(getString(R.string.origo) + getString(R.string.text_error_empty));
+                    m_origo.setErrorEnabled(true);
+                    m_origo.setError(getString(R.string.origo) + getString(R.string.text_error_empty));
                 } else if (TextUtils.isEmpty(resource)) {
-                    add_resource.setErrorEnabled(true);
-                    add_resource.setError(getString(R.string.resource) + getString(R.string.text_error_empty));
+                    m_resource.setErrorEnabled(true);
+                    m_resource.setError(getString(R.string.resource) + getString(R.string.text_error_empty));
                 } else if (TextUtils.isEmpty(introduction)) {
-                    add_introduction.setErrorEnabled(true);
-                    add_introduction.setError(getString(R.string.introduction) + getString(R.string.text_error_empty));
+                    m_introduction.setErrorEnabled(true);
+                    m_introduction.setError(getString(R.string.introduction) + getString(R.string.text_error_empty));
                 } else {
                     //调用插入方法
                     CharacterDataBase.getInstances(CharacterAdd.this).insert(number, name, job, sex, height, weight, origo, alignment , resource, introduction, stre, endu, agil, magi, luck, skil);
@@ -175,7 +192,7 @@ public class CharacterAdd extends AppCompatActivity{
             }
         });
 
-        add_cancel.setOnClickListener(new View.OnClickListener() {
+        m_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
@@ -189,7 +206,7 @@ public class CharacterAdd extends AppCompatActivity{
         imagedialog = new AlertDialog.Builder(CharacterAdd.this).create();
         imagedialog.show();
         imagedialog.getWindow().setContentView(R.layout.alertdialog_image);
-        imagedialog.getWindow().findViewById(R.id.dia_bigimage_1).setOnClickListener(new View.OnClickListener() {
+        imagedialog.getWindow().findViewById(R.id.dia_bigimagechange).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
@@ -198,7 +215,7 @@ public class CharacterAdd extends AppCompatActivity{
             }
         });
 
-        imagedialog.getWindow().findViewById(R.id.dia_bigimage_2).setOnClickListener(new View.OnClickListener() {
+        imagedialog.getWindow().findViewById(R.id.dia_bigimageadd).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
@@ -207,7 +224,7 @@ public class CharacterAdd extends AppCompatActivity{
             }
         });
 
-        imagedialog.getWindow().findViewById(R.id.dia_bigimage_3).setOnClickListener(new View.OnClickListener() {
+        imagedialog.getWindow().findViewById(R.id.dia_bigimagedelete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
@@ -216,14 +233,6 @@ public class CharacterAdd extends AppCompatActivity{
             }
         });
 
-        imagedialog.getWindow().findViewById(R.id.dia_bigimage_4).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
-                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                startActivityForResult(intent, 4);
-            }
-        });
         imagedialog.getWindow().findViewById(R.id.dia_littleimage).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -247,11 +256,37 @@ public class CharacterAdd extends AppCompatActivity{
         if (resultCode == RESULT_CANCELED) {//取消
             Toast.makeText(getApplication(), "取消", Toast.LENGTH_LONG).show();
             return;
-        } if (requestCode <=4) {
+        } if (requestCode <=2) {
             cropPhoto(intent.getData(),requestCode);
-        }  else if (requestCode >4) {
+        } else if (requestCode == 4) {
             if (intent != null) {
-                setImage(intent, requestCode);//设置图片框
+                setImage(intent, 26);//设置图片框
+            }
+        } else if (requestCode == 5) {
+            if (intent != null) {
+                setImage(intent, flag);//设置图片框
+            }
+        } else if (requestCode == 6) {
+            if (intent != null) {
+                int i = 0;
+                file = new File(LOCATION+Tool.numDecimal(number)+w[i]+".png");
+                while (file.exists()) {
+                    i++;
+                }
+                i++;
+                setImage(intent, i);//设置图片框
+            }
+        } else if (requestCode == 3) {
+            if (intent != null) {
+                int i = flag;
+                file = new File(LOCATION+Tool.numDecimal(number)+w[i]+".png");
+                new File(LOCATION+Tool.numDecimal(number)+w[i]+".png").delete();
+                i++;
+                while (file.exists()) {
+                    file.renameTo(new File(LOCATION+Tool.numDecimal(number)+w[i-1]+".png"));
+                    i++;
+                }
+                m_image.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+w[flag]+".png"));
             }
         }
         super.onActivityResult(requestCode, resultCode, intent);
@@ -261,7 +296,9 @@ public class CharacterAdd extends AppCompatActivity{
 
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.setDataAndType(uri, "image/*");
+
         //把裁剪的数据填入里面
+
         // 设置裁剪
         intent.putExtra("crop", "true");
         if (i==0) {
@@ -279,7 +316,7 @@ public class CharacterAdd extends AppCompatActivity{
         intent.putExtra("outputFormat", Bitmap.CompressFormat.PNG.toString());
         intent.putExtra("noFaceDetection", true);
         intent.putExtra("return-data", false);
-        i+=5;
+        i+=4;
         startActivityForResult(intent, i);
     }
 
@@ -288,25 +325,19 @@ public class CharacterAdd extends AppCompatActivity{
         if (extras != null) {
             Bitmap photo = BitmapFactory.decodeFile(IMAGE_FILE_LOCATION);
             File nf = new File(Environment.getExternalStorageDirectory()+"/FateDictionary");
-            String code = null;
-            add_image.setImageBitmap(photo);
             nf.mkdir();
-            if (i==5) {
-                code="l.png";
-            } else if (i==6) {
-                code="a.png";
-            } else if (i==7) {
-                code="b.png";
-            } else if (i==8) {
-                code="c.png";
-            } else if (i==9) {
-                code="d.png";
+            File f;
+            if (i==26) {
+                f = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+Tool.numDecimal(number)+"z.png");
+            } else {
+                f = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+Tool.numDecimal(number)+w[i]+".png");
+                m_image.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+w[i]+".png"));
             }
-            File f = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+Tool.numDecimal(number)+code);
             FileOutputStream out;
             try {
                 out = new FileOutputStream(f);
                 photo.compress(Bitmap.CompressFormat.PNG, 100, out);
+
                 try {
                     out.flush();
                     out.close();
@@ -319,3 +350,4 @@ public class CharacterAdd extends AppCompatActivity{
         }
     }
 }
+

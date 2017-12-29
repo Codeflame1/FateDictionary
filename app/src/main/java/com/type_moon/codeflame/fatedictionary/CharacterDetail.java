@@ -27,6 +27,8 @@ public class CharacterDetail extends AppCompatActivity {
     private int number;
     private int flag = 0;
     private String LOCATION = Environment.getExternalStorageDirectory()+"/FateDictionary/a";
+    private String[] w = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y"};
+    private File file;
 
     @SuppressLint("SetTextI18n")
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,37 +126,12 @@ public class CharacterDetail extends AppCompatActivity {
         detailchange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                File f1 = new File(LOCATION+Tool.numDecimal(number)+"a.png");
-                File f2 = new File(LOCATION+Tool.numDecimal(number)+"b.png");
-                File f3 = new File(LOCATION+Tool.numDecimal(number)+"c.png");
-                File f4 = new File(LOCATION+Tool.numDecimal(number)+"d.png");
-                if (flag==0) {
-                    if (f2.exists()) {
-                        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"b.png"));
-                        flag=1;
-                    }
-                } else if (flag==1) {
-                    if (f3.exists()) {
-                        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"c.png"));
-                        flag=2;
-                    } else {
-                        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"a.png"));
-                        flag=0;
-                    }
-                } else if (flag==2) {
-                    if (f4.exists()) {
-                        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"d.png"));
-                        flag=3;
-                    } else {
-                        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"a.png"));
-                        flag=0;
-                    }
-                } else if (flag==3) {
-                    if (f1.exists()) {
-                        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"a.png"));
-                        flag=0;
-                    }
+                flag++;
+                file = new File(LOCATION+Tool.numDecimal(number)+w[flag]+".png");
+                if (!file.exists()) {
+                    flag=0;
                 }
+                detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+w[flag]+".png"));
             }
         });
         detailback.setOnClickListener(new View.OnClickListener() {

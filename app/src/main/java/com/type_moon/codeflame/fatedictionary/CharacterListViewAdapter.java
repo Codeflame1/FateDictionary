@@ -63,7 +63,7 @@ public class CharacterListViewAdapter extends BaseAdapter {
         int job = cursor.getInt(cursor.getColumnIndex("job"));
         int alignment = cursor.getInt(cursor.getColumnIndex("alignment"));
         cursor.close();
-        holder.image.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"l.png"));
+        holder.image.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"z.png"));
         holder.frame.setImageResource(ImageGet.getSmallFrame(Tool.getJob(job)));
         holder.name.setText(name);
         holder.alignment.setText(Tool.getAlignment(alignment));
