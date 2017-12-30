@@ -13,7 +13,7 @@ public class AddNumberDataBase extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     //表名
     private static final String TABLE_NAME = "number";
-    static AddNumberDataBase characterDataBase;
+    static AddNumberDataBase ANDataBase;
 
     /**
      * 单例模式返回数据库
@@ -22,10 +22,10 @@ public class AddNumberDataBase extends SQLiteOpenHelper {
      * @return 数据库对象
      */
     public static AddNumberDataBase getInstances(Context context) {
-        if (characterDataBase == null) {
+        if (ANDataBase == null) {
             return new AddNumberDataBase(context);
         } else {
-            return characterDataBase;
+            return ANDataBase;
         }
     }
 
@@ -105,26 +105,6 @@ public class AddNumberDataBase extends SQLiteOpenHelper {
         //查找
         return database.query(TABLE_NAME, null, null, null, null, null, null);
     }
-
-//    Cursor searchQuery(String s, String type) {
-//        SQLiteDatabase database = getReadableDatabase();
-//        String selection = type + "=?";
-//        String[] Args = {s};
-//        return database.query(TABLE_NAME, null, selection, Args, null, null, null);
-//    }
-//
-//
-//    /**
-//     * 再创建一个删除一个删除的方法,条件只有一个
-//     */
-//    void deleteById(int id) {
-//        SQLiteDatabase database = getWritableDatabase();
-//        //当条件满足id = 传入的参数的时候,就删除那整行数据,有可能有好几行都满足这个条件,满足的全部都删除
-//        String where = "id = ?";
-//        String[] whereArgs = {id + ""};
-//        database.delete(TABLE_NAME, where, whereArgs);
-//        database.close();
-//    }
 
     /**
      * 创建一个修改数据的方法

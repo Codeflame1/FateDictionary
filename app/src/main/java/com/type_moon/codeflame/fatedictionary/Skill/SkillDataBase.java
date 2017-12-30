@@ -150,22 +150,6 @@ public class SkillDataBase extends SQLiteOpenHelper {
         String[] Args = { id.toString() };
        return database.query(TABLE_NAME, null, selection, Args, null, null, null);
     }
-//
-//    /**
-//     * 创建一个删除数据的方法,传入的参数越多,删除时越精确的找到要删除的哪一行
-//     */
-//    public void delete(int id, String type, String name, String level, String introduction) {
-//        SQLiteDatabase database = getWritableDatabase();
-//        /*
-//        删除的条件,当id = 传入的参数id时,sex = 传入的参数sex时,age = 传入的age,hobby = 传入的hobby时
-//        当条件都满足时才删除这行数据,一个条件不满足就删除失败
-//         */
-//        String where = "id=? and type = ? and name = ? and level = ? and introduction = ? ";
-//        //删除条件的参数
-//        String[] whereArgs = {id + "", type, name, level, introduction};
-//        database.delete(TABLE_NAME, where, whereArgs);
-//        database.close();
-//    }
 
     /**
      * 再创建一个删除一个删除的方法,条件只有一个

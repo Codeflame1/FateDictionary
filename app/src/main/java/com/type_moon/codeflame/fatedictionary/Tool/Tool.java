@@ -1,6 +1,5 @@
 package com.type_moon.codeflame.fatedictionary.Tool;
 
-
 import java.text.DecimalFormat;
 
 public class Tool {

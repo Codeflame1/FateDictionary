@@ -1,6 +1,5 @@
 package com.type_moon.codeflame.fatedictionary;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -67,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
     private String LOCATION = Environment.getExternalStorageDirectory()+"/FateDictionary/a";
     private String[] w = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y"};
 
-    @SuppressLint("InflateParams")
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,8 +102,8 @@ public class MainActivity extends AppCompatActivity {
         if (CharacterDataBase.getInstances(MainActivity.this).query().getCount() == 0) {
             FirstInsert.insertCharacter(this);
             FirstInsert.insertSkill(this);
+            FirstInsert.insertImage(this);
         }
-        FirstInsert.insertImage(this);
         cListTotalNum = CharacterDataBase.getInstances(MainActivity.this).searchNum(msearch.getText().toString().trim());
         cPage = 1;
         clist = getCharacterData("",  0, 15);

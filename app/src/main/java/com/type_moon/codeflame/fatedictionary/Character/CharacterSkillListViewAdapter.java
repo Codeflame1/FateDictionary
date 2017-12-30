@@ -1,6 +1,5 @@
 package com.type_moon.codeflame.fatedictionary.Character;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,7 @@ public class CharacterSkillListViewAdapter extends BaseAdapter {
     private Context context;
     private List<Map<String, Object>> list;
 
-    public CharacterSkillListViewAdapter(Context context, List<Map<String, Object>> list) {
+    CharacterSkillListViewAdapter(Context context, List<Map<String, Object>> list) {
         this.context = context;
         this.list = list;
     }
@@ -39,14 +38,13 @@ public class CharacterSkillListViewAdapter extends BaseAdapter {
         return i;
     }
 
-    @SuppressLint({"InflateParams", "SetTextI18n"})
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
 
         if (view == null) {
             holder = new ViewHolder();
-            view = LayoutInflater.from(context).inflate(R.layout.characterdetail_skill, null);
+            view = LayoutInflater.from(context).inflate(R.layout.characterdetail_skill, viewGroup, false);
             holder.name = view.findViewById(R.id.characterskilldetail_name);
             holder.type = view.findViewById(R.id.characterskilldetail_type);
             holder.level = view.findViewById(R.id.characterskilldetail_level);

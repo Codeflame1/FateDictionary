@@ -1,6 +1,5 @@
 package com.type_moon.codeflame.fatedictionary;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.BitmapFactory;
@@ -43,14 +42,12 @@ public class CharacterListViewAdapter extends BaseAdapter {
         return i;
     }
 
-    @SuppressLint({"InflateParams", "SetTextI18n"})
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
-
         if (view == null) {
             holder = new ViewHolder();
-            view = LayoutInflater.from(context).inflate(R.layout.character_list, null);
+            view = LayoutInflater.from(context).inflate(R.layout.character_list, viewGroup, false);
             holder.image = view.findViewById(R.id.list_image);
             holder.frame = view.findViewById(R.id.list_frame);
             holder.name = view.findViewById(R.id.list_name);
@@ -60,7 +57,7 @@ public class CharacterListViewAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         int id = Integer.parseInt(list.get(i).get("id").toString());
-        Cursor cursor = CharacterDataBase.getInstances(context).searchById( id );
+        Cursor cursor = CharacterDataBase.getInstances(context).searchById(id);
         cursor.moveToNext();
         int number = cursor.getInt(cursor.getColumnIndex("number"));
         String name = cursor.getString(cursor.getColumnIndex("name"));
@@ -74,15 +71,14 @@ public class CharacterListViewAdapter extends BaseAdapter {
 
         return view;
     }
-    static class ViewHolder{
+    static class ViewHolder {
         ImageView image;
         ImageView frame;
         TextView name;
         TextView alignment;
     }
-    void refreshList(List<Map<String, Object>> list){
+    void refreshList(List<Map<String, Object>> list) {
         this.list = list;
         notifyDataSetChanged();
-
     }
 }

@@ -257,13 +257,13 @@ public class CharacterAdd extends AppCompatActivity{
     protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
         // 处理结果 处理缩放过后的图片
         if (resultCode == RESULT_CANCELED) {//取消
-            Toast.makeText(getApplication(), "取消", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplication(), R.string.cancel, Toast.LENGTH_LONG).show();
             return;
         } if (requestCode <=2) {
             cropPhoto(intent.getData(),requestCode);
         } else if (requestCode == 4) {
             if (intent != null) {
-                setImage(intent, 26);//设置图片框
+                setImage(intent, 26);
             }
         } else if (requestCode == 5) {
             if (intent != null) {
@@ -278,7 +278,7 @@ public class CharacterAdd extends AppCompatActivity{
                     i++;
                 }
                 i++;
-                setImage(intent, i);//设置图片框
+                setImage(intent, i);
             }
         } else if (requestCode == 3) {
             if (intent != null) {

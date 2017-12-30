@@ -1,6 +1,5 @@
 package com.type_moon.codeflame.fatedictionary;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,14 +34,12 @@ public class SkillListViewAdapter extends BaseAdapter {
         return i;
     }
 
-    @SuppressLint({"InflateParams", "SetTextI18n"})
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
-
         if (view == null) {
             holder = new ViewHolder();
-            view = LayoutInflater.from(context).inflate(R.layout.skill_list, null);
+            view = LayoutInflater.from(context).inflate(R.layout.skill_list, viewGroup, false);
             holder.name = view.findViewById(R.id.slist_name);
             holder.owner = view.findViewById(R.id.slist_owner);
             view.setTag(holder);
@@ -54,11 +51,11 @@ public class SkillListViewAdapter extends BaseAdapter {
 
         return view;
     }
-    static class ViewHolder{
+    static class ViewHolder {
         TextView name;
         TextView owner;
     }
-    void refreshList(List<Map<String, Object>> list){
+    void refreshList(List<Map<String, Object>> list) {
         this.list = list;
         notifyDataSetChanged();
 
