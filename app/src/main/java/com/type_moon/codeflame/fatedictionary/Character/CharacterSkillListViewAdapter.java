@@ -1,4 +1,4 @@
-package com.type_moon.codeflame.fatedictionary;
+package com.type_moon.codeflame.fatedictionary.Character;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -9,6 +9,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.type_moon.codeflame.fatedictionary.Tool.ImageGet;
+import com.type_moon.codeflame.fatedictionary.R;
+
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +19,7 @@ public class CharacterSkillListViewAdapter extends BaseAdapter {
     private Context context;
     private List<Map<String, Object>> list;
 
-    CharacterSkillListViewAdapter(Context context, List<Map<String, Object>> list) {
+    public CharacterSkillListViewAdapter(Context context, List<Map<String, Object>> list) {
         this.context = context;
         this.list = list;
     }

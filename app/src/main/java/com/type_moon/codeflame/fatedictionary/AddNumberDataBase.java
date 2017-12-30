@@ -21,7 +21,7 @@ public class AddNumberDataBase extends SQLiteOpenHelper {
      * @param context 上下文
      * @return 数据库对象
      */
-    static AddNumberDataBase getInstances(Context context) {
+    public static AddNumberDataBase getInstances(Context context) {
         if (characterDataBase == null) {
             return new AddNumberDataBase(context);
         } else {
@@ -99,7 +99,7 @@ public class AddNumberDataBase extends SQLiteOpenHelper {
      参数Cursor:返回值，相当于结果集ResultSet
      Cursor是一个游标接口，提供了遍历查询结果的方法，如移动指针方法move()，获得列值方法getString()等.
      */
-    Cursor query() {
+    public Cursor query() {
         //数据库可读
         SQLiteDatabase database = getReadableDatabase();
         //查找
@@ -129,7 +129,7 @@ public class AddNumberDataBase extends SQLiteOpenHelper {
     /**
      * 创建一个修改数据的方法
      */
-    void updata(int number) {
+    public void updata(int number) {
         SQLiteDatabase database = getWritableDatabase();
 //        update(String table,ContentValues values,String  whereClause, String[]  whereArgs)
         String where = "id = ?";

@@ -19,6 +19,16 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.type_moon.codeflame.fatedictionary.Character.CharacterAdd;
+import com.type_moon.codeflame.fatedictionary.Character.CharacterDataBase;
+import com.type_moon.codeflame.fatedictionary.Character.CharacterDetail;
+import com.type_moon.codeflame.fatedictionary.Character.CharacterEdit;
+import com.type_moon.codeflame.fatedictionary.Skill.SkillAdd;
+import com.type_moon.codeflame.fatedictionary.Skill.SkillDataBase;
+import com.type_moon.codeflame.fatedictionary.Skill.SkillDetail;
+import com.type_moon.codeflame.fatedictionary.Skill.SkillEdit;
+import com.type_moon.codeflame.fatedictionary.Tool.Tool;
+
 import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -94,8 +104,8 @@ public class MainActivity extends AppCompatActivity {
         if (CharacterDataBase.getInstances(MainActivity.this).query().getCount() == 0) {
             FirstInsert.insertCharacter(this);
             FirstInsert.insertSkill(this);
-            FirstInsert.insertImage(this);
         }
+        FirstInsert.insertImage(this);
         cListTotalNum = CharacterDataBase.getInstances(MainActivity.this).searchNum(msearch.getText().toString().trim());
         cPage = 1;
         clist = getCharacterData("",  0, 15);
@@ -200,11 +210,8 @@ public class MainActivity extends AppCompatActivity {
         });
         //英灵list的监听事件
         mCharacterList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            private int id;
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                //删除是要拿到当前行的id值才能删除当前行,下面的操作都是点击某个item拿到对应item的id字段
-//                //拿到当前position的 item的所有数据
                 Object id = clist.get(position).get("id");
                 int i = Integer.parseInt(id.toString());
                 //将得到id传入到需要的方法中
@@ -228,8 +235,6 @@ public class MainActivity extends AppCompatActivity {
         mSkillList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long l) {
-//                //删除是要拿到当前行的id值才能删除当前行,下面的操作都是点击某个item拿到对应item的id字段
-//                //拿到当前position的 item的所有数据
                 Object id = slist.get(position).get("id");
                 int i = Integer.parseInt(id.toString());
                 //将得到id传入到需要的方法中
@@ -294,7 +299,6 @@ public class MainActivity extends AppCompatActivity {
                 mcdialog.dismiss();
             }
         });
-        //设置一个标题
         mcdialog.getWindow().findViewById(R.id.dia_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -329,7 +333,6 @@ public class MainActivity extends AppCompatActivity {
                 msdialog.dismiss();
             }
         });
-        //设置一个标题
         msdialog.getWindow().findViewById(R.id.dia_cancel).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -354,7 +357,6 @@ public class MainActivity extends AppCompatActivity {
                 list.add(map);
             } while (query.moveToNext());
         }
-        //关闭查询游标
         query.close();
         return list;
     }
@@ -374,7 +376,6 @@ public class MainActivity extends AppCompatActivity {
                 list.add(map);
             } while (query.moveToNext());
         }
-        //关闭查询游标
         query.close();
         return list;
     }
@@ -385,24 +386,6 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == 0) {
             cListTotalNum = CharacterDataBase.getInstances(MainActivity.this).searchNum(strSearch);
             sListTotalNum = SkillDataBase.getInstances(MainActivity.this).searchNum(strSearch);
-//            int i1 = cListTotalNum - cPage*15;
-//            if (cPage<=0) {
-//                cPage=1;
-//            }
-//            if (i1>=0) {
-//                clist = getCharacterData(strSearch, (cPage-1)*15, 15);
-//            } else if (i1<0){
-//                clist = getCharacterData(strSearch, (cPage-1)*15, i1+15);
-//            }
-//            int i2 = sListTotalNum - sPage*15;
-//            if (sPage<=0) {
-//                sPage=1;
-//            }
-//            if (i2>=0) {
-//                slist = getSkillData(strSearch, (sPage-1)*15, 15);
-//            } else if (i2<0){
-//                slist = getSkillData(strSearch, (sPage-1)*15, i2+15);
-//            }
             clist = getCharacterData(strSearch, 0, 15);
             slist = getSkillData(strSearch, 0, 15);
             cPage=1;
@@ -496,14 +479,12 @@ public class MainActivity extends AppCompatActivity {
                         if (get.cmorelist.size() != 0) {
                             System.out.println(get.cmorelist.toString());
                             get.cadapter.notifyDataSetChanged();
-                            System.out.println("加载更多数据");
                         }
                         break;
                     case 101:
                         if (get.smorelist.size() != 0) {
                             System.out.println(get.smorelist.toString());
                             get.sadapter.notifyDataSetChanged();
-                            System.out.println("加载更多数据");
                         }
                     default:
                         break;

@@ -1,4 +1,4 @@
-package com.type_moon.codeflame.fatedictionary;
+package com.type_moon.codeflame.fatedictionary.Character;
 
 
 import android.content.Intent;
@@ -22,10 +22,15 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.type_moon.codeflame.fatedictionary.AddNumberDataBase;
+import com.type_moon.codeflame.fatedictionary.Tool.ImageGet;
+import com.type_moon.codeflame.fatedictionary.R;
+import com.type_moon.codeflame.fatedictionary.Tool.Tool;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class CharacterAdd extends AppCompatActivity{
 
@@ -61,9 +66,7 @@ public class CharacterAdd extends AppCompatActivity{
     private String[] w = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y"};
     private File file;
 
-
     private AlertDialog imagedialog;
-//    public String filePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +106,7 @@ public class CharacterAdd extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 flag++;
-                file = new File(LOCATION+Tool.numDecimal(number)+w[flag]+".png");
+                file = new File(LOCATION+ Tool.numDecimal(number)+w[flag]+".png");
                 if (!file.exists()) {
                     flag=0;
                 }
@@ -264,7 +267,8 @@ public class CharacterAdd extends AppCompatActivity{
             }
         } else if (requestCode == 5) {
             if (intent != null) {
-                setImage(intent, flag);//设置图片框
+                setImage(intent, flag);
+                m_image.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+w[flag]+".png"));//设置图片框
             }
         } else if (requestCode == 6) {
             if (intent != null) {
@@ -323,7 +327,7 @@ public class CharacterAdd extends AppCompatActivity{
     private void setImage(Intent intent, int i) {
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            Bitmap photo = BitmapFactory.decodeFile(IMAGE_FILE_LOCATION);
+            File photo = new File(IMAGE_FILE_LOCATION);
             File nf = new File(Environment.getExternalStorageDirectory()+"/FateDictionary");
             nf.mkdir();
             File f;
@@ -331,20 +335,14 @@ public class CharacterAdd extends AppCompatActivity{
                 f = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+Tool.numDecimal(number)+"z.png");
             } else {
                 f = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+Tool.numDecimal(number)+w[i]+".png");
-                m_image.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+w[i]+".png"));
             }
             FileOutputStream out;
             try {
                 out = new FileOutputStream(f);
-                photo.compress(Bitmap.CompressFormat.PNG, 100, out);
-
-                try {
-                    out.flush();
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } catch (FileNotFoundException e) {
+                ObjectOutputStream oos = new ObjectOutputStream(out);
+                oos.writeObject(photo);
+                out.close();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

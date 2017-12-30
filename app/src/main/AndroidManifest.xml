@@ -16,13 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CharacterAdd"/>
-        <activity android:name=".SkillAdd"/>
-        <activity android:name=".SkillEdit"/>
-        <activity android:name=".CharacterDetail"/>
-        <activity android:name=".SkillDetail"/>
+        <activity android:name=".Character.CharacterAdd"/>
+        <activity android:name=".Skill.SkillAdd"/>
+        <activity android:name=".Skill.SkillEdit"/>
+        <activity android:name=".Character.CharacterDetail"/>
+        <activity android:name=".Skill.SkillDetail"/>
         <activity android:name=".LittleTest"/>
-        <activity android:name=".CharacterEdit">
+        <activity android:name=".Character.CharacterEdit">
 
         </activity>
         <service android:name=".MusicService"/>

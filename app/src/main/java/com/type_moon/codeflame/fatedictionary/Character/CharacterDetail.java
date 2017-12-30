@@ -1,4 +1,4 @@
-package com.type_moon.codeflame.fatedictionary;
+package com.type_moon.codeflame.fatedictionary.Character;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,6 +15,11 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.type_moon.codeflame.fatedictionary.Tool.ImageGet;
+import com.type_moon.codeflame.fatedictionary.R;
+import com.type_moon.codeflame.fatedictionary.Skill.SkillDataBase;
+import com.type_moon.codeflame.fatedictionary.Tool.Tool;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,8 +28,10 @@ import java.util.Map;
 
 public class CharacterDetail extends AppCompatActivity {
 
+    private ImageView detailimage;
     private CharacterSkillListViewAdapter sadapter;
     private int number;
+    private String name;
     private int flag = 0;
     private String LOCATION = Environment.getExternalStorageDirectory()+"/FateDictionary/a";
     private String[] w = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y"};
@@ -35,7 +42,7 @@ public class CharacterDetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.characterdetail);
 
-        final ImageView detailimage = findViewById(R.id.detail_image);
+        detailimage = findViewById(R.id.detail_image);
         ImageView detailframe = findViewById(R.id.detail_imageframe);
         TextView detailname = findViewById(R.id.detail_name);
         ImageView detailsex = findViewById(R.id.detail_sex);
@@ -65,7 +72,7 @@ public class CharacterDetail extends AppCompatActivity {
         Cursor cursor = CharacterDataBase.getInstances(CharacterDetail.this).searchById(id);
         cursor.moveToNext();
         number = cursor.getInt(cursor.getColumnIndex("number"));
-        String name = cursor.getString(cursor.getColumnIndex("name"));
+        name = cursor.getString(cursor.getColumnIndex("name"));
         int job = cursor.getInt(cursor.getColumnIndex("job"));
         int sex = cursor.getInt(cursor.getColumnIndex("sex"));
         int height = cursor.getInt(cursor.getColumnIndex("height"));
@@ -104,7 +111,7 @@ public class CharacterDetail extends AppCompatActivity {
         } else {
             detailsex.setImageResource(R.mipmap.female);
         }
-        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"a.png"));
+        detailimage.setImageBitmap(BitmapFactory.decodeFile(LOCATION+ Tool.numDecimal(number)+"a.png"));
         detailframe.setImageResource(ImageGet.getBigFrame(Tool.getJob(job)));
 
         detailorigo.setText(origo);
@@ -144,25 +151,19 @@ public class CharacterDetail extends AppCompatActivity {
 
     private List<Map<String, Object>> getSkillListData(String s) {
         List<Map<String, Object>> slist = new ArrayList<>();
-        Cursor query = SkillDataBase.getInstances(CharacterDetail.this).query();
+        Cursor query = SkillDataBase.getInstances(CharacterDetail.this).searchOwner(name);
         if (query.moveToFirst()) {
             do {
-                String owner = query.getString(query.getColumnIndex("owner"));
                 String type = query.getString(query.getColumnIndex("type"));
                 String name = query.getString(query.getColumnIndex("name"));
                 String level = query.getString(query.getColumnIndex("level"));
                 String introduction = query.getString(query.getColumnIndex("introduction"));
-                int id = query.getInt(query.getColumnIndex("id"));
                 Map<String, Object> map = new HashMap<>();
-                if (s.equals(owner)) {
-                    map.put("id", id);
-                    map.put("owner", owner);
-                    map.put("type", type);
-                    map.put("name", name);
-                    map.put("level", level);
-                    map.put("introduction", introduction);
-                    slist.add(map);
-                }
+                map.put("type", type);
+                map.put("name", name);
+                map.put("level", level);
+                map.put("introduction", introduction);
+                slist.add(map);
             } while (query.moveToNext());
         }
         query.close();

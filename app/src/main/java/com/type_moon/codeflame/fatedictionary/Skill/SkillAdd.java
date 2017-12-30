@@ -1,4 +1,4 @@
-package com.type_moon.codeflame.fatedictionary;
+package com.type_moon.codeflame.fatedictionary.Skill;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -10,6 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import com.type_moon.codeflame.fatedictionary.Character.CharacterDataBase;
+import com.type_moon.codeflame.fatedictionary.R;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -12,6 +12,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.type_moon.codeflame.fatedictionary.Character.CharacterDataBase;
+import com.type_moon.codeflame.fatedictionary.Tool.ImageGet;
+import com.type_moon.codeflame.fatedictionary.Tool.Tool;
+
 import java.util.List;
 import java.util.Map;
 
@@ -63,7 +67,7 @@ public class CharacterListViewAdapter extends BaseAdapter {
         int job = cursor.getInt(cursor.getColumnIndex("job"));
         int alignment = cursor.getInt(cursor.getColumnIndex("alignment"));
         cursor.close();
-        holder.image.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+"z.png"));
+        holder.image.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+ Tool.numDecimal(number)+"z.png"));
         holder.frame.setImageResource(ImageGet.getSmallFrame(Tool.getJob(job)));
         holder.name.setText(name);
         holder.alignment.setText(Tool.getAlignment(alignment));

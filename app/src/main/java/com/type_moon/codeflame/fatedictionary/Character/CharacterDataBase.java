@@ -1,4 +1,4 @@
-package com.type_moon.codeflame.fatedictionary;
+package com.type_moon.codeflame.fatedictionary.Character;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,14 +6,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class SkillDataBase extends SQLiteOpenHelper {
+public class CharacterDataBase extends SQLiteOpenHelper {
     //数据库名字
-    private static final String DB_NAME = "Skill.db";
+    private static final String DB_NAME = "Sanguo.db";
     //数据库版本
     private static final int DB_VERSION = 1;
     //表名
-    private static final String TABLE_NAME = "skill";
-    static SkillDataBase myDataBase;
+    private static final String TABLE_NAME = "sanguo";
+    static CharacterDataBase characterDataBase;
 
     /**
      * 单例模式返回数据库
@@ -21,25 +21,21 @@ public class SkillDataBase extends SQLiteOpenHelper {
      * @param context 上下文
      * @return 数据库对象
      */
-    static SkillDataBase getInstances(Context context) {
-        if (myDataBase == null) {
-            return new SkillDataBase(context);
+    public static CharacterDataBase getInstances(Context context) {
+        if (characterDataBase == null) {
+            return new CharacterDataBase(context);
         } else {
-            return myDataBase;
+            return characterDataBase;
         }
     }
-
-
     //上下文,数据库名字,数据库工厂,版本号
-    private SkillDataBase(Context context) {
+    private CharacterDataBase(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
-
     //此方法中创建表
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("create table" + " " + TABLE_NAME + "(id INTEGER PRIMARY KEY AUTOINCREMENT,owner text,type text,name text,level text,introduction text);");
-
+        sqLiteDatabase.execSQL("create table" + " " + TABLE_NAME + "(id INTEGER PRIMARY KEY AUTOINCREMENT,number integer,name text,job integer,sex integer,height integer,weight integer,origo text,alignment integer,resource text,introduction text,stre text,endu text,agil text,magi text,luck text,skil text);");
     }
 
     /**
@@ -63,7 +59,7 @@ public class SkillDataBase extends SQLiteOpenHelper {
     /**
      * 创建一个用来插入数据的方法
      */
-    void insert(String owner, String type, String name, String level, String introduction) {
+    public void insert(int number, String name, int job, int sex, int height, int weight, String origo, int alignment, String resource, String introduction, String stre, String endu, String agil, String magi, String luck, String skil) {
         //让数据库可写
         SQLiteDatabase database = getWritableDatabase();
         /*
@@ -72,22 +68,31 @@ public class SkillDataBase extends SQLiteOpenHelper {
         value 对应字段要插入的值
          */
         ContentValues values = new ContentValues();
-        values.put("owner", owner);
-        values.put("type", type);
+        values.put("number", number);
         values.put("name", name);
-        values.put("level", level);
+        values.put("job", job);
+        values.put("sex", sex);
+        values.put("height", height);
+        values.put("weight", weight);
+        values.put("origo", origo);
+        values.put("alignment", alignment);
+        values.put("resource", resource);
         values.put("introduction", introduction);
+        values.put("stre", stre);
+        values.put("endu", endu);
+        values.put("agil", agil);
+        values.put("magi", magi);
+        values.put("luck", luck);
+        values.put("skil", skil);
         //插入
-        database.insert(TABLE_NAME, "type", values);
+        database.insert(TABLE_NAME, null, values);
         //插入完成后关闭,以免造成内存泄漏
         database.close();
     }
-
-
     /**
      * 创建一个查找数据库的方法
      *
-     * public  Cursor query(String table,String[] columns,String selection,String[]  selectionArgs,String groupBy,String having,String orderBy,String limit);
+     * public Cursor query(String table,String[] columns,String selection,String[] selectionArgs,String groupBy,String having,String orderBy,String limit);
      各个参数的意义说明：
      参数table:表名称
      参数columns:列名称数组
@@ -100,83 +105,50 @@ public class SkillDataBase extends SQLiteOpenHelper {
      参数Cursor:返回值，相当于结果集ResultSet
      Cursor是一个游标接口，提供了遍历查询结果的方法，如移动指针方法move()，获得列值方法getString()等.
      */
-    Cursor query() {
+    public Cursor query() {
         SQLiteDatabase database = getReadableDatabase();
         return database.query(TABLE_NAME, null, null, null, null, null, null);
     }
 
-    int searchNum(String search) {
+    public int searchNum(String search) {
         SQLiteDatabase database = getReadableDatabase();
         if (search.isEmpty()) {
             int i = database.query(TABLE_NAME, null, null, null, null, null, null).getCount();
             query().close();
             return i;
         } else {
-            String[] columns = {"id,owner,name"};
-            String selection = "owner like ? or name like ?";
-            String[] selectionArgs = {"%"+search+"%","%"+search+"%"};
+            String[] columns = {"id,name"};
+            String selection = "name like ?";
+            String[] selectionArgs = {"%"+search+"%"};
             int i = database.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null).getCount();
             query().close();
             return i;
         }
     }
 
-    Cursor searchOwner(String owner) {
-        SQLiteDatabase database = getReadableDatabase();
-        if (owner.isEmpty()) {
-            return null;
-        } else {
-            String[] columns = {"type,name,level,introduction"};
-            String selection = "owner = ?";
-            String[] selectionArgs = {"%"+owner+"%"};
-            return database.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null);
-        }
-    }
-
-    Cursor queryNum(String search, int startIndex, int num) {
+    public Cursor queryNum(String search, int startIndex, int num) {
         SQLiteDatabase database = getReadableDatabase();
         if (search.isEmpty()){
             return database.query(TABLE_NAME, null, null, null, null, null, null, startIndex + "," + num);
         } else {
-            String[] columns = {"id,owner,name"};
-            String selection = "owner like ? or name like ?";
-            String[] selectionArgs = {"%"+search+"%","%"+search+"%"};
+            String[] columns = {"id,name"};
+            String selection = "name like ?";
+            String[] selectionArgs = {"%"+search+"%"};
             return database.query(TABLE_NAME, columns, selection, selectionArgs, null, null, null, startIndex + "," + num);
         }
     }
 
-//    Cursor rawQuery(String name) {
-//        SQLiteDatabase database = getReadableDatabase();
-//        return database.query(TABLE_NAME, null, "name='"+name+"'", null, null, null, null);
-//    }
-//
-    Cursor searchById(Integer id) {
+    public Cursor searchById(Integer id) {
         SQLiteDatabase database = getReadableDatabase();
         String selection = "id=?";
         String[] Args = { id.toString() };
-       return database.query(TABLE_NAME, null, selection, Args, null, null, null);
+        return database.query(TABLE_NAME, null, selection, Args, null, null, null);
     }
-//
-//    /**
-//     * 创建一个删除数据的方法,传入的参数越多,删除时越精确的找到要删除的哪一行
-//     */
-//    public void delete(int id, String type, String name, String level, String introduction) {
-//        SQLiteDatabase database = getWritableDatabase();
-//        /*
-//        删除的条件,当id = 传入的参数id时,sex = 传入的参数sex时,age = 传入的age,hobby = 传入的hobby时
-//        当条件都满足时才删除这行数据,一个条件不满足就删除失败
-//         */
-//        String where = "id=? and type = ? and name = ? and level = ? and introduction = ? ";
-//        //删除条件的参数
-//        String[] whereArgs = {id + "", type, name, level, introduction};
-//        database.delete(TABLE_NAME, where, whereArgs);
-//        database.close();
-//    }
 
     /**
      * 再创建一个删除一个删除的方法,条件只有一个
      */
-    void deleteById(int id) {
+    public void deleteById(int id) {
         SQLiteDatabase database = getWritableDatabase();
         //当条件满足id = 传入的参数的时候,就删除那整行数据,有可能有好几行都满足这个条件,满足的全部都删除
         String where = "id = ?";
@@ -188,20 +160,31 @@ public class SkillDataBase extends SQLiteOpenHelper {
     /**
      * 创建一个修改数据的方法
      */
-    void updata(int id, String owner, String type, String name, String level, String introduction) {
+    void updata(int id, int number, String name, int job, int sex, int height, int weight, String origo, int alignment, String resource, String introduction, String stre, String endu, String agil, String magi, String luck, String skil) {
         SQLiteDatabase database = getWritableDatabase();
 //        update(String table,ContentValues values,String  whereClause, String[]  whereArgs)
         String where = "id = ?";
         String[] whereArgs = {id+""};
         ContentValues values = new ContentValues();
-        values.put("owner", owner);
-        values.put("type", type);
+        values.put("number", number);
         values.put("name", name);
-        values.put("level", level);
+        values.put("job", job);
+        values.put("sex", sex);
+        values.put("height", height);
+        values.put("weight", weight);
+        values.put("origo", origo);
+        values.put("alignment", alignment);
+        values.put("resource", resource);
         values.put("introduction", introduction);
+        values.put("stre", stre);
+        values.put("endu", endu);
+        values.put("agil", agil);
+        values.put("magi", magi);
+        values.put("luck", luck);
+        values.put("skil", skil);
         //参数1  表名称  参数2  跟行列ContentValues类型的键值对Key-Value
         // 参数3  更新条件（where字句）    参数4  更新条件数组
-        database.update(TABLE_NAME, values,where, whereArgs);
+        database.update(TABLE_NAME, values, where, whereArgs);
         database.close();
     }
 }

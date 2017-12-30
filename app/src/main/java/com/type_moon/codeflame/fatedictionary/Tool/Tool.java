@@ -1,4 +1,4 @@
-package com.type_moon.codeflame.fatedictionary;
+package com.type_moon.codeflame.fatedictionary.Tool;
 
 
 import java.text.DecimalFormat;
@@ -7,7 +7,7 @@ public class Tool {
     public Tool() {
     }
 
-    static String numDecimal (int i) {
+    public static String numDecimal(int i) {
         DecimalFormat df=new DecimalFormat("000");
         if (i>0&&i<1000) {
             return df.format(i);
@@ -16,7 +16,7 @@ public class Tool {
             return i + "";
         }
     }
-    static String getJob(int i) {
+    public static String getJob(int i) {
         switch (i){
             case 0:
                 return "saber";
@@ -36,22 +36,16 @@ public class Tool {
                 return "ruler";
             case 8:
                 return "avenger";
+            case 9:
+                return "shielder";
+            case 10:
+                return "none";
             default:
-                return "saber";
-        }
-    }
-    static String getSex(int i) {
-        switch (i){
-            case 0:
-                return "男";
-            case 1:
-                return "女";
-            default:
-                return "女";
+                return "none";
         }
     }
 
-    static String getAlignment(int i) {
+    public static String getAlignment(int i) {
         switch (i){
             case 0:
                 return "秩序·善";

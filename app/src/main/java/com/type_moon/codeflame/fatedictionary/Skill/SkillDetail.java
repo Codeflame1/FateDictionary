@@ -1,4 +1,4 @@
-package com.type_moon.codeflame.fatedictionary;
+package com.type_moon.codeflame.fatedictionary.Skill;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.type_moon.codeflame.fatedictionary.Tool.ImageGet;
+import com.type_moon.codeflame.fatedictionary.R;
 
 
 public class SkillDetail extends AppCompatActivity{

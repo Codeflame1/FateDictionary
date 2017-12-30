@@ -13,6 +13,8 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.type_moon.codeflame.fatedictionary.Character.CharacterDataBase;
+
 /**
  * 计划：
  * 功能：

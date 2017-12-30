@@ -1,11 +1,13 @@
-package com.type_moon.codeflame.fatedictionary;
+package com.type_moon.codeflame.fatedictionary.Tool;
 
+
+import com.type_moon.codeflame.fatedictionary.R;
 
 public class ImageGet {
     public ImageGet(){
 
     }
-    static int getBigFrame(String string){
+    public static int getBigFrame(String string){
         switch (string){
             case "saber":
                 return R.mipmap.saberbig;
@@ -25,11 +27,15 @@ public class ImageGet {
                 return R.mipmap.rulerbig;
             case "avenger":
                 return R.mipmap.avangerbig;
+            case "shielder":
+                return R.mipmap.shielderbig;
+            case "none":
+                return R.mipmap.nonebig;
         }
         return 0;
     }
 
-    static int getSmallFrame(String string){
+    public static int getSmallFrame(String string){
         switch (string){
             case "saber":
                 return R.mipmap.saber;
@@ -49,11 +55,15 @@ public class ImageGet {
                 return R.mipmap.ruler;
             case "avenger":
                 return R.mipmap.avenger;
+            case "shielder":
+                return R.mipmap.shielder;
+            case "none":
+                return R.mipmap.none;
         }
         return 0;
     }
 
-    static int getLevelImage(String string){
+    public static int getLevelImage(String string){
         if (string.equals("EX")) {
             return R.mipmap.levelex;
         } else if (string.contains("D")) {

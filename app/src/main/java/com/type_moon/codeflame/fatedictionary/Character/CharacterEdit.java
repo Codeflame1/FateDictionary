@@ -1,4 +1,4 @@
-package com.type_moon.codeflame.fatedictionary;
+package com.type_moon.codeflame.fatedictionary.Character;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -21,10 +21,15 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.type_moon.codeflame.fatedictionary.Tool.ImageGet;
+import com.type_moon.codeflame.fatedictionary.R;
+import com.type_moon.codeflame.fatedictionary.Tool.SpinnerSelect;
+import com.type_moon.codeflame.fatedictionary.Tool.Tool;
+
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 public class CharacterEdit extends AppCompatActivity {
 
@@ -89,7 +94,7 @@ public class CharacterEdit extends AppCompatActivity {
         String skil = cursor.getString(cursor.getColumnIndex("skil"));
         cursor.close();
 
-        final Button m_confirm = findViewById(R.id.edit_buttonconfirm);
+        Button m_confirm = findViewById(R.id.edit_buttonconfirm);
         Button m_cancel = findViewById(R.id.edit_buttoncancel);
         ImageButton change = findViewById(R.id.edit_change);
         m_image = findViewById(R.id.edit_image);
@@ -131,7 +136,7 @@ public class CharacterEdit extends AppCompatActivity {
         ed_resource.setText(resource);
         m_alignment.setSelection(alignment);
         ed_introduction.setText(introduction);
-        m_image.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+"a.png"));
+        m_image.setImageBitmap(BitmapFactory.decodeFile(LOCATION+ Tool.numDecimal(number)+"a.png"));
         str1 = (String) m_job.getSelectedItem();
         imageUri = Uri.fromFile(new File(IMAGE_FILE_LOCATION));
 
@@ -292,7 +297,8 @@ public class CharacterEdit extends AppCompatActivity {
             }
         } else if (requestCode == 5) {
             if (intent != null) {
-                setImage(intent, flag);//设置图片框
+                setImage(intent, flag);
+                m_image.setImageBitmap(BitmapFactory.decodeFile(LOCATION+Tool.numDecimal(number)+w[flag]+".png"));//设置图片框
             }
         } else if (requestCode == 6) {
             if (intent != null) {
@@ -326,7 +332,6 @@ public class CharacterEdit extends AppCompatActivity {
         intent.setDataAndType(uri, "image/*");
 
         //把裁剪的数据填入里面
-
         // 设置裁剪
         intent.putExtra("crop", "true");
         if (i==0) {
@@ -351,28 +356,22 @@ public class CharacterEdit extends AppCompatActivity {
     private void setImage(Intent intent, int i) {
         Bundle extras = intent.getExtras();
         if (extras != null) {
-            Bitmap photo = BitmapFactory.decodeFile(IMAGE_FILE_LOCATION);
+            File photo = new File(IMAGE_FILE_LOCATION);
             File nf = new File(Environment.getExternalStorageDirectory()+"/FateDictionary");
             nf.mkdir();
             File f;
             if (i==26) {
-                f = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+Tool.numDecimal(number)+"z.png");
+                f = new File(LOCATION+Tool.numDecimal(number)+"z.png");
             } else {
-                f = new File(Environment.getExternalStorageDirectory()+"/FateDictionary", "a"+Tool.numDecimal(number)+w[i]+".png");
-                m_image.setImageBitmap(BitmapFactory.decodeFile(Environment.getExternalStorageDirectory()+"/FateDictionary/a"+Tool.numDecimal(number)+w[i]+".png"));
+                f = new File(LOCATION+Tool.numDecimal(number)+w[i]+".png");
             }
             FileOutputStream out;
             try {
                 out = new FileOutputStream(f);
-                photo.compress(Bitmap.CompressFormat.PNG, 100, out);
-
-                try {
-                    out.flush();
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } catch (FileNotFoundException e) {
+                ObjectOutputStream oos = new ObjectOutputStream(out);
+                oos.writeObject(photo);
+                out.close();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }

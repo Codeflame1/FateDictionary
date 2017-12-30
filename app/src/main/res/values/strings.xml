@@ -71,6 +71,8 @@
         <item>berserker</item>
         <item>ruler</item>
         <item>avanger</item>
+        <item>shielder</item>
+        <item>none</item>
     </string-array>
     <string-array name="level">
         <item>E</item>
