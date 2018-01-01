@@ -102,6 +102,8 @@
     </string-array>
     <string-array name="music">
         <item>无</item>
+        <item>piano</item>
+        <item>Unity</item>
         <item>权御天下</item>
     </string-array>
 

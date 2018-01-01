@@ -1,12 +1,22 @@
 package com.type_moon.codeflame.fatedictionary;
 
+import android.Manifest;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.IBinder;
 import android.os.Message;
+import android.os.Parcel;
+import android.os.RemoteException;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.type_moon.codeflame.fatedictionary.Character.CharacterAdd;
@@ -44,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
     private SkillListViewAdapter sadapter;
     private ListView mCharacterList;
     private ListView mSkillList;
-//    private Spinner MusicChange;
-//    private MusicService musicService;
     private Button CSChange;
     private Button mCharacterListAdd;
     private Button mSkillListAdd;
@@ -54,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
     private EditText msearch;
     private AlertDialog mcdialog;
     private AlertDialog msdialog;
-//    Intent intent;
-//    ServiceConnection sc;
     private int cPage = 1;
     private int sPage = 1;
     private int cListTotalNum;
@@ -66,11 +73,17 @@ public class MainActivity extends AppCompatActivity {
     private String LOCATION = Environment.getExternalStorageDirectory()+"/FateDictionary/a";
     private String[] w = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y"};
 
+    private Spinner MusicChange;
+    ServiceConnection sc;
+    IBinder iBinder;
+    Intent intent;
+
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        verifyStoragePermissions();
         handler = new MyHandler(this);
         mCharacterList = findViewById(R.id.characterlist);
         mSkillList = findViewById(R.id.skilllist);
@@ -78,21 +91,30 @@ public class MainActivity extends AppCompatActivity {
         mSkillListAdd = findViewById(R.id.skilllistadd);
         mLittletest = findViewById(R.id.littletestgoto);
         CSChange = findViewById(R.id.characterskillchange);
-//        MusicChange = findViewById(R.id.music_change);
+        MusicChange = findViewById(R.id.music_change);
         TextInputLayout characterlistsearch = findViewById(R.id.characterlistsearch);
         searchButton = findViewById(R.id.characterlistsearchButton);
         msearch = characterlistsearch.getEditText();
-//        sc = new ServiceConnection() {
-//            @Override
-//            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
-//                musicService = ((MusicService.MyBinder) iBinder).getService();
-//            }
-//
-//            @Override
-//            public void onServiceDisconnected(ComponentName componentName) {
-//                musicService = null;
-//            }
-//        };
+
+        sc = new ServiceConnection() {
+            @Override
+            public void onServiceConnected(ComponentName componentName, IBinder service) {
+                iBinder = service;
+                try { //通过IBinder与Service通信
+                    int code = 106; //歌曲长度
+                    Parcel data = Parcel.obtain();
+                    Parcel reply = Parcel.obtain();
+                    iBinder.transact(code, data, reply, 0);
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                }
+            }
+            @Override
+            public void onServiceDisconnected(ComponentName componentName) {
+                sc = null;
+            }
+        };
+
         if (msearch != null) {
             msearch.clearFocus();
         }
@@ -124,28 +146,75 @@ public class MainActivity extends AppCompatActivity {
         CSChange.setTag("0");
         setListener();
 
-//        intent = new Intent(MainActivity.this,MusicService.class);
-//        startService(intent);
-//        bindService(intent, sc, BIND_AUTO_CREATE);
+        intent = new Intent(MainActivity.this, MusicService.class);
+        startService(intent);
+        bindService(intent, sc, Context.BIND_AUTO_CREATE);
+
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                try {
+                    Thread.sleep(103);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (sc != null) {
+                    handler.obtainMessage(102).sendToTarget();
+                }
+            }
+        };
+        thread.start();
     }
 
     private void setListener() {
-//        MusicChange.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-//                String str1 = (String)MusicChange.getSelectedItem();
-//                if (str1.equals("无")) {
-//                    musicService.pausePlay();
-//                } else if (str1.equals("权御天下")) {
-//                    musicService.play1();
-//                }
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> adapterView) {
-//                musicService.pausePlay();
-//            }
-//        });
+        MusicChange.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                int id = (int)MusicChange.getSelectedItemId();
+                if (id==0) {
+                    try {
+                        int code = 100;
+                        Parcel data = Parcel.obtain();
+                        Parcel reply = Parcel.obtain();
+                        iBinder.transact(code, data, reply, 0);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else if (id==1) {
+                    try {
+                        int code = 101;
+                        Parcel data = Parcel.obtain();
+                        Parcel reply = Parcel.obtain();
+                        iBinder.transact(code, data, reply, 0);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else if (id==2) {
+                    try {
+                        int code = 102;
+                        Parcel data = Parcel.obtain();
+                        Parcel reply = Parcel.obtain();
+                        iBinder.transact(code, data, reply, 0);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else if (id==3) {
+                    try {
+                        int code = 103;
+                        Parcel data = Parcel.obtain();
+                        Parcel reply = Parcel.obtain();
+                        iBinder.transact(code, data, reply, 0);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+            }
+        });
 
         CSChange.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -484,6 +553,19 @@ public class MainActivity extends AppCompatActivity {
                             System.out.println(get.smorelist.toString());
                             get.sadapter.notifyDataSetChanged();
                         }
+                    case 102:
+                        try {
+                            int code = 104;
+                            Parcel data = Parcel.obtain();
+                            Parcel reply = Parcel.obtain();
+                            get.iBinder.transact(code, data, reply, 0);
+                            data = Parcel.obtain();
+                            reply = Parcel.obtain();
+                            get.iBinder.transact(107, data, reply, 0);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -491,10 +573,35 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        //停止并释放资源
-//        stopService(intent);
-//    }
+    private void verifyStoragePermissions()
+    {
+        try { //检测是否有读取的权限
+            int permissions = ActivityCompat.checkSelfPermission
+                    (MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);
+            if(permissions != PackageManager.PERMISSION_GRANTED) { //没有读取权限，弹出对话框申请读取权限
+                ActivityCompat.requestPermissions
+                        (MainActivity.this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            //权限被用户同意，可以做想做的事
+        } else {
+            //权限被用户拒绝
+            System.exit(0);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        //停止并释放资源
+        stopService(intent);
+    }
 }
