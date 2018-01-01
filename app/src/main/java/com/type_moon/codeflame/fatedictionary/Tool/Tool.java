@@ -10,8 +10,7 @@ public class Tool {
         DecimalFormat df=new DecimalFormat("000");
         if (i>0&&i<1000) {
             return df.format(i);
-        }
-        else {
+        } else {
             return i + "";
         }
     }
@@ -39,6 +38,8 @@ public class Tool {
                 return "shielder";
             case 10:
                 return "none";
+            case 11:
+                return "foreigner";
             default:
                 return "none";
         }

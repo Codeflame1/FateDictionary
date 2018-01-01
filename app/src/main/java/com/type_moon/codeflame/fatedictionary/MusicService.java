@@ -11,7 +11,6 @@ import android.os.RemoteException;
 
 import java.io.IOException;
 
-
 public class MusicService extends Service {
     public static MediaPlayer mp= new MediaPlayer();
     public MusicService() {
@@ -55,6 +54,7 @@ public class MusicService extends Service {
                     }
                     mp.start();
                     break;
+
                 case 102: //退出按钮，服务处理函数
                     if (mp.isPlaying()) {
                         mp.stop();
@@ -66,6 +66,7 @@ public class MusicService extends Service {
                     }
                     mp.start();
                     break;
+
                 case 103: //界面刷新，服务返回数据函数
                     if (mp.isPlaying()) {
                         mp.stop();

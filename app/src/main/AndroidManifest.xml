@@ -9,23 +9,21 @@
         android:roundIcon="@mipmap/sanguoicon"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".MainActivity">
-        </activity>
-        <activity android:name=".WelcomeActivity">
+        <activity android:name=".WelcomeActivity"
+                  android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"/>
         <activity android:name=".Character.CharacterAdd"/>
+        <activity android:name=".Character.CharacterEdit"/>
+        <activity android:name=".Character.CharacterDetail"/>
         <activity android:name=".Skill.SkillAdd"/>
         <activity android:name=".Skill.SkillEdit"/>
-        <activity android:name=".Character.CharacterDetail"/>
         <activity android:name=".Skill.SkillDetail"/>
         <activity android:name=".LittleTest"/>
-        <activity android:name=".Character.CharacterEdit">
-
-        </activity>
         <service android:name=".MusicService"/>
     </application>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>

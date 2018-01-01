@@ -47,6 +47,7 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
+
     private List<Map<String, Object>> clist;
     private List<Map<String, Object>> slist;
     private List<Map<String, Object>> cmorelist;
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText msearch;
     private AlertDialog mcdialog;
     private AlertDialog msdialog;
+
     private int cPage = 1;
     private int sPage = 1;
     private int cListTotalNum;
@@ -498,6 +500,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
     private final class sScrollListener implements AbsListView.OnScrollListener {
         @Override
         public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -590,10 +593,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            //权限被用户同意，可以做想做的事
-        } else {
-            //权限被用户拒绝
+        if (grantResults.length <= 0 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
             System.exit(0);
         }
     }

@@ -73,6 +73,7 @@
         <item>avanger</item>
         <item>shielder</item>
         <item>none</item>
+        <item>foreigner</item>
     </string-array>
     <string-array name="level">
         <item>E</item>
