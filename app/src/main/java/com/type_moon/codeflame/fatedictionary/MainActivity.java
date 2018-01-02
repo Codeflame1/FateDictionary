@@ -76,8 +76,8 @@ public class MainActivity extends AppCompatActivity {
     private String[] w = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y"};
 
     private Spinner MusicChange;
+    MusicService musicService;
     ServiceConnection sc;
-    IBinder iBinder;
     Intent intent;
 
     @Override
@@ -87,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         verifyStoragePermissions();
         handler = new MyHandler(this);
+        musicService = new MusicService();
         mCharacterList = findViewById(R.id.characterlist);
         mSkillList = findViewById(R.id.skilllist);
         mCharacterListAdd = findViewById(R.id.characterlistadd);
@@ -100,20 +101,12 @@ public class MainActivity extends AppCompatActivity {
 
         sc = new ServiceConnection() {
             @Override
-            public void onServiceConnected(ComponentName componentName, IBinder service) {
-                iBinder = service;
-                try { //通过IBinder与Service通信
-                    int code = 106; //歌曲长度
-                    Parcel data = Parcel.obtain();
-                    Parcel reply = Parcel.obtain();
-                    iBinder.transact(code, data, reply, 0);
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                }
+            public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+                musicService = ((MusicService.MyBinder) iBinder).getService();
             }
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
-                sc = null;
+                musicService = null;
             }
         };
 
@@ -151,22 +144,6 @@ public class MainActivity extends AppCompatActivity {
         intent = new Intent(MainActivity.this, MusicService.class);
         startService(intent);
         bindService(intent, sc, Context.BIND_AUTO_CREATE);
-
-        Thread thread = new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                try {
-                    Thread.sleep(103);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                if (sc != null) {
-                    handler.obtainMessage(102).sendToTarget();
-                }
-            }
-        };
-        thread.start();
     }
 
     private void setListener() {
@@ -175,41 +152,13 @@ public class MainActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 int id = (int)MusicChange.getSelectedItemId();
                 if (id==0) {
-                    try {
-                        int code = 100;
-                        Parcel data = Parcel.obtain();
-                        Parcel reply = Parcel.obtain();
-                        iBinder.transact(code, data, reply, 0);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    handler.obtainMessage(102).sendToTarget();
                 } else if (id==1) {
-                    try {
-                        int code = 101;
-                        Parcel data = Parcel.obtain();
-                        Parcel reply = Parcel.obtain();
-                        iBinder.transact(code, data, reply, 0);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    handler.obtainMessage(103).sendToTarget();
                 } else if (id==2) {
-                    try {
-                        int code = 102;
-                        Parcel data = Parcel.obtain();
-                        Parcel reply = Parcel.obtain();
-                        iBinder.transact(code, data, reply, 0);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    handler.obtainMessage(104).sendToTarget();
                 } else if (id==3) {
-                    try {
-                        int code = 103;
-                        Parcel data = Parcel.obtain();
-                        Parcel reply = Parcel.obtain();
-                        iBinder.transact(code, data, reply, 0);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    handler.obtainMessage(105).sendToTarget();
                 }
             }
 
@@ -557,17 +506,16 @@ public class MainActivity extends AppCompatActivity {
                             get.sadapter.notifyDataSetChanged();
                         }
                     case 102:
-                        try {
-                            int code = 104;
-                            Parcel data = Parcel.obtain();
-                            Parcel reply = Parcel.obtain();
-                            get.iBinder.transact(code, data, reply, 0);
-                            data = Parcel.obtain();
-                            reply = Parcel.obtain();
-                            get.iBinder.transact(107, data, reply, 0);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                        get.musicService.choice0();
+                        break;
+                    case 103:
+                        get.musicService.choice1();
+                        break;
+                    case 104:
+                        get.musicService.choice2();
+                        break;
+                    case 105:
+                        get.musicService.choice3();
                         break;
                     default:
                         break;
@@ -576,8 +524,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void verifyStoragePermissions()
-    {
+    private void verifyStoragePermissions() {
         try { //检测是否有读取的权限
             int permissions = ActivityCompat.checkSelfPermission
                     (MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE);

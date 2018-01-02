@@ -15,7 +15,7 @@ public class Tool {
         }
     }
     public static String getJob(int i) {
-        switch (i){
+        switch (i) {
             case 0:
                 return "saber";
             case 1:
@@ -46,7 +46,7 @@ public class Tool {
     }
 
     public static String getAlignment(int i) {
-        switch (i){
+        switch (i) {
             case 0:
                 return "秩序·善";
             case 1:

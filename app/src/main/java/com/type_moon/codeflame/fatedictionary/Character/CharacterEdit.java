@@ -130,8 +130,10 @@ public class CharacterEdit extends AppCompatActivity {
         m_skil.setSelection(SpinnerSelect.getLevel(skil));
         ed_name.setText(name);
         m_sex.setSelection(sex);
-        ed_height.setText(height+"");
-        ed_weight.setText(weight+"");
+        String hei = height+"";
+        String wei = weight+"";
+        ed_height.setText(hei);
+        ed_weight.setText(wei);
         ed_origo.setText(origo);
         ed_resource.setText(resource);
         m_alignment.setSelection(alignment);
