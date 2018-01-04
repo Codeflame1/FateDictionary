@@ -28,13 +28,15 @@ public class SkillEdit extends AppCompatActivity {
     private EditText medit_introduction;
     private Spinner edit_owner;
     private Spinner edit_level;
+    private SkillDataBase skillDataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_skilldetail);
+        skillDataBase = new SkillDataBase(this);
         id = getIntent().getIntExtra("id", 0);
-        Cursor cursor = SkillDataBase.getInstances(SkillEdit.this).searchById( id );
+        Cursor cursor = skillDataBase.searchById( id );
         cursor.moveToNext();
         String owner = cursor.getString(1);
         String name = cursor.getString(3);
@@ -85,7 +87,7 @@ public class SkillEdit extends AppCompatActivity {
                     edit_introduction.setError(getString(R.string.introduction) + getString(R.string.text_error_empty));
                 } else {
                     //调用插入方法
-                    SkillDataBase.getInstances(SkillEdit.this).updata(id, owner, type, name, level, introduction);
+                    skillDataBase.updata(id, owner, type, name, level, introduction);
                     finish();
                 }
             }
@@ -101,7 +103,7 @@ public class SkillEdit extends AppCompatActivity {
 
     private List<String> getOwnerSpinner() {
         List<String> ownerlist = new ArrayList<>();
-        Cursor query = CharacterDataBase.getInstances(SkillEdit.this).query();
+        Cursor query = skillDataBase.query();
         /*
         游标cursor默认是在-1的位置,query.moveToFirst()将游标移动到第一行,如果不写这个就会报
          Caused by: android.database.CursorIndexOutOfBoundsException: Index -1 requested, with a size of 12

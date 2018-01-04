@@ -13,7 +13,6 @@ public class SkillDataBase extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     //表名
     private static final String TABLE_NAME = "skill";
-    static SkillDataBase myDataBase;
 
     /**
      * 单例模式返回数据库
@@ -21,17 +20,9 @@ public class SkillDataBase extends SQLiteOpenHelper {
      * @param context 上下文
      * @return 数据库对象
      */
-    public static SkillDataBase getInstances(Context context) {
-        if (myDataBase == null) {
-            return new SkillDataBase(context);
-        } else {
-            return myDataBase;
-        }
-    }
-
 
     //上下文,数据库名字,数据库工厂,版本号
-    private SkillDataBase(Context context) {
+    public SkillDataBase(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 

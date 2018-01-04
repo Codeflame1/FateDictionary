@@ -59,6 +59,8 @@ public class CharacterAdd extends AppCompatActivity{
     private Spinner m_luck;
     private Spinner m_skil;
     public String str1;
+    private CharacterDataBase characterDataBase;
+
     private Uri imageUri;
     private static final String IMAGE_FILE_LOCATION = Environment.getExternalStorageDirectory()+"/temp.jpg";
     private int flag = 0;
@@ -101,6 +103,7 @@ public class CharacterAdd extends AppCompatActivity{
         m_skil = findViewById(R.id.add_skil);
         str1 = (String) m_job.getSelectedItem();
         imageUri = Uri.fromFile(new File(IMAGE_FILE_LOCATION));
+        characterDataBase = new CharacterDataBase(CharacterAdd.this);
 
         change.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -189,7 +192,7 @@ public class CharacterAdd extends AppCompatActivity{
                     m_introduction.setError(getString(R.string.introduction) + getString(R.string.text_error_empty));
                 } else {
                     //调用插入方法
-                    CharacterDataBase.getInstances(CharacterAdd.this).insert(number, name, job, sex, height, weight, origo, alignment , resource, introduction, stre, endu, agil, magi, luck, skil);
+                    characterDataBase.insert(number, name, job, sex, height, weight, origo, alignment , resource, introduction, stre, endu, agil, magi, luck, skil);
                     finish();
                 }
             }

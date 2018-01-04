@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import com.type_moon.codeflame.fatedictionary.Character.CharacterDataBase;
 import com.type_moon.codeflame.fatedictionary.R;
 
 import java.util.ArrayList;
@@ -26,12 +25,14 @@ public class SkillAdd extends AppCompatActivity {
     private EditText madd_introduction;
     private Spinner add_owner;
     private Spinner add_level;
+    private SkillDataBase skillDataBase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_skilldetail);
 
+        skillDataBase = new SkillDataBase(this);
         final Button add_confirm = findViewById(R.id.skilladd_buttonconfirm);
         Button add_cancel = findViewById(R.id.skilladd_buttoncancel);
         add_type = findViewById(R.id.skilladd_type);
@@ -67,7 +68,7 @@ public class SkillAdd extends AppCompatActivity {
                     add_introduction.setError(getString(R.string.introduction) + getString(R.string.text_error_empty));
                 } else {
                     //调用插入方法
-                    SkillDataBase.getInstances(SkillAdd.this).insert(owner, type, name, level, introduction);
+                    skillDataBase.insert(owner, type, name, level, introduction);
                     finish();
                 }
             }
@@ -83,7 +84,7 @@ public class SkillAdd extends AppCompatActivity {
 
     private List<String> getOwnerSpinner() {
         List<String> ownerlist = new ArrayList<>();
-        Cursor query = CharacterDataBase.getInstances(SkillAdd.this).query();
+        Cursor query = skillDataBase.query();
         /*
         游标cursor默认是在-1的位置,query.moveToFirst()将游标移动到第一行,如果不写这个就会报
          Caused by: android.database.CursorIndexOutOfBoundsException: Index -1 requested, with a size of 12

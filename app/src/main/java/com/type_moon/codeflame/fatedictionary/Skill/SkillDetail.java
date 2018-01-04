@@ -25,9 +25,10 @@ public class SkillDetail extends AppCompatActivity{
         TextView detailintroduction = findViewById(R.id.skilldetail_introduction);
         ImageView detaillevellv = findViewById(R.id.skilldetail_levellv);
         ImageButton detailback = findViewById(R.id.skillback);
+        SkillDataBase skillDataBase = new SkillDataBase(this);
 
         int id = getIntent().getIntExtra("id", 0);
-        Cursor cursor = SkillDataBase.getInstances(SkillDetail.this).searchById( id );
+        Cursor cursor = skillDataBase.searchById( id );
         cursor.moveToNext();
         String owner = cursor.getString(1);
         String name = cursor.getString(3);

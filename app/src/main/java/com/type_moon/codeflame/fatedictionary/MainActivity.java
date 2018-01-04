@@ -12,8 +12,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.os.Parcel;
-import android.os.RemoteException;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
@@ -64,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText msearch;
     private AlertDialog mcdialog;
     private AlertDialog msdialog;
+    private CharacterDataBase characterDataBase;
+    private SkillDataBase skillDataBase;
 
     private int cPage = 1;
     private int sPage = 1;
@@ -98,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
         TextInputLayout characterlistsearch = findViewById(R.id.characterlistsearch);
         searchButton = findViewById(R.id.characterlistsearchButton);
         msearch = characterlistsearch.getEditText();
+        characterDataBase = new CharacterDataBase(MainActivity.this);
+        skillDataBase = new SkillDataBase(MainActivity.this);
 
         sc = new ServiceConnection() {
             @Override
@@ -116,12 +118,12 @@ public class MainActivity extends AppCompatActivity {
         characterlistsearch.clearFocus();
         msearch.setSelected(false);
 
-        if (CharacterDataBase.getInstances(MainActivity.this).query().getCount() == 0) {
+        if (characterDataBase.query().getCount() == 0) {
             FirstInsert.insertCharacter(this);
             FirstInsert.insertSkill(this);
             FirstInsert.insertImage(this);
         }
-        cListTotalNum = CharacterDataBase.getInstances(MainActivity.this).searchNum(msearch.getText().toString().trim());
+        cListTotalNum = characterDataBase.searchNum(msearch.getText().toString().trim());
         cPage = 1;
         clist = getCharacterData("",  0, 15);
         mCharacterList.setOnScrollListener(new cScrollListener());
@@ -129,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
         mCharacterList.setAdapter(cadapter);
         mCharacterList.setTextFilterEnabled(true);
 
-        sListTotalNum = SkillDataBase.getInstances(MainActivity.this).searchNum(msearch.getText().toString().trim());
+        sListTotalNum = skillDataBase.searchNum(msearch.getText().toString().trim());
         sPage = 1;
         slist = getSkillData("", 0, 15);
         mSkillList.setOnScrollListener(new sScrollListener());
@@ -192,9 +194,9 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     strSearch = msearch.getText().toString().trim();
                 }
-                cListTotalNum = CharacterDataBase.getInstances(MainActivity.this).searchNum(strSearch);
+                cListTotalNum = characterDataBase.searchNum(strSearch);
                 cPage = 1;
-                sListTotalNum = SkillDataBase.getInstances(MainActivity.this).searchNum(strSearch);
+                sListTotalNum = skillDataBase.searchNum(strSearch);
                 sPage = 1;
                 clist = getCharacterData(strSearch, 0, 15);
                 slist = getSkillData(strSearch, 0, 15);
@@ -295,7 +297,7 @@ public class MainActivity extends AppCompatActivity {
         mcdialog.getWindow().findViewById(R.id.dia_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Cursor cursor = CharacterDataBase.getInstances(MainActivity.this).searchById( id );
+                Cursor cursor = characterDataBase.searchById( id );
                 cursor.moveToNext();
                 int number = cursor.getInt(1);
                 cursor.close();
@@ -309,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
                 if(f2.isFile()){
                     f2.delete();
                 }
-                CharacterDataBase.getInstances(MainActivity.this).deleteById(id);
+                characterDataBase.deleteById(id);
                 //重新查询,然后显示
                 clist = getCharacterData("",0,15);
                 cadapter.refreshList(clist);
@@ -343,7 +345,7 @@ public class MainActivity extends AppCompatActivity {
         msdialog.getWindow().findViewById(R.id.dia_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SkillDataBase.getInstances(MainActivity.this).deleteById(id);
+                skillDataBase.deleteById(id);
                 //重新查询,然后显示
                 slist = getSkillData("", 0, 15);
                 sadapter.refreshList(slist);
@@ -364,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private List<Map<String, Object>> getCharacterData(String s, int startIndex, int num) {
         List<Map<String, Object>> list = new ArrayList<>();
-        Cursor query = CharacterDataBase.getInstances(MainActivity.this).queryNum(s, startIndex, num);
+        Cursor query = characterDataBase.queryNum(s, startIndex, num);
         if (query.moveToFirst()) {
             do {
                 String name = query.getString(query.getColumnIndex("name"));
@@ -381,7 +383,7 @@ public class MainActivity extends AppCompatActivity {
 
     private List<Map<String, Object>> getSkillData(String s, int startIndex, int num) {
         List<Map<String, Object>> list = new ArrayList<>();
-        Cursor query = SkillDataBase.getInstances(MainActivity.this).queryNum(s, startIndex, num);
+        Cursor query = skillDataBase.queryNum(s, startIndex, num);
         if (query.moveToFirst()) {
             do {
                 String owner = query.getString(query.getColumnIndex("owner"));
@@ -402,8 +404,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 0) {
-            cListTotalNum = CharacterDataBase.getInstances(MainActivity.this).searchNum(strSearch);
-            sListTotalNum = SkillDataBase.getInstances(MainActivity.this).searchNum(strSearch);
+            cListTotalNum = characterDataBase.searchNum(strSearch);
+            sListTotalNum = skillDataBase.searchNum(strSearch);
             clist = getCharacterData(strSearch, 0, 15);
             slist = getSkillData(strSearch, 0, 15);
             cPage=1;

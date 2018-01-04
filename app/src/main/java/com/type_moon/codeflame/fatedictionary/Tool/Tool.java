@@ -8,12 +8,13 @@ public class Tool {
 
     public static String numDecimal(int i) {
         DecimalFormat df=new DecimalFormat("000");
-        if (i>0&&i<1000) {
+        if (i>0 && i<1000) {
             return df.format(i);
         } else {
             return i + "";
         }
     }
+
     public static String getJob(int i) {
         switch (i) {
             case 0:

@@ -60,6 +60,7 @@ public class CharacterEdit extends AppCompatActivity {
     private Spinner m_skil;
     public String str1;
     private Uri imageUri;
+    private CharacterDataBase characterDataBase;
 
     private int flag = 0;
     private String LOCATION = Environment.getExternalStorageDirectory()+"/FateDictionary/a";
@@ -74,7 +75,8 @@ public class CharacterEdit extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_characterdetail);
         id = getIntent().getIntExtra("id", 0);
-        Cursor cursor = CharacterDataBase.getInstances(CharacterEdit.this).searchById( id );
+        characterDataBase = new CharacterDataBase(CharacterEdit.this);
+        Cursor cursor = characterDataBase.searchById( id );
         cursor.moveToNext();
         number = cursor.getInt(cursor.getColumnIndex("number"));
         String name = cursor.getString(cursor.getColumnIndex("name"));
@@ -221,7 +223,7 @@ public class CharacterEdit extends AppCompatActivity {
                     m_introduction.setError(getString(R.string.introduction) + getString(R.string.text_error_empty));
                 } else {
                     //调用插入方法
-                    CharacterDataBase.getInstances(CharacterEdit.this).updata(id, number, name, job, sex, height, weight, origo, alignment, resource, introduction, stre, endu, agil, magi, luck, skil);
+                    characterDataBase.updata(id, number, name, job, sex, height, weight, origo, alignment, resource, introduction, stre, endu, agil, magi, luck, skil);
                     finish();
                 }
             }

@@ -31,6 +31,7 @@ public class CharacterDetail extends AppCompatActivity {
     private ImageView mimage;
     private CharacterSkillListViewAdapter sadapter;
     private int number;
+    private SkillDataBase skillDataBase;
     private int flag = 0;
     private String LOCATION = Environment.getExternalStorageDirectory()+"/FateDictionary/a";
     private String[] w = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y"};
@@ -66,8 +67,10 @@ public class CharacterDetail extends AppCompatActivity {
         ImageButton mback = findViewById(R.id.back);
         ImageButton mchange = findViewById(R.id.change);
 
+        CharacterDataBase characterDataBase = new CharacterDataBase(this);
+        skillDataBase = new SkillDataBase(this);
         int id = getIntent().getIntExtra("id", 0);
-        Cursor cursor = CharacterDataBase.getInstances(CharacterDetail.this).searchById(id);
+        Cursor cursor = characterDataBase.searchById(id);
         cursor.moveToNext();
         number = cursor.getInt(cursor.getColumnIndex("number"));
         String name = cursor.getString(cursor.getColumnIndex("name"));
@@ -148,7 +151,7 @@ public class CharacterDetail extends AppCompatActivity {
 
     private List<Map<String, Object>> getSkillListData(String s) {
         List<Map<String, Object>> slist = new ArrayList<>();
-        Cursor query = SkillDataBase.getInstances(CharacterDetail.this).searchOwner(s);
+        Cursor query = skillDataBase.searchOwner(s);
         if (query.moveToFirst()) {
             do {
                 String type = query.getString(query.getColumnIndex("type"));

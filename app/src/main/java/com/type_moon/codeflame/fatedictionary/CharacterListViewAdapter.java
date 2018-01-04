@@ -44,6 +44,7 @@ public class CharacterListViewAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
+        CharacterDataBase characterDataBase = new CharacterDataBase(context);
         ViewHolder holder;
         if (view == null) {
             holder = new ViewHolder();
@@ -57,7 +58,7 @@ public class CharacterListViewAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
         int id = Integer.parseInt(list.get(i).get("id").toString());
-        Cursor cursor = CharacterDataBase.getInstances(context).searchById(id);
+        Cursor cursor = characterDataBase.searchById(id);
         cursor.moveToNext();
         int number = cursor.getInt(cursor.getColumnIndex("number"));
         String name = cursor.getString(cursor.getColumnIndex("name"));

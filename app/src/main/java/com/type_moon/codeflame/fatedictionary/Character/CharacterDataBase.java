@@ -13,7 +13,6 @@ public class CharacterDataBase extends SQLiteOpenHelper {
     private static final int DB_VERSION = 1;
     //表名
     private static final String TABLE_NAME = "sanguo";
-    static CharacterDataBase characterDataBase;
 
     /**
      * 单例模式返回数据库
@@ -21,15 +20,8 @@ public class CharacterDataBase extends SQLiteOpenHelper {
      * @param context 上下文
      * @return 数据库对象
      */
-    public static CharacterDataBase getInstances(Context context) {
-        if (characterDataBase == null) {
-            return new CharacterDataBase(context);
-        } else {
-            return characterDataBase;
-        }
-    }
     //上下文,数据库名字,数据库工厂,版本号
-    private CharacterDataBase(Context context) {
+    public CharacterDataBase(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
     //此方法中创建表
