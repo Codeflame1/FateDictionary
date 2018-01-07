@@ -48,6 +48,7 @@ public class CharacterDataBase extends SQLiteOpenHelper {
         }
     }
 
+
     /**
      * 创建一个用来插入数据的方法
      */

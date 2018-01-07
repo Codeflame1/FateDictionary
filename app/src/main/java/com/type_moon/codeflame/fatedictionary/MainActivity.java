@@ -1,6 +1,7 @@
 package com.type_moon.codeflame.fatedictionary;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -16,7 +17,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -44,7 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private List<Map<String, Object>> clist;
     private List<Map<String, Object>> slist;
@@ -76,9 +76,8 @@ public class MainActivity extends AppCompatActivity {
     private String[] w = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y"};
 
     private Spinner MusicChange;
-    MusicService musicService;
-    ServiceConnection sc;
-    Intent intent;
+    private MusicService musicService;
+    private Intent intent;
 
     @Override
 
@@ -88,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
         verifyStoragePermissions();
         handler = new MyHandler(this);
         musicService = new MusicService();
+
         mCharacterList = findViewById(R.id.characterlist);
         mSkillList = findViewById(R.id.skilllist);
         mCharacterListAdd = findViewById(R.id.characterlistadd);
@@ -97,15 +97,17 @@ public class MainActivity extends AppCompatActivity {
         MusicChange = findViewById(R.id.music_change);
         TextInputLayout characterlistsearch = findViewById(R.id.characterlistsearch);
         searchButton = findViewById(R.id.characterlistsearchButton);
+
         msearch = characterlistsearch.getEditText();
         characterDataBase = new CharacterDataBase(MainActivity.this);
         skillDataBase = new SkillDataBase(MainActivity.this);
 
-        sc = new ServiceConnection() {
+        ServiceConnection sc = new ServiceConnection() {
             @Override
             public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
                 musicService = ((MusicService.MyBinder) iBinder).getService();
             }
+
             @Override
             public void onServiceDisconnected(ComponentName componentName) {
                 musicService = null;

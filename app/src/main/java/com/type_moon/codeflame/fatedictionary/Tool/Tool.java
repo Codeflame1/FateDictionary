@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 
 public class Tool {
     public Tool() {
+
     }
 
     public static String numDecimal(int i) {

@@ -45,10 +45,13 @@ public class LittleTest extends AppCompatActivity{
     /*对应问题所需要的数据名称*/
     private String[] dataName = new String[]{"birth","death","origo","army"};
 
+    private CharacterDataBase characterDataBase;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.little_test);
+        characterDataBase = new CharacterDataBase(this);
         initData();
         runTest();
     }
@@ -56,7 +59,7 @@ public class LittleTest extends AppCompatActivity{
         /*初始化候选答案*/
         this.candidateAnswers = new String[3];
         /*获取游标数据：整个表中的人物数据*/
-        data = CharacterDataBase.getInstances(LittleTest.this).query();
+        data = characterDataBase.query();
         /*这里获取sanguo表中共存可几个人物的数据：获取行数*/
         this.PERSONNUMBER = data.getCount();
 
