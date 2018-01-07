@@ -1,7 +1,6 @@
 package com.type_moon.codeflame.fatedictionary;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +16,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
@@ -44,7 +44,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private List<Map<String, Object>> clist;
     private List<Map<String, Object>> slist;
@@ -117,6 +117,7 @@ public class MainActivity extends Activity {
         if (msearch != null) {
             msearch.clearFocus();
         }
+
         characterlistsearch.clearFocus();
         msearch.setSelected(false);
 
