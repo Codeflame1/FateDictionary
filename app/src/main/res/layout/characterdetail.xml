@@ -118,7 +118,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/detailtexthape"
-                android:maxLines="100"
+                android:maxLines="150"
                 android:minLines="5"
                 android:scrollbars="vertical"
                 android:textSize="18sp"
